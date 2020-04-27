@@ -26,4 +26,10 @@
         <item name="cornerSizeBottomRight">32dp</item>
         <item name="android:shadowColor">#FFFFFF</item>
     </style>
+
+    <style name="RoutineItemTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@color/darkgrey</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>
