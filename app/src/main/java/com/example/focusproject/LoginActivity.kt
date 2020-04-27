@@ -28,10 +28,11 @@ class LoginActivity : AppCompatActivity() {
         //Set OnClickListener for each buttons
         loginBtn.setOnClickListener{
             //TODO Check email/password condition
-            auth.signInWithEmailAndPassword(emailTextEdit.editText.toString(), passwordTextEdit.editText.toString())
+            auth.signInWithEmailAndPassword(emailTextEdit.editText?.text.toString(), passwordTextEdit.editText?.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful){
                         //Switch to MainActivity
+                        startMainActivity()
                     } else {
                         //Toast
                     }
@@ -51,5 +52,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun startMainActivity(){
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
