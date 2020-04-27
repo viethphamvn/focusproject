@@ -11,19 +11,19 @@
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:colorButtonNormal">@color/colorAccent</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:topRightRadius">8dp</item>
-        <item name="android:topLeftRadius">8dp</item>
-        <item name="android:bottomLeftRadius">8dp</item>
-        <item name="android:bottomRightRadius">8dp</item>
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeBottomLeft">32dp</item>
+        <item name="cornerSizeTopRight">32dp</item>
+        <item name="cornerSizeBottomRight">32dp</item>
         <item name="android:shadowColor">#FFFFFF</item>
     </style>
 
     <style name="AppTheme.ButtonSecondary" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:topRightRadius">8dp</item>
-        <item name="android:topLeftRadius">8dp</item>
-        <item name="android:bottomLeftRadius">8dp</item>
-        <item name="android:bottomRightRadius">8dp</item>
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeBottomLeft">32dp</item>
+        <item name="cornerSizeTopRight">32dp</item>
+        <item name="cornerSizeBottomRight">32dp</item>
         <item name="android:shadowColor">#FFFFFF</item>
     </style>
 </resources>
