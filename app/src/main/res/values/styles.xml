@@ -1,11 +1,29 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Platform.MaterialComponents">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#0B7FE4</item>
     </style>
 
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:topRightRadius">8dp</item>
+        <item name="android:topLeftRadius">8dp</item>
+        <item name="android:bottomLeftRadius">8dp</item>
+        <item name="android:bottomRightRadius">8dp</item>
+        <item name="android:shadowColor">#FFFFFF</item>
+    </style>
+
+    <style name="AppTheme.ButtonSecondary" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:topRightRadius">8dp</item>
+        <item name="android:topLeftRadius">8dp</item>
+        <item name="android:bottomLeftRadius">8dp</item>
+        <item name="android:bottomRightRadius">8dp</item>
+        <item name="android:shadowColor">#FFFFFF</item>
+    </style>
 </resources>
