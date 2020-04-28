@@ -31,15 +31,9 @@ class ArmsFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-        Exercises.add(Excercise("Push Up","pushup","addr1"))
-        Exercises.add(Excercise("Pull Up","pullup","addr2"))
-        Exercises.add(Excercise("Run","run","addr3"))
-        Exercises.add(Excercise("Push Up","pushup","addr1"))
-        Exercises.add(Excercise("Pull Up","pullup","addr2"))
-        Exercises.add(Excercise("Run","run","addr3"))
-        Exercises.add(Excercise("Push Up","pushup","addr1"))
-        Exercises.add(Excercise("Pull Up","pullup","addr2"))
-        Exercises.add(Excercise("Run","run","addr3"))
+        Exercises.add(Excercise("Push Up","pushup",30, "addr1", true))
+        Exercises.add(Excercise("Pull Up","pullup",0,"addr2", false))
+        Exercises.add(Excercise("Run","run",10, "addr3", true))
     }
 
     override fun onCreateView(

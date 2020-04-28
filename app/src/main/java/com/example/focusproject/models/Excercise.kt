@@ -4,13 +4,13 @@ import com.bumptech.glide.Glide.init
 import java.lang.reflect.Array.get
 import java.lang.reflect.Array.set
 
-class Excercise(name: String, code: String, setnrep:HashMap<Int, Int>, weight:HashMap<Int, Int>, duration: Int,  img: String, isRestTime: Boolean){
+class Excercise(name: String, code: String, duration: Int,  img: String, isRestTime: Boolean){
     var name: String
     var code: String
     var img: String
     var isRestTime: Boolean
-    var setnrep: HashMap<Int, Int>
-    var weight: HashMap<Int, Int>
+//    var setnrep: HashMap<Int, Int>
+//    var weight: HashMap<Int, Int>
     var duration: Int
 
     init{
@@ -18,8 +18,8 @@ class Excercise(name: String, code: String, setnrep:HashMap<Int, Int>, weight:Ha
         this.code = code
         this.img = img
         this.isRestTime = isRestTime
-        this.setnrep = HashMap<Int, Int>(setnrep)
-        this.weight = HashMap(weight)
+//        this.setnrep = HashMap<Int, Int>(setnrep)
+//        this.weight = HashMap(weight)
         this.duration = duration
     }
 }
