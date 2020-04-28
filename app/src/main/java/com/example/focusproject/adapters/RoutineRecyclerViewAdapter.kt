@@ -18,8 +18,7 @@ class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerVie
     val EXCERCISE = 2
 
     fun updateDataSet(Excercises: ArrayList<Excercise>){
-        this.Excercises = ArrayList(Excercises)
-        notifyDataSetChanged()
+        this.Excercises = Excercises
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
