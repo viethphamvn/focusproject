@@ -17,12 +17,12 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         return fragments.size
     }
 
-    public fun addFragment(fragment:Fragment, title:String){
+    fun addFragment(fragment:Fragment, title:String){
         fragments.add(fragment)
         titles.add(title)
     }
 
-    public override fun getPageTitle(position: Int):CharSequence{
+    override fun getPageTitle(position: Int):CharSequence{
         return titles.get(position)
     }
 }

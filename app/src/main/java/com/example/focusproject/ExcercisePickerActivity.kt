@@ -18,7 +18,7 @@ class ExcercisePickerActivity : AppCompatActivity() {
         //TODO each muscle group is a fragment
         viewPagerAdapter.addFragment(ArmsFragment.newInstance("Hello","Hello"), "Arms")
         viewPagerAdapter.addFragment(ArmsFragment.newInstance("Hello","Hello"), "Legs")
-        viewpager.setAdapter(viewPagerAdapter)
+        viewpager.adapter = viewPagerAdapter
         tablayout.setupWithViewPager(viewpager)
     }
 }

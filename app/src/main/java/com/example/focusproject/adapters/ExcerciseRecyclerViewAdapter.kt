@@ -15,7 +15,7 @@ class ExcerciseRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerV
     private var Excercises = ArrayList(Excercises)
     private var firestore = FirebaseFirestore.getInstance()
 
-    public fun updateDataSet(Excercises: ArrayList<Excercise>){
+    fun updateDataSet(Excercises: ArrayList<Excercise>){
         this.Excercises = ArrayList(Excercises)
         notifyDataSetChanged()
     }
@@ -44,7 +44,7 @@ class ExcerciseRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerV
         var excerciseNameTextView = itemView.excerciseNameTextView
 
         fun bind(excercise : Excercise){
-            excerciseNameTextView.setText(excercise.name)
+            excerciseNameTextView.text = excercise.name
             //Bind image
             val url = "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
             Glide.with(itemView.context)  //2

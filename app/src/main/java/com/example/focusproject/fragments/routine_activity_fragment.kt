@@ -52,7 +52,7 @@ class routine_activity_fragment : Fragment() {
         //Initiate RecyclerView with Adapter
         view.routine_recycler_list_view.apply {
             layoutManager = LinearLayoutManager(context)
-            routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(Exercises as ArrayList<Excercise>)
+            routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(Exercises)
             adapter = routineRecyclerViewAdapter
         }
 

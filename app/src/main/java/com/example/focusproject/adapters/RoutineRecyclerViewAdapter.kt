@@ -17,7 +17,7 @@ class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerVie
     val REST = 1
     val EXCERCISE = 2
 
-    public fun updateDataSet(Excercises: ArrayList<Excercise>){
+    fun updateDataSet(Excercises: ArrayList<Excercise>){
         this.Excercises = ArrayList(Excercises)
         notifyDataSetChanged()
     }
@@ -61,7 +61,7 @@ class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerVie
 
         fun bind(excercise : Excercise){
             if (!excercise.isRestTime) {
-                excerciseNameTextView.setText(excercise.name)
+                excerciseNameTextView.text = excercise.name
                 //Bind image
                 val url =
                     "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
@@ -70,7 +70,7 @@ class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerVie
                     .centerCrop() //4
                     .into(imageView) //8
             } else {
-                timeTextView.setText("${excercise.duration} SECS")
+                timeTextView.text = "${excercise.duration} SECS"
             }
         }
     }
