@@ -8,6 +8,7 @@ import com.example.focusproject.fragments.routine_activity_fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -43,8 +44,12 @@ class MainActivity : AppCompatActivity() {
             false
         })
 
+        //Setup Views
         findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
             startActivity(Intent(this, ExcercisePickerActivity::class.java))
+        }
+        findViewById<CircleImageView>(R.id.user_profile_button).setOnClickListener{
+            startActivity(Intent(this, UserProfileActivity::class.java))
         }
     }
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
+import com.example.focusproject.StartRoutineActivity
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.models.Excercise
 import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.*
@@ -137,6 +139,9 @@ class routine_activity_fragment : Fragment() {
             }
             edit_routine_btn.setOnClickListener {
                 startEditActivity(Routines, selectedDate)
+            }
+            start_workout_btn.setOnClickListener{
+                startActivity(Intent(context, StartRoutineActivity::class.java))
             }
         }
 

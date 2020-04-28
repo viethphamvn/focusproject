@@ -29,7 +29,8 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/topLayout"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHeight_percent="0.8"/>
+        app:layout_constraintHeight_percent="0.8"
+        android:paddingTop="10dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton_addAction"
@@ -41,8 +42,21 @@
         android:clickable="true"
         app:layout_constraintTop_toBottomOf="@id/routine_recycler_list_view"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/floatingActionButton_cancelAction"
         app:layout_constraintRight_toLeftOf="@id/floatingActionButton_saveAction"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton_cancelAction"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/ic_close"
+        android:backgroundTint="#F44336"
+        app:fabCustomSize="70dp"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/routine_recycler_list_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/floatingActionButton_addAction"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton_saveAction"
