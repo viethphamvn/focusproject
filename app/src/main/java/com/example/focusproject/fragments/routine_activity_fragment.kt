@@ -61,26 +61,6 @@ class routine_activity_fragment : Fragment() {
         Routines.put("fri", Exercises)
         Routines.put("sat", Exercises)
         Routines.put("sun", Exercises)
-
-        //Handle Drag and Drop Item
-        touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0){
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val sourcePosition = viewHolder.adapterPosition
-                val targetPosition = target.adapterPosition
-                Collections.swap(ActiveRoutineList, sourcePosition, targetPosition)
-                routineRecyclerViewAdapter.notifyItemMoved(sourcePosition, targetPosition)
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                TODO("Not yet implemented")
-            }
-
-        })
     }
 
     override fun onCreateView(
@@ -96,7 +76,6 @@ class routine_activity_fragment : Fragment() {
             routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(Exercises)
             adapter = routineRecyclerViewAdapter
         }
-        touchHelper.attachToRecyclerView(view.routine_recycler_list_view)
 
         //Handle Views Behavior
         view.apply {
@@ -105,6 +84,7 @@ class routine_activity_fragment : Fragment() {
                     updateDataSet(Routines.get("mon") as ArrayList<Excercise>)
                     notifyDataSetChanged()
                 }
+                selectedDate = 2
                 ActiveRoutineList = Routines.get("mon") as ArrayList<Excercise>
             }
             tue_textview.setOnClickListener {
@@ -112,6 +92,7 @@ class routine_activity_fragment : Fragment() {
                     updateDataSet(Routines.get("tue") as ArrayList<Excercise>)
                     notifyDataSetChanged()
                 }
+                selectedDate = 3
                 ActiveRoutineList = Routines.get("tue") as ArrayList<Excercise>
             }
             wed_textview.setOnClickListener {
@@ -119,6 +100,7 @@ class routine_activity_fragment : Fragment() {
                     updateDataSet(Routines.get("wed") as ArrayList<Excercise>)
                     notifyDataSetChanged()
                 }
+                selectedDate = 4
                 ActiveRoutineList = Routines.get("wed") as ArrayList<Excercise>
             }
             thu_textview.setOnClickListener {
@@ -126,6 +108,7 @@ class routine_activity_fragment : Fragment() {
                     updateDataSet(Routines.get("thu") as ArrayList<Excercise>)
                     notifyDataSetChanged()
                 }
+                selectedDate = 5
                 ActiveRoutineList = Routines.get("thu") as ArrayList<Excercise>
             }
             fri_textview.setOnClickListener {
@@ -133,6 +116,7 @@ class routine_activity_fragment : Fragment() {
                     updateDataSet(Routines.get("fri") as ArrayList<Excercise>)
                     notifyDataSetChanged()
                 }
+                selectedDate = 6
                 ActiveRoutineList = Routines.get("fri") as ArrayList<Excercise>
             }
             sat_textview.setOnClickListener {
@@ -140,6 +124,7 @@ class routine_activity_fragment : Fragment() {
                     updateDataSet(Routines.get("sat") as ArrayList<Excercise>)
                     notifyDataSetChanged()
                 }
+                selectedDate = 7
                 ActiveRoutineList = Routines.get("sat") as ArrayList<Excercise>
             }
             sun_textview.setOnClickListener {
@@ -147,6 +132,7 @@ class routine_activity_fragment : Fragment() {
                     updateDataSet(Routines.get("sun") as ArrayList<Excercise>)
                     notifyDataSetChanged()
                 }
+                selectedDate = 1
                 ActiveRoutineList = Routines.get("sun") as ArrayList<Excercise>
             }
             edit_routine_btn.setOnClickListener {
