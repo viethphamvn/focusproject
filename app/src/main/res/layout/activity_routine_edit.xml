@@ -21,13 +21,6 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:background="@color/darkgrey"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right|center_vertical"
-            android:text="SAVE"
-            android:background="@color/colorPrimaryDark"
-            android:layout_marginRight="10dp"/>
     </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -39,14 +32,29 @@
         app:layout_constraintHeight_percent="0.8"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton_addAction"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:src="@drawable/ic_add"
         app:fabCustomSize="70dp"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:clickable="true"
         app:layout_constraintTop_toBottomOf="@id/routine_recycler_list_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/floatingActionButton_saveAction"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton_saveAction"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/ic_check"
+        android:backgroundTint="#2BC331"
+        app:fabCustomSize="70dp"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/routine_recycler_list_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/floatingActionButton_addAction"
         app:layout_constraintRight_toRightOf="parent"/>
 
 

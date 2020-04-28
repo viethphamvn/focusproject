@@ -1,10 +1,11 @@
 package com.example.focusproject.models
 
 import com.bumptech.glide.Glide.init
+import java.io.Serializable
 import java.lang.reflect.Array.get
 import java.lang.reflect.Array.set
 
-class Excercise(name: String, code: String, duration: Int,  img: String, isRestTime: Boolean){
+class Excercise(name: String, code: String, duration: Int,  img: String, isRestTime: Boolean) : Serializable{
     var name: String
     var code: String
     var img: String

@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             false
         })
 
-        findViewById<FloatingActionButton>(R.id.floatingActionButton).setOnClickListener {
+        findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
             startActivity(Intent(this, ExcercisePickerActivity::class.java))
         }
     }
