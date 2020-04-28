@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.focusproject.fragments.routine_activity_fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,9 +28,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, routine_activity_fragment.newInstance("hello","hello"))
-            .commit();
+        //BottomNavigation Handle
+        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_routine -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.container, routine_activity_fragment.newInstance())
+                        .commit()
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.action_excercise -> {
+                    //Implement Excercise Fragment
+                }
+            }
+            false
+        })
 
         findViewById<FloatingActionButton>(R.id.floatingActionButton).setOnClickListener {
             startActivity(Intent(this, ExcercisePickerActivity::class.java))

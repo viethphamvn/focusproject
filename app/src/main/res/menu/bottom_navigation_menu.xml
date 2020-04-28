@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_recents"
+        android:id="@+id/action_routine"
         android:enabled="true"
         android:icon="@drawable/ic_routine"
         android:title="Routine"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_excercise"
         android:enabled="true"
         android:icon="@drawable/ic_excercise"
         android:title="Excercise"
