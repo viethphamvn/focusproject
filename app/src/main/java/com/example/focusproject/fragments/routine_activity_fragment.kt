@@ -1,5 +1,6 @@
 package com.example.focusproject.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.R
+import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.models.Excercise
 import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.*
@@ -80,6 +82,7 @@ class routine_activity_fragment : Fragment() {
         //Initiate RecyclerView with Adapter
         view.routine_recycler_list_view.apply {
             layoutManager = LinearLayoutManager(context)
+            //TODO Pass routine list associate with current day. Set ActiveExerciseList to the list.
             routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(Exercises)
             adapter = routineRecyclerViewAdapter
         }
@@ -135,6 +138,9 @@ class routine_activity_fragment : Fragment() {
                     notifyDataSetChanged()
                 }
                 ActiveRoutineList = Routines.get("sun") as ArrayList<Excercise>
+            }
+            edit_routine_btn.setOnClickListener {
+                startActivity(Intent(context, RoutineEditActivity::class.java))
             }
         }
 
