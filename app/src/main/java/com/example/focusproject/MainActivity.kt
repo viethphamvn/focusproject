@@ -10,6 +10,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,12 +30,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        addRoutineFragment()
+
         //BottomNavigation Handle
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_routine -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.container, routine_activity_fragment.newInstance())
-                        .commit()
+                    addRoutineFragment()
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.action_excercise -> {
@@ -50,6 +52,19 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<CircleImageView>(R.id.user_profile_button).setOnClickListener{
             startActivity(Intent(this, UserProfileActivity::class.java))
+        }
+    }
+
+    private fun addRoutineFragment(){
+        var calendar = Calendar.getInstance()
+        var todayDate = calendar.get(Calendar.DAY_OF_WEEK)
+        var routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
+        if (routineFragment != null){
+            supportFragmentManager.beginTransaction().replace(R.id.container, routineFragment,"routineFragment")
+                .commit()
+        } else {
+            supportFragmentManager.beginTransaction().replace(R.id.container, routine_activity_fragment.newInstance(todayDate),"routineFragment")
+                .commit()
         }
     }
 }
