@@ -4,9 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import android.widget.Toolbar
-import androidx.viewpager.widget.ViewPager
 import com.example.focusproject.adapters.ViewPagerAdapter
 import com.example.focusproject.fragments.ArmsFragment
 import com.example.focusproject.models.Excercise

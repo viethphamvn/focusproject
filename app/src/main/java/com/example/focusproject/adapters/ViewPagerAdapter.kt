@@ -3,6 +3,7 @@ package com.example.focusproject.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.google.android.youtube.player.YouTubePlayerFragment
 
 class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
@@ -17,7 +18,7 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         return fragments.size
     }
 
-    fun addFragment(fragment:Fragment, title:String){
+    fun addFragment(fragment: Fragment, title:String){
         fragments.add(fragment)
         titles.add(title)
     }

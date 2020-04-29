@@ -5,8 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 
 import com.example.focusproject.R
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import kotlinx.android.synthetic.main.fragment_video_viewer.view.videoPlayerView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [VideoViewerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class VideoViewerFragment : Fragment() {
+class VideoViewerFragment : Fragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -36,7 +40,16 @@ class VideoViewerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_video_viewer, container, false)
+        var view = inflater.inflate(R.layout.fragment_video_viewer, container, false)
+        view.videoPlayerView.getPlayerUiController().showFullscreenButton(true)
+        view.videoPlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                val videoId = "YE7VzlLtp-4"
+                youTubePlayer.cueVideo(videoId, 0f)
+                youTubePlayer.play()
+            }
+        })
+        return view
     }
 
     companion object {
@@ -58,4 +71,5 @@ class VideoViewerFragment : Fragment() {
                 }
             }
     }
+
 }
