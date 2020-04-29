@@ -11,14 +11,19 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.excercise_item.view.*
 import kotlinx.android.synthetic.main.resttime_item.view.*
 
-class RoutineRecyclerViewAdapter(Excercise: ArrayList<Excercise>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var Excercise = Excercise
+class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var Excercises = Excercises
     private var firestore = FirebaseFirestore.getInstance()
     val REST = 1
     val EXCERCISE = 2
 
-    fun updateDataSet(Excercise: ArrayList<Excercise>){
-        this.Excercise = Excercise
+    fun updateDataSet(Excercises: ArrayList<Excercise>){
+        this.Excercises = Excercises
+    }
+
+    fun removeItemAt(position: Int){
+        Excercises.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -34,19 +39,19 @@ class RoutineRecyclerViewAdapter(Excercise: ArrayList<Excercise>) : RecyclerView
     }
 
     override fun getItemCount(): Int {
-        return Excercise.size
+        return Excercises.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
             is RoutineViewHolder -> {
-                holder.bind(Excercise.get(position))
+                holder.bind(Excercises.get(position))
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (Excercise.get(position).isRestTime){
+        if (Excercises.get(position).isRestTime){
             return REST
         } else {
             return EXCERCISE
