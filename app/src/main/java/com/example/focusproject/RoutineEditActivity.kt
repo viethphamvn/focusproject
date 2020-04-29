@@ -31,7 +31,7 @@ class RoutineEditActivity : AppCompatActivity() {
     private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
 
     //REQUEST CODE
-    public val ADD_WORKOUT = 200
+    val ADD_WORKOUT = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
