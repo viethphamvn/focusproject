@@ -1,11 +1,15 @@
 package com.example.focusproject
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.example.focusproject.adapters.ViewPagerAdapter
 import com.example.focusproject.fragments.ArmsFragment
+import com.example.focusproject.models.Excercise
 import kotlinx.android.synthetic.main.activity_excercise_picker.*
 
 class ExcercisePickerActivity : AppCompatActivity() {
@@ -20,5 +24,12 @@ class ExcercisePickerActivity : AppCompatActivity() {
         viewPagerAdapter.addFragment(ArmsFragment.newInstance("Hello","Hello"), "Legs")
         viewpager.adapter = viewPagerAdapter
         tablayout.setupWithViewPager(viewpager)
+    }
+
+    fun itemClick(item: Excercise){
+        var returnIntent = Intent()
+        returnIntent.putExtra("excercise", item)
+        setResult(Activity.RESULT_OK, returnIntent)
+        finish()
     }
 }

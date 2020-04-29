@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.focusproject.R
+import com.example.focusproject.fragments.ArmsFragment
 import com.example.focusproject.models.Excercise
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.excercise_item.view.*
 
-class ExcerciseRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ExcerciseRecyclerViewAdapter(Excercises: ArrayList<Excercise>, val adapterOnClick: (Excercise) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var Excercises = ArrayList(Excercises)
     private var firestore = FirebaseFirestore.getInstance()
 
@@ -39,7 +40,7 @@ class ExcerciseRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerV
         }
     }
 
-    class ExcerciseViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ExcerciseViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imageView = itemView.excerciseImageHolder
         var excerciseNameTextView = itemView.excerciseNameTextView
 
@@ -51,7 +52,13 @@ class ExcerciseRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerV
                 .load(url) //3
                 .centerCrop() //4
                 .into(imageView) //8
+            setItem(excercise)
+        }
 
+        fun setItem(item: Excercise){
+            itemView.setOnClickListener{
+                adapterOnClick(item)
+            }
         }
     }
 }

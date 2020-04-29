@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.focusproject.ExcercisePickerActivity
 
 import com.example.focusproject.R
 import com.example.focusproject.adapters.ExcerciseRecyclerViewAdapter
@@ -44,10 +46,14 @@ class ArmsFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_arms, container, false)
         view.excerciseItemRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
-            excerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(Exercises)
+            excerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(Exercises) { item -> doClick(item)}
             adapter = excerciseRecyclerViewAdapter
         }
         return view
+    }
+
+    fun doClick(item: Excercise){
+        (activity as ExcercisePickerActivity).itemClick(item)
     }
 
     companion object {

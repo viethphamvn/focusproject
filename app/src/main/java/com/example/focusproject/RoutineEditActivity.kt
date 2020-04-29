@@ -27,7 +27,11 @@ class RoutineEditActivity : AppCompatActivity() {
     var selectedDate : Int = 0
     private lateinit var touchHelper : ItemTouchHelper
     private lateinit var ActiveRoutineList: ArrayList<Excercise>
+    private lateinit var routine_recycler_list_view: RecyclerView
     private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
+
+    //REQUEST CODE
+    public val ADD_WORKOUT = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,7 @@ class RoutineEditActivity : AppCompatActivity() {
         selectedDate = intent.getIntExtra("date", 2)
 
         setUpSpinner()
+        setUpRecyclerView()
 
         //Set up Views
         var saveBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton_saveAction)
@@ -50,6 +55,25 @@ class RoutineEditActivity : AppCompatActivity() {
             finish()
         }
 
+        addBtn.setOnClickListener{
+            var intent = Intent(this, ExcercisePickerActivity::class.java)
+            startActivityForResult(intent, ADD_WORKOUT)
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode){
+            ADD_WORKOUT -> {
+                if (data != null){
+                    ActiveRoutineList.add(data.getSerializableExtra("excercise") as Excercise)
+                    updateRecyclerViewAdapter(selectedDate)
+                }
+            }
+        }
+
     }
 
     private fun setUpSpinner(){
@@ -59,7 +83,6 @@ class RoutineEditActivity : AppCompatActivity() {
         dateSpinner.adapter = ArrayAdapter<String>(this, R.layout.center_textview_for_spinner, options)
         //Set Up Default Option
         var defaultPosition = 0
-        System.out.println(selectedDate)
         when(selectedDate){
             2 -> {defaultPosition = 0}
             3 -> {defaultPosition = 1}
@@ -84,21 +107,24 @@ class RoutineEditActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                var selectedDateAsString = when(position){
-                    0 -> "mon"
-                    1 -> "tue"
-                    2 -> "wed"
-                    3 -> "thu"
-                    4 -> "fri"
-                    5 -> "sat"
-                    else -> "sun"
+                when(position){
+                    0 -> {selectedDate = 2}
+                    1 -> {selectedDate = 3}
+                    2 -> {selectedDate = 4}
+                    3 -> {selectedDate = 5}
+                    4 -> {selectedDate = 6}
+                    5 -> {selectedDate = 7}
+                    6 -> {selectedDate = 1}
                 }
-                ActiveRoutineList = Routines.get(selectedDateAsString) as ArrayList<Excercise>
-                routineRecyclerViewAdapter.updateDataSet(ActiveRoutineList)
-                routineRecyclerViewAdapter.notifyDataSetChanged()
+
+                updateRecyclerViewAdapter(selectedDate)
             }
         }
 
+
+    }
+
+    private fun setUpRecyclerView(){
         //Set Up Recycler View
         //Handle Drag and Drop Item
         touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0){
@@ -119,10 +145,15 @@ class RoutineEditActivity : AppCompatActivity() {
             }
 
         })
-        var routine_recycler_list_view = findViewById<RecyclerView>(R.id.routine_recycler_list_view)
+        routine_recycler_list_view = findViewById(R.id.routine_recycler_list_view)
+        updateRecyclerViewAdapter(selectedDate)
+        touchHelper.attachToRecyclerView(routine_recycler_list_view)
+    }
+
+    private fun updateRecyclerViewAdapter(selectedDate: Int) {
         routine_recycler_list_view.apply {
             layoutManager = LinearLayoutManager(context)
-            var selectedDateAsString = when(selectedDate){
+            var selectedDateAsString = when (selectedDate) {
                 2 -> "mon"
                 3 -> "tue"
                 4 -> "wed"
@@ -135,6 +166,5 @@ class RoutineEditActivity : AppCompatActivity() {
             routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(ActiveRoutineList)
             adapter = routineRecyclerViewAdapter
         }
-        touchHelper.attachToRecyclerView(routine_recycler_list_view)
     }
 }
