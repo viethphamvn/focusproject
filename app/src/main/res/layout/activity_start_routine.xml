@@ -22,84 +22,37 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/excerciseMediaViewPager"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="0dp"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/progress_horizontal"
+        app:layout_constraintBottom_toTopOf="@id/multi_purposeInfoContainer"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <TextView
-        android:id="@+id/multi-purposeInfoTextView"
-        android:layout_width="350dp"
+    <FrameLayout
+        android:id="@+id/multi_purposeInfoContainer"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/excerciseMediaViewPager"
+        app:layout_constraintBottom_toTopOf="@id/extraImageView"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="12:00"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textSize="100sp"
-        android:gravity="center_vertical|center_horizontal"/>
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <ImageView
         android:id="@+id/extraImageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/multi-purposeInfoTextView"
-        app:layout_constraintBottom_toTopOf="@id/start_pauseButton"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
-    <ImageButton
-        android:id="@+id/stopButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/rounded_shape"
-        android:backgroundTint="#C62828"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_stop"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/previousButton"
-        app:layout_constraintRight_toLeftOf="@id/start_pauseButton" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/start_pauseButton"
-        android:layout_width="200dp"
-        android:layout_height="70dp"
-        android:backgroundTint="#30BF37"
-        android:text="START"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/stopButton"
-        app:layout_constraintRight_toLeftOf="@id/nextButton" />
-
-    <ImageButton
-        android:id="@+id/previousButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_left"
-        android:background="@null"
-        android:scaleType="fitXY"
-        app:layout_constraintRight_toLeftOf="@id/stopButton"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <ImageButton
-        android:id="@+id/nextButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@null"
-        android:src="@drawable/ic_right"
-        android:scaleType="fitXY"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/start_pauseButton"/>
+        app:layout_constraintBottom_toTopOf="@id/controlBar"
+        app:layout_constraintTop_toBottomOf="@id/multi_purposeInfoContainer" />
+
+    <FrameLayout
+        android:id="@+id/controlBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/darkgrey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

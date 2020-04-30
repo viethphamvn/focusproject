@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.focusproject.fragments.routine_activity_fragment
+import com.example.focusproject.fragments.RoutinesListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.container, routineFragment,"routineFragment")
                 .commit()
         } else {
-            supportFragmentManager.beginTransaction().replace(R.id.container, routine_activity_fragment.newInstance(todayDate),"routineFragment")
+            supportFragmentManager.beginTransaction().replace(R.id.container, RoutinesListFragment.newInstance(todayDate),"routineFragment")
                 .commit()
         }
     }

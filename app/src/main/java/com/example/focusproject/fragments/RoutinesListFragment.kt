@@ -31,9 +31,8 @@ import java.util.Calendar
 
 private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
 
-class routine_activity_fragment : Fragment() {
+class RoutinesListFragment : Fragment() {
     private var Exercises: ArrayList<Excercise> = ArrayList()
-    private var Exercises2: ArrayList<Excercise> = ArrayList()
     private lateinit var ActiveRoutineList: ArrayList<Excercise>
     private var Routines : HashMap<String, ArrayList<Excercise>> = HashMap()
     private var selectedDate : Int = 0
@@ -48,19 +47,13 @@ class routine_activity_fragment : Fragment() {
             selectedDate = it.getInt(DAY_OF_WEEK)
         }
 
-        Exercises.add(Excercise("Push Up","pushup",30, "addr1", true))
-        Exercises.add(Excercise("Pull Up","pullup",0,"addr2", false))
-        Exercises.add(Excercise("Run","run",10, "addr3", true))
-        Exercises.add(Excercise("Run","pushup",20, "addr1", true))
-        Exercises.add(Excercise("Chest Press","pullup",0,"addr2", false))
-        Exercises.add(Excercise("Run","run",10, "addr3", true))
-
-        Exercises2.add(Excercise("Run","pushup",20, "addr1", true))
-        Exercises2.add(Excercise("Chest Press","pullup",0,"addr2", false))
-        Exercises2.add(Excercise("Run","run",10, "addr3", true))
+        Exercises.add(Excercise("Push Up","pushup",30, "https://cdn.clipart.email/c679a7a0a6044e04a60a6da1d1688382_exercise-gifs-get-the-best-gif-on-giphy_480-360.gif", "",false, true))
+        Exercises.add(Excercise("Pull Up","pullup",0,"", "uUKAYkQZXko", false, false))
+        Exercises.add(Excercise("Rest","run",10, "https://media.giphy.com/media/3o6MbrHpaSX5Q375zW/giphy.gif", "",true, true))
+        Exercises.add(Excercise("Abs","pushup",0, "", "q_LFDHqkFLo", false, false))
 
         Routines.put("mon", Exercises)
-        Routines.put("tue", Exercises2)
+        Routines.put("tue", Exercises)
         Routines.put("wed", Exercises)
         Routines.put("thu", Exercises)
         Routines.put("fri", Exercises)
@@ -86,7 +79,6 @@ class routine_activity_fragment : Fragment() {
         //Initiate RecyclerView with Adapter
         view.routine_recycler_list_view.apply {
             layoutManager = LinearLayoutManager(context)
-            //TODO Pass routine list associate with current day. Set ActiveExerciseList to the list.
             routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(getCurrentActiveList(selectedDate))
             adapter = routineRecyclerViewAdapter
             currentButton = buttonArray.get(selectedDate)!!
@@ -169,7 +161,10 @@ class routine_activity_fragment : Fragment() {
                 startEditActivity(Routines, selectedDate)
             }
             start_workout_btn.setOnClickListener{
-                startActivity(Intent(context, StartRoutineActivity::class.java))
+                var intent = Intent(context, StartRoutineActivity::class.java)
+                intent.putExtra("routine", ActiveRoutineList)
+                intent.putExtra("selectedDate", selectedDate)
+                startActivity(intent)
             }
         }
 
@@ -187,7 +182,7 @@ class routine_activity_fragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(todayDate: Int) =
-            routine_activity_fragment().apply {
+            RoutinesListFragment().apply {
                 arguments = Bundle().apply {
                     putInt(DAY_OF_WEEK, todayDate)
                 }
@@ -200,14 +195,15 @@ class routine_activity_fragment : Fragment() {
 
     private fun getCurrentActiveList(selectedDate: Int): ArrayList<Excercise>{
         when(selectedDate){
-            2 -> return Routines.get("mon") as ArrayList<Excercise>
-            3 -> return Routines.get("tue") as ArrayList<Excercise>
-            4 -> return Routines.get("wed") as ArrayList<Excercise>
-            5 -> return Routines.get("thu") as ArrayList<Excercise>
-            6 -> return Routines.get("fri") as ArrayList<Excercise>
-            7 -> return Routines.get("sat") as ArrayList<Excercise>
-            else -> return Routines.get("sun") as ArrayList<Excercise>
+            2 -> ActiveRoutineList = Routines.get("mon") as ArrayList<Excercise>
+            3 -> ActiveRoutineList = Routines.get("tue") as ArrayList<Excercise>
+            4 -> ActiveRoutineList = Routines.get("wed") as ArrayList<Excercise>
+            5 -> ActiveRoutineList = Routines.get("thu") as ArrayList<Excercise>
+            6 -> ActiveRoutineList = Routines.get("fri") as ArrayList<Excercise>
+            7 -> ActiveRoutineList = Routines.get("sat") as ArrayList<Excercise>
+            else -> ActiveRoutineList = Routines.get("sun") as ArrayList<Excercise>
         }
+        return ActiveRoutineList
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

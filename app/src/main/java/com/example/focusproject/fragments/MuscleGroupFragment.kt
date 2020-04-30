@@ -33,9 +33,10 @@ class ArmsFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-        Exercises.add(Excercise("Push Up","pushup",30, "addr1", true))
-        Exercises.add(Excercise("Pull Up","pullup",0,"addr2", false))
-        Exercises.add(Excercise("Run","run",10, "addr3", true))
+        Exercises.add(Excercise("Push Up","pushup",30, "https://cdn.clipart.email/c679a7a0a6044e04a60a6da1d1688382_exercise-gifs-get-the-best-gif-on-giphy_480-360.gif", "",false, true))
+        Exercises.add(Excercise("Pull Up","pullup",0,"", "uUKAYkQZXko", false, false))
+        Exercises.add(Excercise("Rest","run",10, "https://media.giphy.com/media/3o6MbrHpaSX5Q375zW/giphy.gif", "",true, true))
+        Exercises.add(Excercise("Abs","pushup",0, "", "q_LFDHqkFLo", false, false))
     }
 
     override fun onCreateView(
