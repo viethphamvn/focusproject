@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Chronometer
 import android.widget.TextView
 import com.example.focusproject.R
+import com.example.focusproject.StartRoutineActivity
 import com.google.common.base.Stopwatch
 import kotlinx.android.synthetic.main.fragment_countdown.*
 import java.time.Duration
@@ -65,6 +66,7 @@ class CountdownFragment : Fragment() {
                     chronometer.start()
                 } else {
                     countdownTextView.setBackgroundColor(Color.parseColor("#C62828"))
+                    (activity as StartRoutineActivity).nextExcercise()
                 }
             }
 

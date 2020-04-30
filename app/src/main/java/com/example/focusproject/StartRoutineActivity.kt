@@ -29,6 +29,8 @@ class StartRoutineActivity : AppCompatActivity() {
     private var fragmentHolder : ArrayList<Fragment> = ArrayList()
     private lateinit var progressBar : ProgressBar
     private lateinit var excerciseNameTextView : TextView
+    private var totalSetFinished : Int = 0
+    private var totalSetRequired: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,12 +72,14 @@ class StartRoutineActivity : AppCompatActivity() {
 
     private fun startWorkout(position: Int){
        updateProgressBar(position)
-
         ActiveRoutineList.get(position).apply {
             excerciseNameTextView.text = this.name
+
+            totalSetRequired = this.set
+
             //If excercise has vid --> Play
             if (this.vidUrl != ""){
-                //(fragmentHolder.get(position) as VideoViewerFragment).playVideo()
+                (fragmentHolder.get(position) as VideoViewerFragment).playVideo()
             }
             //Start timer if it's timed workout
             if (this.isTimed){
@@ -89,24 +93,32 @@ class StartRoutineActivity : AppCompatActivity() {
                         .remove(fragment)
                         .commit()
                 }
-
             }
         }
     }
 
     fun nextExcercise(){
-        //Pause or Stop video for previous fragment
-        if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != ""){
-            (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
+        //Increase number of sets finished
+        totalSetFinished++
+
+        if (totalSetFinished < totalSetRequired){
+            //Call nextExcercise when clock hits 0
+            startWorkout(currentWorkoutPosition)
+        } else {
+            totalSetFinished = 0
+            //Pause or Stop video for previous fragment
+            if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != "") {
+                (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
+            }
+            increaseCurrentWorkoutPosition()
+            excerciseMediaViewPager.currentItem = currentWorkoutPosition
+            startWorkout(currentWorkoutPosition)
         }
-        increaseCurrentWorkoutPosition()
-        excerciseMediaViewPager.currentItem = currentWorkoutPosition
-        startWorkout(currentWorkoutPosition)
     }
 
     fun playVideo(){
         if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != ""){
-            (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
+            //(fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
         }
     }
 
