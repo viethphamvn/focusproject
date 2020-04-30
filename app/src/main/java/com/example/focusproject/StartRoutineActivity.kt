@@ -53,16 +53,13 @@ class StartRoutineActivity : AppCompatActivity() {
             }
 
             override fun onSwipeLeft() {
-                excerciseMediaViewPager.setCurrentItem(--currentWorkoutPosition)
-                progressBar.setProgress(currentWorkoutPosition)
+                excerciseMediaViewPager.currentItem = --currentWorkoutPosition
+                progressBar.progress = currentWorkoutPosition
             }
 
             override fun onSwipeBottom() {
             }
 
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                return super.onTouch(v, event)
-            }
         })
     }
 

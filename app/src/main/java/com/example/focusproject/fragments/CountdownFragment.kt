@@ -86,7 +86,7 @@ class CountdownFragment : Fragment() {
         var minutes = (remainingTimeInMillis / 1000) / 60
         var seconds = (remainingTimeInMillis / 1000) % 60
         var displayString = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds)
-        countdownTextView.setText(displayString)
+        countdownTextView.text = displayString
 
     }
 
