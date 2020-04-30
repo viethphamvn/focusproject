@@ -5,6 +5,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -27,6 +28,7 @@ class StartRoutineActivity : AppCompatActivity() {
     private var currentWorkoutPosition : Int = 0
     private var fragmentHolder : ArrayList<Fragment> = ArrayList()
     private lateinit var progressBar : ProgressBar
+    private lateinit var excerciseNameTextView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,8 @@ class StartRoutineActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progress_horizontal)
         progressBar.max = ActiveRoutineList.size
         progressBar.min = 0
+
+        excerciseNameTextView = findViewById(R.id.excerciseNameTextView)
 
         setUpFragmentPager()
         startWorkout(currentWorkoutPosition)
@@ -53,8 +57,9 @@ class StartRoutineActivity : AppCompatActivity() {
             }
 
             override fun onSwipeLeft() {
-                excerciseMediaViewPager.currentItem = --currentWorkoutPosition
-                progressBar.progress = currentWorkoutPosition
+                decreaseCurrentWorkoutPosition()
+                excerciseMediaViewPager.currentItem = currentWorkoutPosition
+                updateProgressBar(currentWorkoutPosition)
             }
 
             override fun onSwipeBottom() {
@@ -64,9 +69,10 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     private fun startWorkout(position: Int){
-        progressBar.setProgress(position+1, true)
+       updateProgressBar(position)
 
         ActiveRoutineList.get(position).apply {
+            excerciseNameTextView.text = this.name
             //If excercise has vid --> Play
             if (this.vidUrl != ""){
                 //(fragmentHolder.get(position) as VideoViewerFragment).playVideo()
@@ -93,7 +99,8 @@ class StartRoutineActivity : AppCompatActivity() {
         if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != ""){
             (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
         }
-        excerciseMediaViewPager.currentItem = ++currentWorkoutPosition
+        increaseCurrentWorkoutPosition()
+        excerciseMediaViewPager.currentItem = currentWorkoutPosition
         startWorkout(currentWorkoutPosition)
     }
 
@@ -119,6 +126,22 @@ class StartRoutineActivity : AppCompatActivity() {
         }
 
         excerciseMediaViewPager.adapter = viewPagerAdapter
+    }
+
+    private fun decreaseCurrentWorkoutPosition(){
+        if (currentWorkoutPosition > 0){
+            --currentWorkoutPosition
+        }
+    }
+
+    private fun increaseCurrentWorkoutPosition(){
+        if (currentWorkoutPosition < ActiveRoutineList.size){
+            ++currentWorkoutPosition
+        }
+    }
+
+    private fun updateProgressBar(progress: Int){
+        progressBar.setProgress(progress+1)
     }
 
 }
