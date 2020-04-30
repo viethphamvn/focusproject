@@ -29,6 +29,7 @@ class CountdownFragment : Fragment() {
     private lateinit var chronometer : Chronometer
     private lateinit var countdownTextView : TextView
     var countUp: Boolean = false
+    private lateinit var countdownTimer : CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +56,7 @@ class CountdownFragment : Fragment() {
     }
 
     fun startTimer(){
-        var countdownTimer = object : CountDownTimer(duration, 1000){
+        countdownTimer = object : CountDownTimer(duration, 1000){
             override fun onFinish() {
                 if (countUp) {
                     chronometer.visibility = View.VISIBLE
@@ -102,5 +103,10 @@ class CountdownFragment : Fragment() {
                     putBoolean(COUNT_UP, countUp)
                 }
             }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        countdownTimer.cancel()
     }
 }

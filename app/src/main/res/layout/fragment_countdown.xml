@@ -13,14 +13,14 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal|center_vertical"
         android:textColor="@color/white"
-        android:textSize="80dp"
+        android:textSize="70dp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/countDownTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="80dp"
+        android:textSize="70dp"
         android:textColor="@color/white"
         android:text="12:00"
         android:textStyle="bold"

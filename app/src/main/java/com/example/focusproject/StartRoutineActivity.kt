@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.focusproject.adapters.ViewPagerAdapter
 import com.example.focusproject.fragments.CountdownFragment
+import com.example.focusproject.fragments.ExcerciseProgressFragment
 import com.example.focusproject.fragments.ImageViewerFragment
 import com.example.focusproject.fragments.VideoViewerFragment
 import com.example.focusproject.models.Excercise
@@ -82,17 +83,28 @@ class StartRoutineActivity : AppCompatActivity() {
                 (fragmentHolder.get(position) as VideoViewerFragment).playVideo()
             }
             //Start timer if it's timed workout
+            var fragment = supportFragmentManager.findFragmentByTag("countDownFragment")
             if (this.isTimed){
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.multi_purposeInfoContainer, CountdownFragment.newInstance(this.duration, this.isRestTime),"countDownFragment")
-                    .commit()
-            } else {
-                var fragment = supportFragmentManager.findFragmentByTag("countDownFragment")
                 if (fragment != null) {
                     supportFragmentManager.beginTransaction()
                         .remove(fragment)
                         .commit()
                 }
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.clockContainer, CountdownFragment.newInstance(this.duration, this.isRestTime),"countDownFragment")
+                    .commit()
+            }
+            if (this.set > 0){
+                fragment = supportFragmentManager.findFragmentByTag("progressFragment")
+                if (fragment != null) {
+                    supportFragmentManager.beginTransaction()
+                        .remove(fragment)
+                        .commit()
+                }
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.progressContainer, ExcerciseProgressFragment.newInstance(totalSetFinished+1, totalSetRequired, 12),"progressFragment")
+                    .commit()
+
             }
         }
     }
