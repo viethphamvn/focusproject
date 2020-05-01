@@ -43,6 +43,8 @@ class StartRoutineActivity : AppCompatActivity() {
         ActiveRoutineList = intent.getSerializableExtra("routine") as ArrayList<Excercise>
         selectedDate = intent.getIntExtra("date", 2)
 
+        setUpRoutineList()
+
         progressBar = findViewById(R.id.progress_horizontal)
         progressBar.max = ActiveRoutineList.size
         progressBar.min = 0
@@ -77,9 +79,9 @@ class StartRoutineActivity : AppCompatActivity() {
             }
 
             override fun onSwipeLeft() {
-                decreaseCurrentWorkoutPosition()
-                excerciseMediaViewPager.currentItem = currentWorkoutPosition
-                updateProgressBar(currentWorkoutPosition)
+//                decreaseCurrentWorkoutPosition()
+//                excerciseMediaViewPager.currentItem = currentWorkoutPosition
+//                updateProgressBar(currentWorkoutPosition)
             }
 
             override fun onSwipeBottom() {
@@ -140,10 +142,8 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     fun nextExcercise(){
-        //Increase number of sets finished
-        totalSetFinished++
-
-        if (totalSetFinished < totalSetRequired){
+        if (totalSetFinished+1 < totalSetRequired){
+            totalSetFinished++
             //Call nextExcercise when clock hits 0
             startWorkout(currentWorkoutPosition)
         } else {
@@ -168,7 +168,7 @@ class StartRoutineActivity : AppCompatActivity() {
         var viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
 
         ActiveRoutineList.forEach {
-            if (it.img != ""){
+            if (it.img != "" ){
                 fragmentHolder.add(ImageViewerFragment.newInstance(it.img))
             } else {
                 fragmentHolder.add(VideoViewerFragment.newInstance(it.vidUrl))
@@ -196,6 +196,21 @@ class StartRoutineActivity : AppCompatActivity() {
 
     private fun updateProgressBar(progress: Int){
         progressBar.setProgress(progress+1)
+    }
+
+    private fun setUpRoutineList(){
+        var tempList : ArrayList<Excercise> = ArrayList()
+
+        ActiveRoutineList.forEach {
+            if (it.isRestTime){
+                tempList.add(it)
+            } else {
+                var readyTime = Excercise("GET READY","",10,it.img,it.vidUrl,false,true,0)
+                tempList.add(readyTime)
+                tempList.add(it)
+            }
+        }
+        ActiveRoutineList = tempList
     }
 
 }
