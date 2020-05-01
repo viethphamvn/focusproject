@@ -73,6 +73,7 @@ class CountdownFragment : Fragment() {
 
             override fun onTick(millisUntilFinished: Long) {
                 updateTextView(millisUntilFinished)
+                duration = millisUntilFinished
             }
 
         }
@@ -81,6 +82,11 @@ class CountdownFragment : Fragment() {
 
     fun setTimer(duration: Long){
         this.duration = duration
+    }
+
+    fun pauseTimer(){
+        countdownTimer.cancel()
+        countdownTextView.text = "PAUSED"
     }
 
     private fun updateTextView(remainingTimeInMillis : Long){
@@ -92,7 +98,6 @@ class CountdownFragment : Fragment() {
         countdownTextView.text = displayString
 
     }
-
 
     companion object {
         @JvmStatic

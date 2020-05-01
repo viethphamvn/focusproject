@@ -93,7 +93,9 @@ class VideoViewerFragment : Fragment(){
     }
 
     fun playVideo(){
-        mYoutubePlayer.play()
+        if (this::mYoutubePlayer.isInitialized){
+            mYoutubePlayer.play()
+        }
     }
 
     fun pauseVideo(){

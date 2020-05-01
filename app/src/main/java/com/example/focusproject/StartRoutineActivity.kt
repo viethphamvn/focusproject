@@ -19,11 +19,12 @@ import com.example.focusproject.models.Excercise
 import com.example.focusproject.tools.OnSwipeTouchListener
 import kotlinx.android.synthetic.main.activity_routine_edit.*
 import kotlinx.android.synthetic.main.activity_start_routine.*
+import org.w3c.dom.Text
 
 
 class StartRoutineActivity : AppCompatActivity() {
 
-    private lateinit var controlLayout: FrameLayout
+    private lateinit var controlLayout: TextView
     private lateinit var ActiveRoutineList: ArrayList<Excercise>
     private var selectedDate = 0
     private var currentWorkoutPosition : Int = 0
@@ -32,6 +33,7 @@ class StartRoutineActivity : AppCompatActivity() {
     private lateinit var excerciseNameTextView : TextView
     private var totalSetFinished : Int = 0
     private var totalSetRequired: Int = 0
+    private var isPaused : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +55,21 @@ class StartRoutineActivity : AppCompatActivity() {
         controlLayout = findViewById(R.id.controlBar)
         controlLayout.setOnTouchListener(object :OnSwipeTouchListener(this) {
             override fun onSwipeTop() {
+                isPaused = false
+
+                findViewById<TextView>(R.id.controlBar).apply {
+                    setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+                    text = "PAUSE"
+                }
+
+                if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != "") {
+                    (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
+                }
+                var fragment =
+                    supportFragmentManager.findFragmentByTag("countDownFragment") as CountdownFragment
+                if (fragment != null) {
+                    fragment.startTimer()
+                }
             }
 
             override fun onSwipeRight() {
@@ -66,8 +83,22 @@ class StartRoutineActivity : AppCompatActivity() {
             }
 
             override fun onSwipeBottom() {
-            }
+                    isPaused = true
 
+                    findViewById<TextView>(R.id.controlBar).apply {
+                        setBackgroundColor(resources.getColor(R.color.darkgrey))
+                        text = "RESUME"
+                    }
+
+                    if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != "") {
+                        (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
+                    }
+                    var fragment =
+                        supportFragmentManager.findFragmentByTag("countDownFragment") as CountdownFragment
+                    if (fragment != null) {
+                        fragment.pauseTimer()
+                    }
+            }
         })
     }
 
@@ -84,27 +115,26 @@ class StartRoutineActivity : AppCompatActivity() {
             }
             //Start timer if it's timed workout
             var fragment = supportFragmentManager.findFragmentByTag("countDownFragment")
+            if (fragment != null) {
+                supportFragmentManager.beginTransaction()
+                    .remove(fragment)
+                    .commit()
+            }
             if (this.isTimed){
-                if (fragment != null) {
-                    supportFragmentManager.beginTransaction()
-                        .remove(fragment)
-                        .commit()
-                }
                 supportFragmentManager.beginTransaction()
                     .add(R.id.clockContainer, CountdownFragment.newInstance(this.duration, this.isRestTime),"countDownFragment")
                     .commit()
             }
+            fragment = supportFragmentManager.findFragmentByTag("progressFragment")
+            if (fragment != null) {
+                supportFragmentManager.beginTransaction()
+                    .remove(fragment)
+                    .commit()
+            }
             if (this.set > 0){
-                fragment = supportFragmentManager.findFragmentByTag("progressFragment")
-                if (fragment != null) {
-                    supportFragmentManager.beginTransaction()
-                        .remove(fragment)
-                        .commit()
-                }
                 supportFragmentManager.beginTransaction()
                     .add(R.id.progressContainer, ExcerciseProgressFragment.newInstance(totalSetFinished+1, totalSetRequired, 12),"progressFragment")
                     .commit()
-
             }
         }
     }
@@ -130,7 +160,7 @@ class StartRoutineActivity : AppCompatActivity() {
 
     fun playVideo(){
         if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != ""){
-            //(fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
+            (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
         }
     }
 
