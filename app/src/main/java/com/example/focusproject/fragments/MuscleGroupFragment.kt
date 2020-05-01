@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.focusproject.CreateExcerciseActivity
 import com.example.focusproject.ExcercisePickerActivity
 
 import com.example.focusproject.R
@@ -54,7 +55,9 @@ class ArmsFragment : Fragment() {
     }
 
     fun doClick(item: Excercise){
-        (activity as ExcercisePickerActivity).itemClick(item)
+        if (activity is CreateExcerciseActivity){
+            (activity as CreateExcerciseActivity).onItemClick(item)
+        }
     }
 
     companion object {

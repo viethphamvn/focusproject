@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         //Setup Views
         findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
-            startActivity(Intent(this, ExcercisePickerActivity::class.java))
+            startActivity(Intent(this, CreateExcerciseActivity::class.java))
         }
         findViewById<CircleImageView>(R.id.user_profile_button).setOnClickListener{
             startActivity(Intent(this, UserProfileActivity::class.java))
