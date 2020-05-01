@@ -12,6 +12,7 @@ import com.example.focusproject.CreateExcerciseActivity
 import com.example.focusproject.ExcercisePickerActivity
 
 import com.example.focusproject.R
+import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.adapters.ExcerciseRecyclerViewAdapter
 import com.example.focusproject.models.Excercise
 import kotlinx.android.synthetic.main.fragment_arms.view.excerciseItemRecyclerView
@@ -57,6 +58,8 @@ class ArmsFragment : Fragment() {
     fun doClick(item: Excercise){
         if (activity is CreateExcerciseActivity){
             (activity as CreateExcerciseActivity).onItemClick(item)
+        } else if (activity is RoutineEditActivity){
+            (activity as RoutineEditActivity).onItemClicked(item)
         }
     }
 

@@ -68,8 +68,7 @@ class RoutineEditActivity : AppCompatActivity() {
         }
 
         addBtn.setOnClickListener{
-            var intent = Intent(this, ExcercisePickerActivity::class.java)
-            startActivityForResult(intent, ADD_WORKOUT)
+            //Implement ExcercisePickerFragment
         }
 
         cancelBtn.setOnClickListener{
@@ -78,18 +77,9 @@ class RoutineEditActivity : AppCompatActivity() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when(requestCode){
-            ADD_WORKOUT -> {
-                if (data != null){
-                    ActiveRoutineList.add(data.getSerializableExtra("excercise") as Excercise)
-                    updateRecyclerViewAdapter(selectedDate)
-                }
-            }
-        }
-
+    fun onItemClicked(item : Excercise){
+        ActiveRoutineList.add(item)
+        updateRecyclerViewAdapter(selectedDate)
     }
 
     private fun setUpSpinner(){
