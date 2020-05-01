@@ -195,7 +195,7 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     private fun updateProgressBar(progress: Int){
-        progressBar.setProgress(progress+1)
+        progressBar.progress = progress+1
     }
 
     private fun setUpRoutineList(){
