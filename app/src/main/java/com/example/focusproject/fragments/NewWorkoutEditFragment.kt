@@ -1,19 +1,14 @@
 package com.example.focusproject.fragments
 
-import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.TimePicker
 
 import com.example.focusproject.R
-import com.example.focusproject.tools.DurationPicker
 import com.ikovac.timepickerwithseconds.MyTimePickerDialog
 import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.*
-import kotlin.math.min
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -39,7 +34,7 @@ class NewWorkoutEditFragment : Fragment() {
 
         if (view != null) {
             view.changeDurationButton.setOnClickListener {
-                var timePickerDialog = MyTimePickerDialog(context, object :
+                MyTimePickerDialog(context, object :
                     MyTimePickerDialog.OnTimeSetListener {
                     override fun onTimeSet(
                         view: com.ikovac.timepickerwithseconds.TimePicker?,
