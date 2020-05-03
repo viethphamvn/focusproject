@@ -22,7 +22,7 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         titles.add(title)
     }
 
-    override fun getPageTitle(position: Int):CharSequence{
+    override fun getPageTitle(position: Int): CharSequence? {
         return titles.get(position)
     }
 }
