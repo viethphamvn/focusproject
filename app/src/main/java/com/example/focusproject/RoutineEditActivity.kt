@@ -9,15 +9,13 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.SpinnerAdapter
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
+import com.example.focusproject.fragments.ExcercisePickerFragment
 import com.example.focusproject.models.Excercise
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.*
@@ -68,18 +66,41 @@ class RoutineEditActivity : AppCompatActivity() {
         }
 
         addBtn.setOnClickListener{
-            //Implement ExcercisePickerFragment
+            var excercisePickerFragment = supportFragmentManager.findFragmentByTag("pickerFragment")
+            if (excercisePickerFragment != null){
+                supportFragmentManager.beginTransaction()
+                    .remove(excercisePickerFragment)
+                    .commit()
+                val display = windowManager.defaultDisplay
+                val layout = findViewById<FrameLayout>(R.id.excercisePickerContainer)
+                var screen_height = display.height
+                screen_height = 0
+                val parms = layout.layoutParams
+                parms.height = screen_height
+                layout.layoutParams = parms
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.excercisePickerContainer, ExcercisePickerFragment.newInstance("hello","hello"),"pickerFragment")
+                    .commit()
+
+                val display = windowManager.defaultDisplay
+                val layout = findViewById<FrameLayout>(R.id.excercisePickerContainer)
+                var screen_height = display.height
+                screen_height = (0.40 * screen_height).toInt()
+                val parms = layout.layoutParams
+                parms.height = screen_height
+                layout.layoutParams = parms
+            }
         }
 
         cancelBtn.setOnClickListener{
             finish()
         }
-
     }
 
-    fun onItemClicked(item : Excercise){
+    fun onItemClick(item: Excercise){
         ActiveRoutineList.add(item)
-        updateRecyclerViewAdapter(selectedDate)
+        routineRecyclerViewAdapter.notifyItemInserted(ActiveRoutineList.size-1)
     }
 
     private fun setUpSpinner(){

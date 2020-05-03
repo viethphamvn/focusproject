@@ -59,7 +59,7 @@ class ArmsFragment : Fragment() {
         if (activity is CreateExcerciseActivity){
             (activity as CreateExcerciseActivity).onItemClick(item)
         } else if (activity is RoutineEditActivity){
-            (activity as RoutineEditActivity).onItemClicked(item)
+            (activity as RoutineEditActivity).onItemClick(item)
         }
     }
 
