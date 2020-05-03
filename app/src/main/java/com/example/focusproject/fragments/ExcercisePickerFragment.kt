@@ -40,6 +40,7 @@ class ExcercisePickerFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_excercise_picker, container, false)
         var viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
+        viewPagerAdapter.addFragment(NewWorkoutEditFragment.newInstance("hello","hello"),"New")
         viewPagerAdapter.addFragment(ArmsFragment.newInstance("Hello","Hello"), "Arms")
         viewPagerAdapter.addFragment(ArmsFragment.newInstance("Hello","Hello"), "Legs")
         view.viewpager.adapter = viewPagerAdapter
