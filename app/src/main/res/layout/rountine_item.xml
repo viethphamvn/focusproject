@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="350dp"
-    android:layout_height="100dp"
+    android:layout_height="80dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:drawable/dialog_holo_dark_frame">
 
@@ -50,21 +50,27 @@
             android:background="@drawable/ic_repeat"/>
 
         <TextView
-            android:id="@+id/setnumber_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="3 SETS"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-
-        <TextView
             android:id="@+id/reprange_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:textColor="@color/white"
-            android:text="REP RANGE 8 - 12"
+            android:text="REPETITION: 12"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <ImageButton
+            android:id="@+id/weightIconImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_weight"/>
+
+        <TextView
+            android:id="@+id/equipmentOrWeightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="50lbs"
             android:textSize="15sp"
             android:textStyle="bold"/>
 

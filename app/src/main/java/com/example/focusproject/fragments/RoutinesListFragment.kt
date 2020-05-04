@@ -47,10 +47,10 @@ class RoutinesListFragment : Fragment() {
             selectedDate = it.getInt(DAY_OF_WEEK)
         }
 
-        Exercises.add(Excercise("Push Up","pushup",30, "https://cdn.clipart.email/c679a7a0a6044e04a60a6da1d1688382_exercise-gifs-get-the-best-gif-on-giphy_480-360.gif", "",false, true, 3))
-        Exercises.add(Excercise("Pull Up","pullup",0,"", "uUKAYkQZXko", false, false, 0))
-        Exercises.add(Excercise("Rest","run",10, "https://media.giphy.com/media/3o6MbrHpaSX5Q375zW/giphy.gif", "",true, true, 0))
-        Exercises.add(Excercise("Abs","pushup",0, "", "q_LFDHqkFLo", false, false, 2))
+        Exercises.add(Excercise("Push Up","pushup",30, "https://cdn.clipart.email/c679a7a0a6044e04a60a6da1d1688382_exercise-gifs-get-the-best-gif-on-giphy_480-360.gif", "",false, true, 3, true, 40))
+        Exercises.add(Excercise("Pull Up","pullup",0,"", "uUKAYkQZXko", false, false, 0, false, 40))
+        Exercises.add(Excercise("Rest","run",10, "https://media.giphy.com/media/3o6MbrHpaSX5Q375zW/giphy.gif", "",true, true, 0, true, 20))
+        Exercises.add(Excercise("Abs","pushup",0, "", "q_LFDHqkFLo", false, false, 2, false, 20))
 
         Routines.put("mon", Exercises)
         Routines.put("tue", Exercises)

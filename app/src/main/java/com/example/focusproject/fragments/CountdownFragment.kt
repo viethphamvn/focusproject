@@ -34,7 +34,7 @@ class CountdownFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            duration = it.getLong(DURATION)
+            duration = it.getLong(DURATION) * 1000
             countUp = it.getBoolean(COUNT_UP)
         }
     }
@@ -81,7 +81,7 @@ class CountdownFragment : Fragment() {
     }
 
     fun setTimer(duration: Long){
-        this.duration = duration
+        this.duration = duration * 1000
     }
 
     fun pauseTimer(){

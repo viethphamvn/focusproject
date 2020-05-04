@@ -67,8 +67,12 @@ class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerVie
             if (!excercise.isRestTime) {
                 excerciseNameTextView.text = excercise.name
                 //Bind image
-                val url =
-                    "https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif"
+                var url = ""
+                if (excercise.img != ""){
+                    url = excercise.img
+                } else if (excercise.vidId != ""){
+                    url = "https://img.youtube.com/vi/" + excercise.vidId + "/0.jpg"
+                }
                 Glide.with(itemView.context)  //2
                     .load(url) //3
                     .centerCrop() //4

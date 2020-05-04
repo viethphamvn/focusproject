@@ -1,30 +1,30 @@
 package com.example.focusproject.models
 
-import com.bumptech.glide.Glide.init
 import java.io.Serializable
-import java.lang.reflect.Array.get
-import java.lang.reflect.Array.set
 
-class Excercise(name: String, code: String, duration: Int,  img: String, vidUrl: String, isRestTime: Boolean, isTimed: Boolean, set:Int) : Serializable{
+class Excercise(name: String, uid: String, duration: Long,  img: String, vidId: String, isRestTime: Boolean,
+                isTimed: Boolean, rep:Long, equipmentNeeded: Boolean, weight: Long) : Serializable{
     var name: String
-    var code: String
+    var uid: String
     var img: String
-    var vidUrl: String
+    var vidId: String
     var isRestTime: Boolean
     var isTimed: Boolean
-    var set: Int
-//    var weight: HashMap<Int, Int>
+    var rep: Long
+    var equipmentNeeded: Boolean
+    var weight: Long
     var duration: Long
 
     init{
         this.name = name
-        this.code = code
+        this.uid = uid
         this.img = img
         this.isRestTime = isRestTime
-        this.vidUrl = vidUrl
-        this.set = set
-//        this.weight = HashMap(weight)
-        this.duration = (duration*1000).toLong()
+        this.vidId = vidId
+        this.rep = rep
+        this.weight = weight
+        this.duration = duration
         this.isTimed = isTimed
+        this.equipmentNeeded = equipmentNeeded
     }
 }

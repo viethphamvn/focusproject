@@ -64,7 +64,7 @@ class StartRoutineActivity : AppCompatActivity() {
                     text = "PAUSE"
                 }
 
-                if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != "") {
+                if (ActiveRoutineList.get(currentWorkoutPosition).vidId != "") {
                     (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
                 }
                 var fragment =
@@ -92,7 +92,7 @@ class StartRoutineActivity : AppCompatActivity() {
                         text = "RESUME"
                     }
 
-                    if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != "") {
+                    if (ActiveRoutineList.get(currentWorkoutPosition).vidId != "") {
                         (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
                     }
                     var fragment =
@@ -104,15 +104,15 @@ class StartRoutineActivity : AppCompatActivity() {
         })
     }
 
-    private fun startWorkout(position: Int){
+    private fun startWorkout(position: Int){ //Need to rework this section since set is removed
        updateProgressBar(position)
         ActiveRoutineList.get(position).apply {
             excerciseNameTextView.text = this.name
 
-            totalSetRequired = this.set
+            totalSetRequired = 10
 
             //If excercise has vid --> Play
-            if (this.vidUrl != ""){
+            if (this.vidId != ""){
                 (fragmentHolder.get(position) as VideoViewerFragment).playVideo()
             }
             //Start timer if it's timed workout
@@ -133,7 +133,7 @@ class StartRoutineActivity : AppCompatActivity() {
                     .remove(fragment)
                     .commit()
             }
-            if (this.set > 0){
+            if (this.rep > 0){
                 supportFragmentManager.beginTransaction()
                     .add(R.id.progressContainer, ExcerciseProgressFragment.newInstance(totalSetFinished+1, totalSetRequired, 12),"progressFragment")
                     .commit()
@@ -149,7 +149,7 @@ class StartRoutineActivity : AppCompatActivity() {
         } else {
             totalSetFinished = 0
             //Pause or Stop video for previous fragment
-            if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != "") {
+            if (ActiveRoutineList.get(currentWorkoutPosition).vidId != "") {
                 (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
             }
             increaseCurrentWorkoutPosition()
@@ -159,7 +159,7 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     fun playVideo(){
-        if (ActiveRoutineList.get(currentWorkoutPosition).vidUrl != ""){
+        if (ActiveRoutineList.get(currentWorkoutPosition).vidId != ""){
             (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
         }
     }
@@ -171,7 +171,7 @@ class StartRoutineActivity : AppCompatActivity() {
             if (it.img != "" ){
                 fragmentHolder.add(ImageViewerFragment.newInstance(it.img))
             } else {
-                fragmentHolder.add(VideoViewerFragment.newInstance(it.vidUrl))
+                fragmentHolder.add(VideoViewerFragment.newInstance(it.vidId))
             }
         }
 
@@ -205,7 +205,7 @@ class StartRoutineActivity : AppCompatActivity() {
             if (it.isRestTime){
                 tempList.add(it)
             } else {
-                var readyTime = Excercise("GET READY","",10,it.img,it.vidUrl,false,true,0)
+                var readyTime = Excercise("GET READY","",10,it.img,it.vidId,false,true,0, false, 0)
                 tempList.add(readyTime)
                 tempList.add(it)
             }

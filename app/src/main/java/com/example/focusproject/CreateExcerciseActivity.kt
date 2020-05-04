@@ -62,9 +62,8 @@ class CreateExcerciseActivity : AppCompatActivity() {
                 layout.layoutParams = parms
             } else {
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.excercisePickerContainer, ExcercisePickerFragment.newInstance("hello","hello"),"pickerFragment")
+                    .add(R.id.excercisePickerContainer, ExcercisePickerFragment.newInstance(),"pickerFragment")
                     .commit()
-
                 val display = windowManager.defaultDisplay
                 val layout = findViewById<FrameLayout>(R.id.excercisePickerContainer)
                 var screen_height = display.height

@@ -80,7 +80,7 @@ class RoutineEditActivity : AppCompatActivity() {
                 layout.layoutParams = parms
             } else {
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.excercisePickerContainer, ExcercisePickerFragment.newInstance("hello","hello"),"pickerFragment")
+                    .add(R.id.excercisePickerContainer, ExcercisePickerFragment.newInstance(),"pickerFragment")
                     .commit()
 
                 val display = windowManager.defaultDisplay

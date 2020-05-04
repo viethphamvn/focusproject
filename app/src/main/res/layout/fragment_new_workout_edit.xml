@@ -56,11 +56,29 @@
                 android:inputType="textShortMessage" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <CheckBox
+            android:id="@+id/needEquipmentCheckBox"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/workoutNameEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/workoutDescEditText"/>
+
+        <TextView
+            android:id="@+id/needEquipmentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/workoutNameEditText"
+            app:layout_constraintLeft_toRightOf="@id/needEquipmentCheckBox"
+            android:layout_marginTop="10dp"
+            android:text="Equipment Needed"
+            android:textSize="20sp"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/workoutDescEditText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/workoutNameEditText"
+            app:layout_constraintTop_toBottomOf="@id/needEquipmentTextView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:endIconMode="clear_text"
             android:hint="Excercise Description"

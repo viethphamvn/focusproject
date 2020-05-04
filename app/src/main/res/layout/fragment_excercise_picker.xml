@@ -6,43 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ExcercisePickerFragment">
 
-    <LinearLayout
-        android:id="@+id/toolbarWithSearchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@color/colorPrimaryDark"
-        android:gravity="center_vertical|center_horizontal"
-        android:paddingTop="5dp">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/toolbarWithSearchBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        android:background="@color/colorPrimaryDark"-->
+<!--        android:gravity="center_vertical|center_horizontal"-->
+<!--        android:paddingTop="5dp">-->
 
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_back"/>
+<!--        <ImageButton-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:background="@drawable/ic_back"/>-->
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:background="@drawable/rounded_shape"
-            android:textColor="#000000"
-            android:text="Push Up"
-            android:paddingLeft="10dp"
-            android:inputType="textShortMessage"
-            android:paddingRight="10dp"
-            android:singleLine="true"/>
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:background="@drawable/rounded_shape"-->
+<!--            android:textColor="#000000"-->
+<!--            android:text="Push Up"-->
+<!--            android:paddingLeft="10dp"-->
+<!--            android:inputType="textShortMessage"-->
+<!--            android:paddingRight="10dp"-->
+<!--            android:singleLine="true"/>-->
 
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_search"/>
-    </LinearLayout>
+<!--        <ImageButton-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:background="@drawable/ic_search"/>-->
+<!--    </LinearLayout>-->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbarWithSearchBar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:background="@color/colorPrimaryDark"
         app:tabSelectedTextColor="#FFFFFF"
