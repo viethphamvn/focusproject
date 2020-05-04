@@ -12,10 +12,6 @@ import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.*
 
 class NewWorkoutEditFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

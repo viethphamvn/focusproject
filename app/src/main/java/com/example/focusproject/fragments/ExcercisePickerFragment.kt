@@ -11,9 +11,6 @@ import com.example.focusproject.adapters.ViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_excercise_picker.view.*
 
 class ExcercisePickerFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

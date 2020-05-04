@@ -60,7 +60,7 @@ class MuscleGroupFragment : Fragment() {
     }
 
     private fun getItemFromDatabase(){
-        var firestore = FirebaseFirestore.getInstance();
+        var firestore = FirebaseFirestore.getInstance()
         firestore.collection(doc_name)
             .get()
             .addOnSuccessListener { result ->
