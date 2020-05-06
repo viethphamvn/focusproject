@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="SET"
+        android:text="% ONE-RM"
         android:textSize="30sp"
         android:textStyle="bold"
         android:gravity="center_horizontal|center_vertical"
@@ -33,7 +33,7 @@
         app:layout_constraintWidth_percent="0.5"/>
 
     <TextView
-        android:id="@+id/setTextView"
+        android:id="@+id/ormTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textView2"
@@ -42,7 +42,7 @@
         android:textSize="35sp"
         android:textColor="@color/white"
         android:gravity="center_vertical|center_horizontal"
-        android:text="3/5"/>
+        android:text="65"/>
 
     <TextView
         android:id="@+id/repTextView"

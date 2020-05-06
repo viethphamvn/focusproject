@@ -9,7 +9,10 @@ import com.example.focusproject.R
 import com.example.focusproject.models.Excercise
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.excercise_item.view.*
+import kotlinx.android.synthetic.main.excercise_item.view.excerciseImageHolder
+import kotlinx.android.synthetic.main.excercise_item.view.excerciseNameTextView
 import kotlinx.android.synthetic.main.resttime_item.view.*
+import kotlinx.android.synthetic.main.rountine_item.view.*
 
 class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var Excercises = Excercises
@@ -61,11 +64,17 @@ class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerVie
     class RoutineViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imageView = itemView.excerciseImageHolder
         var excerciseNameTextView = itemView.excerciseNameTextView
+        var equipmentOrWeightTextView = itemView.equipmentOrWeightTextView
         var timeTextView = itemView.time_textview
 
         fun bind(excercise : Excercise){
             if (!excercise.isRestTime) {
                 excerciseNameTextView.text = excercise.name
+                if (excercise.weight > 0) {
+                    equipmentOrWeightTextView.text = String.format("%d %%RM", excercise.weight)
+                } else {
+                    equipmentOrWeightTextView.text = "NA"
+                }
                 //Bind image
                 var url = ""
                 if (excercise.img != ""){

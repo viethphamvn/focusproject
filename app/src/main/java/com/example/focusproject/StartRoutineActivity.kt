@@ -109,8 +109,6 @@ class StartRoutineActivity : AppCompatActivity() {
         ActiveRoutineList.get(position).apply {
             excerciseNameTextView.text = this.name
 
-            totalSetRequired = 10
-
             //If excercise has vid --> Play
             if (this.vidId != ""){
                 (fragmentHolder.get(position) as VideoViewerFragment).playVideo()
@@ -133,29 +131,23 @@ class StartRoutineActivity : AppCompatActivity() {
                     .remove(fragment)
                     .commit()
             }
-            if (this.rep > 0){
+            if (this.rep > 0 || this.weight > 0){
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.progressContainer, ExcerciseProgressFragment.newInstance(totalSetFinished+1, totalSetRequired, 12),"progressFragment")
+                    .add(R.id.progressContainer, ExcerciseProgressFragment.newInstance(this.weight, this.rep),"progressFragment")
                     .commit()
             }
         }
     }
 
     fun nextExcercise(){
-        if (totalSetFinished+1 < totalSetRequired){
-            totalSetFinished++
-            //Call nextExcercise when clock hits 0
-            startWorkout(currentWorkoutPosition)
-        } else {
-            totalSetFinished = 0
-            //Pause or Stop video for previous fragment
-            if (ActiveRoutineList.get(currentWorkoutPosition).vidId != "") {
-                (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
-            }
-            increaseCurrentWorkoutPosition()
-            excerciseMediaViewPager.currentItem = currentWorkoutPosition
-            startWorkout(currentWorkoutPosition)
+        //Pause or Stop video for previous fragment
+        if (ActiveRoutineList.get(currentWorkoutPosition).vidId != "") {
+            (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
         }
+        increaseCurrentWorkoutPosition()
+        excerciseMediaViewPager.currentItem = currentWorkoutPosition
+        startWorkout(currentWorkoutPosition)
+
     }
 
     fun playVideo(){
@@ -205,7 +197,7 @@ class StartRoutineActivity : AppCompatActivity() {
             if (it.isRestTime){
                 tempList.add(it)
             } else {
-                var readyTime = Excercise("GET READY","",10,it.img,it.vidId,false,true,0, false, 0)
+                var readyTime = Excercise("GET READY","",10,it.img,it.vidId,false,true,it.rep, false, it.weight)
                 tempList.add(readyTime)
                 tempList.add(it)
             }
