@@ -3,42 +3,35 @@ package com.example.focusproject.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.provider.CalendarContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.StartRoutineActivity
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.models.Excercise
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.*
 import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.mon_textview
-import org.w3c.dom.Text
-import java.util.*
+import kotlinx.android.synthetic.main.rountine_item.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.properties.Delegates
-import java.util.Calendar
 
 private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
 
 class RoutinesListFragment : Fragment() {
-    private var Exercises: ArrayList<Excercise> = ArrayList()
     private lateinit var ActiveRoutineList: ArrayList<Excercise>
     private var Routines : HashMap<String, ArrayList<Excercise>> = HashMap()
     private var selectedDate : Int = 0
     private val DAY_OF_WEEK = "DayOfWeek"
     private lateinit var currentButton : TextView
     private var buttonArray : HashMap<Int, TextView> = HashMap()
+    private var data : Map<String, Any> = HashMap()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,18 +40,270 @@ class RoutinesListFragment : Fragment() {
             selectedDate = it.getInt(DAY_OF_WEEK)
         }
 
-        Exercises.add(Excercise("Push Up","pushup",30, "https://cdn.clipart.email/c679a7a0a6044e04a60a6da1d1688382_exercise-gifs-get-the-best-gif-on-giphy_480-360.gif", "",false, true, 3, true, 40))
-        Exercises.add(Excercise("Pull Up","pullup",0,"", "uUKAYkQZXko", false, false, 0, false, 40))
-        Exercises.add(Excercise("Rest","run",10, "https://media.giphy.com/media/3o6MbrHpaSX5Q375zW/giphy.gif", "",true, true, 0, true, 20))
-        Exercises.add(Excercise("Abs","pushup",0, "", "q_LFDHqkFLo", false, false, 2, false, 20))
+        Routines.put("mon", ArrayList())
+        Routines.put("tue", ArrayList())
+        Routines.put("wed", ArrayList())
+        Routines.put("thu", ArrayList())
+        Routines.put("fri", ArrayList())
+        Routines.put("sat", ArrayList())
+        Routines.put("sun", ArrayList())
 
-        Routines.put("mon", Exercises)
-        Routines.put("tue", Exercises)
-        Routines.put("wed", Exercises)
-        Routines.put("thu", Exercises)
-        Routines.put("fri", Exercises)
-        Routines.put("sat", Exercises)
-        Routines.put("sun", Exercises)
+        initiateRoutine()
+    }
+
+    private fun initiateRoutine(){
+        var firestore = FirebaseFirestore.getInstance()
+        var currentUser = FirebaseAuth.getInstance().currentUser!!
+        firestore.collection("Users").document(currentUser.uid)
+            .get()
+            .addOnSuccessListener {
+                data = it["routine"] as HashMap<String, Any>
+
+
+                var tempArrayList = data.get("mon") as ArrayList<String>
+                for (exerciseId in tempArrayList) {
+                    if (exerciseId != "") {
+                        firestore.collection("Exercise").document(exerciseId)
+                            .get()
+                            .addOnSuccessListener {
+                                var name = it.get("name") as String
+                                var type = it.get("type") as String
+                                var duration = it.get("duration") as Long
+                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
+                                var img = it.get("img") as String
+                                var isRestTime = it.get("isRestTime") as Boolean
+                                var isTime = it.get("isTimed") as Boolean
+                                var rep = it.get("rep") as Long
+                                var weight = it.get("weight") as Long
+                                var vidId = it.get("vidId") as String
+                                var exercise: Excercise = Excercise(
+                                    name,
+                                    type,
+                                    exerciseId,
+                                    duration,
+                                    img,
+                                    vidId,
+                                    isRestTime,
+                                    isTime,
+                                    rep,
+                                    equipmentNeeded,
+                                    weight
+                                )
+                                Routines["mon"]?.add(exercise)
+                            }
+                    }
+                }
+
+
+                tempArrayList = data.get("tue") as ArrayList<String>
+                for (exerciseId in tempArrayList) {
+                    if (exerciseId != "") {
+                        firestore.collection("Exercise").document(exerciseId)
+                            .get()
+                            .addOnSuccessListener {
+                                var name = it.get("name") as String
+                                var type = it.get("type") as String
+                                var duration = it.get("duration") as Long
+                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
+                                var img = it.get("img") as String
+                                var isRestTime = it.get("isRestTime") as Boolean
+                                var isTime = it.get("isTimed") as Boolean
+                                var rep = it.get("rep") as Long
+                                var weight = it.get("weight") as Long
+                                var vidId = it.get("vidId") as String
+                                var exercise: Excercise = Excercise(
+                                    name,
+                                    type,
+                                    exerciseId,
+                                    duration,
+                                    img,
+                                    vidId,
+                                    isRestTime,
+                                    isTime,
+                                    rep,
+                                    equipmentNeeded,
+                                    weight
+                                )
+
+                                Routines["tue"]?.add(exercise)
+                            }
+                    }
+                }
+
+
+                tempArrayList = data.get("wed") as ArrayList<String>
+                for (exerciseId in tempArrayList) {
+                    if (exerciseId != "") {
+                        firestore.collection("Exercise").document(exerciseId)
+                            .get()
+                            .addOnSuccessListener {
+                                var name = it.get("name") as String
+                                var type = it.get("type") as String
+                                var duration = it.get("duration") as Long
+                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
+                                var img = it.get("img") as String
+                                var isRestTime = it.get("isRestTime") as Boolean
+                                var isTime = it.get("isTimed") as Boolean
+                                var rep = it.get("rep") as Long
+                                var weight = it.get("weight") as Long
+                                var vidId = it.get("vidId") as String
+                                var exercise: Excercise = Excercise(
+                                    name,
+                                    type,
+                                    exerciseId,
+                                    duration,
+                                    img,
+                                    vidId,
+                                    isRestTime,
+                                    isTime,
+                                    rep,
+                                    equipmentNeeded,
+                                    weight
+                                )
+                                Routines["wed"]?.add(exercise)
+                            }
+                    }
+                }
+
+
+                tempArrayList = data.get("thu") as ArrayList<String>
+                for (exerciseId in tempArrayList) {
+                    if (exerciseId != "") {
+                        firestore.collection("Exercise").document(exerciseId)
+                            .get()
+                            .addOnSuccessListener {
+                                var name = it.get("name") as String
+                                var type = it.get("type") as String
+                                var duration = it.get("duration") as Long
+                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
+                                var img = it.get("img") as String
+                                var isRestTime = it.get("isRestTime") as Boolean
+                                var isTime = it.get("isTimed") as Boolean
+                                var rep = it.get("rep") as Long
+                                var weight = it.get("weight") as Long
+                                var vidId = it.get("vidId") as String
+                                var exercise: Excercise = Excercise(
+                                    name,
+                                    type,
+                                    exerciseId,
+                                    duration,
+                                    img,
+                                    vidId,
+                                    isRestTime,
+                                    isTime,
+                                    rep,
+                                    equipmentNeeded,
+                                    weight
+                                )
+                                Routines["thu"]?.add(exercise)
+                            }
+                    }
+                }
+
+                tempArrayList = data.get("fri") as ArrayList<String>
+                for (exerciseId in tempArrayList) {
+                    if (exerciseId != "") {
+                        firestore.collection("Exercise").document(exerciseId)
+                            .get()
+                            .addOnSuccessListener {
+                                var name = it.get("name") as String
+                                var type = it.get("type") as String
+                                var duration = it.get("duration") as Long
+                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
+                                var img = it.get("img") as String
+                                var isRestTime = it.get("isRestTime") as Boolean
+                                var isTime = it.get("isTimed") as Boolean
+                                var rep = it.get("rep") as Long
+                                var weight = it.get("weight") as Long
+                                var vidId = it.get("vidId") as String
+                                var exercise: Excercise = Excercise(
+                                    name,
+                                    type,
+                                    exerciseId,
+                                    duration,
+                                    img,
+                                    vidId,
+                                    isRestTime,
+                                    isTime,
+                                    rep,
+                                    equipmentNeeded,
+                                    weight
+                                )
+                                Routines["fri"]?.add(exercise)
+                            }
+                    }
+                }
+
+
+                tempArrayList = data.get("sat") as ArrayList<String>
+                for (exerciseId in tempArrayList) {
+                    if (exerciseId != "") {
+                        firestore.collection("Exercise").document(exerciseId)
+                            .get()
+                            .addOnSuccessListener {
+                                var name = it.get("name") as String
+                                var type = it.get("type") as String
+                                var duration = it.get("duration") as Long
+                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
+                                var img = it.get("img") as String
+                                var isRestTime = it.get("isRestTime") as Boolean
+                                var isTime = it.get("isTimed") as Boolean
+                                var rep = it.get("rep") as Long
+                                var weight = it.get("weight") as Long
+                                var vidId = it.get("vidId") as String
+                                var exercise: Excercise = Excercise(
+                                    name,
+                                    type,
+                                    exerciseId,
+                                    duration,
+                                    img,
+                                    vidId,
+                                    isRestTime,
+                                    isTime,
+                                    rep,
+                                    equipmentNeeded,
+                                    weight
+                                )
+                                Routines["sat"]?.add(exercise)
+                            }
+                    }
+                }
+
+
+                tempArrayList = data.get("sun") as ArrayList<String>
+                for (exerciseId in tempArrayList) {
+                    if (exerciseId != "") {
+                        firestore.collection("Exercise").document(exerciseId)
+                            .get()
+                            .addOnSuccessListener {
+                                var name = it.get("name") as String
+                                var type = it.get("type") as String
+                                var duration = it.get("duration") as Long
+                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
+                                var img = it.get("img") as String
+                                var isRestTime = it.get("isRestTime") as Boolean
+                                var isTime = it.get("isTimed") as Boolean
+                                var rep = it.get("rep") as Long
+                                var weight = it.get("weight") as Long
+                                var vidId = it.get("vidId") as String
+                                var exercise: Excercise = Excercise(
+                                    name,
+                                    type,
+                                    exerciseId,
+                                    duration,
+                                    img,
+                                    vidId,
+                                    isRestTime,
+                                    isTime,
+                                    rep,
+                                    equipmentNeeded,
+                                    weight
+                                )
+                                Routines["sun"]?.add(exercise)
+                            }
+                    }
+                }
+            }
     }
 
     override fun onCreateView(
@@ -189,10 +434,6 @@ class RoutinesListFragment : Fragment() {
             }
     }
 
-    private fun getRoutines(){
-        //Do something
-    }
-
     private fun getCurrentActiveList(selectedDate: Int): ArrayList<Excercise>{
         when(selectedDate){
             2 -> ActiveRoutineList = Routines.get("mon") as ArrayList<Excercise>
@@ -206,6 +447,10 @@ class RoutinesListFragment : Fragment() {
         return ActiveRoutineList
     }
 
+    private fun updateDatabase(){ //This function will update Firestore with new dataset
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
@@ -217,6 +462,7 @@ class RoutinesListFragment : Fragment() {
                     notifyDataSetChanged()
                 }
             }
+            updateDatabase()
         }
     }
 }

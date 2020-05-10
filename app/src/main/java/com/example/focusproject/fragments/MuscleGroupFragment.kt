@@ -61,23 +61,27 @@ class MuscleGroupFragment : Fragment() {
 
     private fun getItemFromDatabase(){
         var firestore = FirebaseFirestore.getInstance()
-        firestore.collection(doc_name)
+        firestore.collection("Exercise")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result){
-                    var excercise = Excercise(
-                        document.data.get("name").toString(),
-                    document.data.get("uid").toString(),
-                    document.data.get("duration") as Long,
-                        document.data.get("img").toString(),
-                        document.data.get("vidId").toString(),
-                        document.data.get("isRestTime") as Boolean,
-                        document.data.get("isTimed") as Boolean,
-                        document.data.get("rep") as Long,
-                        document.data.get("equipmentNeeded") as Boolean,
-                        document.data.get("weight") as Long)
-                    Excercises.add(excercise)
-                    excerciseRecyclerViewAdapter.notifyItemInserted(Excercises.size-1)
+                    if (document.data.get("type") == doc_name) {
+                        var excercise = Excercise(
+                            document.data.get("name").toString(),
+                            document.data.get("type").toString(),
+                            document.data.get("uid").toString(),
+                            document.data.get("duration") as Long,
+                            document.data.get("img").toString(),
+                            document.data.get("vidId").toString(),
+                            document.data.get("isRestTime") as Boolean,
+                            document.data.get("isTimed") as Boolean,
+                            document.data.get("rep") as Long,
+                            document.data.get("equipmentNeeded") as Boolean,
+                            document.data.get("weight") as Long
+                        )
+                        Excercises.add(excercise)
+                        excerciseRecyclerViewAdapter.notifyItemInserted(Excercises.size - 1)
+                    }
                 }
             }
     }

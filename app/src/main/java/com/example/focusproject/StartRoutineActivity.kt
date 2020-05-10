@@ -197,7 +197,7 @@ class StartRoutineActivity : AppCompatActivity() {
             if (it.isRestTime){
                 tempList.add(it)
             } else {
-                var readyTime = Excercise("GET READY","",10,it.img,it.vidId,false,true,it.rep, false, it.weight)
+                var readyTime = Excercise("GET READY","","",10,it.img,it.vidId,false,true,it.rep, false, it.weight)
                 tempList.add(readyTime)
                 tempList.add(it)
             }
