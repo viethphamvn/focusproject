@@ -1,31 +1,24 @@
 package com.example.focusproject
 
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.View
-import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
 import com.example.focusproject.adapters.ViewPagerAdapter
 import com.example.focusproject.fragments.CountdownFragment
 import com.example.focusproject.fragments.ExcerciseProgressFragment
 import com.example.focusproject.fragments.ImageViewerFragment
 import com.example.focusproject.fragments.VideoViewerFragment
-import com.example.focusproject.models.Excercise
+import com.example.focusproject.models.Exercise
 import com.example.focusproject.tools.OnSwipeTouchListener
-import kotlinx.android.synthetic.main.activity_routine_edit.*
 import kotlinx.android.synthetic.main.activity_start_routine.*
-import org.w3c.dom.Text
 
 
 class StartRoutineActivity : AppCompatActivity() {
 
     private lateinit var controlLayout: TextView
-    private lateinit var ActiveRoutineList: ArrayList<Excercise>
+    private lateinit var activeRoutineList: ArrayList<Exercise>
     private var selectedDate = 0
     private var currentWorkoutPosition : Int = 0
     private var fragmentHolder : ArrayList<Fragment> = ArrayList()
@@ -40,13 +33,13 @@ class StartRoutineActivity : AppCompatActivity() {
         setContentView(R.layout.activity_start_routine)
 
         //Get the data from caller
-        ActiveRoutineList = intent.getSerializableExtra("routine") as ArrayList<Excercise>
+        activeRoutineList = intent.getSerializableExtra("routine") as ArrayList<Exercise>
         selectedDate = intent.getIntExtra("date", 2)
 
         setUpRoutineList()
 
         progressBar = findViewById(R.id.progress_horizontal)
-        progressBar.max = ActiveRoutineList.size
+        progressBar.max = activeRoutineList.size
         progressBar.min = 0
 
         excerciseNameTextView = findViewById(R.id.excerciseNameTextView)
@@ -64,7 +57,7 @@ class StartRoutineActivity : AppCompatActivity() {
                     text = "PAUSE"
                 }
 
-                if (ActiveRoutineList.get(currentWorkoutPosition).vidId != "") {
+                if (activeRoutineList.get(currentWorkoutPosition).vidId != "") {
                     (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
                 }
                 var fragment =
@@ -92,7 +85,7 @@ class StartRoutineActivity : AppCompatActivity() {
                         text = "RESUME"
                     }
 
-                    if (ActiveRoutineList.get(currentWorkoutPosition).vidId != "") {
+                    if (activeRoutineList.get(currentWorkoutPosition).vidId != "") {
                         (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
                     }
                     var fragment =
@@ -106,7 +99,7 @@ class StartRoutineActivity : AppCompatActivity() {
 
     private fun startWorkout(position: Int){ //Need to rework this section since set is removed
        updateProgressBar(position)
-        ActiveRoutineList.get(position).apply {
+        activeRoutineList.get(position).apply {
             excerciseNameTextView.text = this.name
 
             //If excercise has vid --> Play
@@ -141,7 +134,7 @@ class StartRoutineActivity : AppCompatActivity() {
 
     fun nextExcercise(){
         //Pause or Stop video for previous fragment
-        if (ActiveRoutineList.get(currentWorkoutPosition).vidId != "") {
+        if (activeRoutineList.get(currentWorkoutPosition).vidId != "") {
             (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
         }
         increaseCurrentWorkoutPosition()
@@ -151,7 +144,7 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     fun playVideo(){
-        if (ActiveRoutineList.get(currentWorkoutPosition).vidId != ""){
+        if (activeRoutineList.get(currentWorkoutPosition).vidId != ""){
             (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
         }
     }
@@ -159,7 +152,7 @@ class StartRoutineActivity : AppCompatActivity() {
     private fun setUpFragmentPager(){
         var viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
 
-        ActiveRoutineList.forEach {
+        activeRoutineList.forEach {
             if (it.img != "" ){
                 fragmentHolder.add(ImageViewerFragment.newInstance(it.img))
             } else {
@@ -181,7 +174,7 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     private fun increaseCurrentWorkoutPosition(){
-        if (currentWorkoutPosition < ActiveRoutineList.size){
+        if (currentWorkoutPosition < activeRoutineList.size){
             ++currentWorkoutPosition
         }
     }
@@ -191,18 +184,18 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     private fun setUpRoutineList(){
-        var tempList : ArrayList<Excercise> = ArrayList()
+        var tempList : ArrayList<Exercise> = ArrayList()
 
-        ActiveRoutineList.forEach {
+        activeRoutineList.forEach {
             if (it.isRestTime){
                 tempList.add(it)
             } else {
-                var readyTime = Excercise("GET READY","","",10,it.img,it.vidId,false,true,it.rep, false, it.weight)
+                var readyTime = Exercise("GET READY","","",10,it.img,it.vidId,false,true,it.rep, false, it.weight, it.createdBy)
                 tempList.add(readyTime)
                 tempList.add(it)
             }
         }
-        ActiveRoutineList = tempList
+        activeRoutineList = tempList
     }
 
 }

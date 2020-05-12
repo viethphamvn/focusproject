@@ -6,22 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.focusproject.R
-import com.example.focusproject.models.Excercise
+import com.example.focusproject.models.Exercise
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.excercise_item.view.*
 import kotlinx.android.synthetic.main.excercise_item.view.excerciseImageHolder
 import kotlinx.android.synthetic.main.excercise_item.view.excerciseNameTextView
 import kotlinx.android.synthetic.main.resttime_item.view.*
 import kotlinx.android.synthetic.main.rountine_item.view.*
 
-class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var Excercises = Excercises
+class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var Excercises = exercises
     private var firestore = FirebaseFirestore.getInstance()
     val REST = 1
     val EXCERCISE = 2
 
-    fun updateDataSet(Excercises: ArrayList<Excercise>){
-        this.Excercises = Excercises
+    fun updateDataSet(exercises: ArrayList<Exercise>){
+        this.Excercises = exercises
     }
 
     fun removeItemAt(position: Int){
@@ -68,33 +67,33 @@ class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerVie
         var repTextView = itemView.reprange_textview
         var timeTextView = itemView.time_textview
 
-        fun bind(excercise : Excercise){
-            if (!excercise.isRestTime) {
-                excerciseNameTextView.text = excercise.name
-                if (excercise.weight > 0) {
-                    equipmentOrWeightTextView.text = String.format("%d %%RM", excercise.weight)
+        fun bind(exercise : Exercise){
+            if (!exercise.isRestTime) {
+                excerciseNameTextView.text = exercise.name
+                if (exercise.weight > 0) {
+                    equipmentOrWeightTextView.text = String.format("%d %%RM", exercise.weight)
                 } else {
                     equipmentOrWeightTextView.text = "NA"
                 }
 
-                if (excercise.rep > 0){
-                    repTextView.text = "REPETITION: ${excercise.rep}"
+                if (exercise.rep > 0){
+                    repTextView.text = "REPETITION: ${exercise.rep}"
                 } else {
                     repTextView.text = "REPETITION: NA"
                 }
                 //Bind image
                 var url = ""
-                if (excercise.img != ""){
-                    url = excercise.img
-                } else if (excercise.vidId != ""){
-                    url = "https://img.youtube.com/vi/" + excercise.vidId + "/0.jpg"
+                if (exercise.img != ""){
+                    url = exercise.img
+                } else if (exercise.vidId != ""){
+                    url = "https://img.youtube.com/vi/" + exercise.vidId + "/0.jpg"
                 }
                 Glide.with(itemView.context)  //2
                     .load(url) //3
                     .centerCrop() //4
                     .into(imageView) //8
             } else {
-                timeTextView.text = "${excercise.duration} SECS"
+                timeTextView.text = "${exercise.duration} SECS"
             }
         }
     }

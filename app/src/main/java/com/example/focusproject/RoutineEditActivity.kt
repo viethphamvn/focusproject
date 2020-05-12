@@ -3,8 +3,6 @@ package com.example.focusproject
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,10 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.fragments.ExcercisePickerFragment
-import com.example.focusproject.models.Excercise
+import com.example.focusproject.models.Exercise
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.*
-import kotlinx.android.synthetic.main.rountine_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -27,10 +23,10 @@ import kotlin.collections.HashMap
 class RoutineEditActivity : AppCompatActivity() {
 
     lateinit var dateSpinner : Spinner
-    lateinit var Routines : HashMap<String, ArrayList<Excercise>>
+    lateinit var routines : HashMap<String, ArrayList<Exercise>>
     var selectedDate : Int = 0
     private lateinit var touchHelper : ItemTouchHelper
-    private lateinit var ActiveRoutineList: ArrayList<Excercise>
+    private lateinit var activeRoutineList: ArrayList<Exercise>
     private lateinit var routine_recycler_list_view: RecyclerView
     private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
 
@@ -47,7 +43,7 @@ class RoutineEditActivity : AppCompatActivity() {
         deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
 
         //Get the data from caller
-        Routines = HashMap(intent.getSerializableExtra("routine") as HashMap<String, ArrayList<Excercise>>)
+        routines = HashMap(intent.getSerializableExtra("routine") as HashMap<String, ArrayList<Exercise>>)
         selectedDate = intent.getIntExtra("date", 2)
 
         setUpSpinner()
@@ -60,7 +56,7 @@ class RoutineEditActivity : AppCompatActivity() {
 
         saveBtn.setOnClickListener {
             var returnIntent: Intent = Intent()
-            returnIntent.putExtra("routine", Routines)
+            returnIntent.putExtra("routine", routines)
             setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }
@@ -98,9 +94,9 @@ class RoutineEditActivity : AppCompatActivity() {
         }
     }
 
-    fun onItemClick(item: Excercise){
-        ActiveRoutineList.add(item)
-        routineRecyclerViewAdapter.notifyItemInserted(ActiveRoutineList.size-1)
+    fun onItemClick(item: Exercise){
+        activeRoutineList.add(item)
+        routineRecyclerViewAdapter.notifyItemInserted(activeRoutineList.size-1)
     }
 
     private fun setUpSpinner(){
@@ -162,7 +158,7 @@ class RoutineEditActivity : AppCompatActivity() {
             ): Boolean {
                 val sourcePosition = viewHolder.adapterPosition
                 val targetPosition = target.adapterPosition
-                Collections.swap(ActiveRoutineList, sourcePosition, targetPosition)
+                Collections.swap(activeRoutineList, sourcePosition, targetPosition)
                 routineRecyclerViewAdapter.notifyItemMoved(sourcePosition, targetPosition)
                 return true
             }
@@ -233,8 +229,8 @@ class RoutineEditActivity : AppCompatActivity() {
                 7 -> "sat"
                 else -> "sun"
             }
-            ActiveRoutineList = Routines.get(selectedDateAsString) as ArrayList<Excercise>
-            routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(ActiveRoutineList)
+            activeRoutineList = routines.get(selectedDateAsString) as ArrayList<Exercise>
+            routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(activeRoutineList)
             adapter = routineRecyclerViewAdapter
         }
     }

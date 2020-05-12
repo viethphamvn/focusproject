@@ -13,16 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.fragments.ExcercisePickerFragment
-import com.example.focusproject.models.Excercise
+import com.example.focusproject.models.Exercise
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class CreateExcerciseActivity : AppCompatActivity() {
 
-    private var newWorkout : ArrayList<Excercise> = ArrayList()
+    private var newWorkout : ArrayList<Exercise> = ArrayList()
     private lateinit var touchHelper : ItemTouchHelper
     private lateinit var routine_recycler_list_view: RecyclerView
     private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
@@ -80,7 +79,7 @@ class CreateExcerciseActivity : AppCompatActivity() {
 
     }
 
-    fun onItemClick(item: Excercise){
+    fun onItemClick(item: Exercise){
         newWorkout.add(item)
         routineRecyclerViewAdapter.notifyItemInserted(newWorkout.size-1)
     }

@@ -2,8 +2,8 @@ package com.example.focusproject.models
 
 import java.io.Serializable
 
-class Excercise(name: String, type: String, uid: String, duration: Long,  img: String, vidId: String, isRestTime: Boolean,
-                isTimed: Boolean, rep:Long, equipmentNeeded: Boolean, weight: Long, createdBy: String) : Serializable{
+class Exercise(name: String, type: String, uid: String, duration: Long, img: String, vidId: String, isRestTime: Boolean,
+               isTimed: Boolean, rep:Long, equipmentNeeded: Boolean, weight: Long, createdBy: String) : Serializable{
     var name = name
     var uid = uid
     var img = img

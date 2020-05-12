@@ -5,18 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.Nullable
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.focusproject.CreateExcerciseActivity
 
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.adapters.ExcerciseRecyclerViewAdapter
-import com.example.focusproject.models.Excercise
-import com.google.firebase.firestore.EventListener
+import com.example.focusproject.models.Exercise
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_arms.view.excerciseItemRecyclerView
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,7 +22,7 @@ private const val MUSCL_GRP = "param1"
 class MuscleGroupFragment : Fragment() {
     private var doc_name: String = ""
     private lateinit var excerciseRecyclerViewAdapter: ExcerciseRecyclerViewAdapter
-    private var Excercises: ArrayList<Excercise> = ArrayList()
+    private var exercises: ArrayList<Exercise> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +41,13 @@ class MuscleGroupFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_arms, container, false)
         view.excerciseItemRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
-            excerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(Excercises) { item -> doClick(item)}
+            excerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(exercises) { item -> doClick(item)}
             adapter = excerciseRecyclerViewAdapter
         }
         return view
     }
 
-    fun doClick(item: Excercise){
+    fun doClick(item: Exercise){
         if (activity is CreateExcerciseActivity){
             (activity as CreateExcerciseActivity).onItemClick(item)
         } else if (activity is RoutineEditActivity){
@@ -66,7 +62,7 @@ class MuscleGroupFragment : Fragment() {
             .addOnSuccessListener { result ->
                 for (document in result){
                     if (document.data.get("type") == doc_name) {
-                        var excercise = Excercise(
+                        var excercise = Exercise(
                             document.data.get("name").toString(),
                             document.data.get("type").toString(),
                             document.data.get("uid").toString(),
@@ -80,8 +76,8 @@ class MuscleGroupFragment : Fragment() {
                             document.data.get("weight") as Long,
                             document.data.get("createdBy") as String
                         )
-                        Excercises.add(excercise)
-                        excerciseRecyclerViewAdapter.notifyItemInserted(Excercises.size - 1)
+                        exercises.add(excercise)
+                        excerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
                     }
                 }
             }
