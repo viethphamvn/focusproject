@@ -305,6 +305,7 @@ class RoutinesListFragment : Fragment() {
         var weight = it.get("weight") as Long
         var vidId = it.get("vidId") as String
         var createdBy = it.get("createdBy") as String
+        var desc = it.get("desc") as String
         var exercise = Exercise(
             name,
             type,
@@ -317,7 +318,8 @@ class RoutinesListFragment : Fragment() {
             rep,
             equipmentNeeded,
             weight,
-            createdBy
+            createdBy,
+            desc
         )
 
         return exercise

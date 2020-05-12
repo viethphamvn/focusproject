@@ -48,7 +48,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="10dp"
             app:endIconMode="clear_text"
-            android:hint="Excercise Name">
+            android:hint="Exercise Name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -90,6 +90,14 @@
                 android:inputType="textAutoCorrect"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Spinner
+            android:id="@+id/spinnerExerciseType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/workoutDescEditText"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/workoutImgUrlEditText"
             android:layout_width="300dp"
@@ -110,7 +118,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/workoutDescEditText"
+            app:layout_constraintTop_toBottomOf="@id/spinnerExerciseType"
             app:layout_constraintBottom_toTopOf="@id/workoutImgUrlEditText"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="10dp"
@@ -162,6 +170,7 @@
                 android:background="@drawable/ic_down"/>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/repTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12"
@@ -180,10 +189,56 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/rep_layout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="WEIGHT ONE REP-MAX"/>
+
+        <LinearLayout
+            android:id="@+id/weight_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal|center_vertical">
+
+            <ImageButton
+                android:id="@+id/decreaseWeightButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_down"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/weightTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:maxLength="2"
+                android:text="45"
+                android:textSize="50sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/increaseWeightButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/ic_up"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/weight_layout"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="10dp"
             android:textSize="20sp"

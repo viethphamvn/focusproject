@@ -74,7 +74,8 @@ class MuscleGroupFragment : Fragment() {
                             document.data.get("rep") as Long,
                             document.data.get("equipmentNeeded") as Boolean,
                             document.data.get("weight") as Long,
-                            document.data.get("createdBy") as String
+                            document.data.get("createdBy") as String,
+                            document.data.get("desc") as String
                         )
                         exercises.add(excercise)
                         excerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)

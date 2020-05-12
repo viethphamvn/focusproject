@@ -3,7 +3,7 @@ package com.example.focusproject.models
 import java.io.Serializable
 
 class Exercise(name: String, type: String, uid: String, duration: Long, img: String, vidId: String, isRestTime: Boolean,
-               isTimed: Boolean, rep:Long, equipmentNeeded: Boolean, weight: Long, createdBy: String) : Serializable{
+               isTimed: Boolean, rep:Long, equipmentNeeded: Boolean, weight: Long, createdBy: String, desc: String) : Serializable{
     var name = name
     var uid = uid
     var img = img
@@ -16,4 +16,5 @@ class Exercise(name: String, type: String, uid: String, duration: Long, img: Str
     var duration = duration
     var type = type
     var createdBy = createdBy
+    var desc = desc
 }
