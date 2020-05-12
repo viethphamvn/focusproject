@@ -16,6 +16,7 @@ import com.example.focusproject.StartRoutineActivity
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.models.Excercise
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.*
 import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.mon_textview
@@ -69,30 +70,7 @@ class RoutinesListFragment : Fragment() {
                         firestore.collection("Exercise").document(exerciseId)
                             .get()
                             .addOnSuccessListener {
-                                var name = it.get("name") as String
-                                var type = it.get("type") as String
-                                var duration = it.get("duration") as Long
-                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
-                                var img = it.get("img") as String
-                                var isRestTime = it.get("isRestTime") as Boolean
-                                var isTime = it.get("isTimed") as Boolean
-                                var rep = it.get("rep") as Long
-                                var weight = it.get("weight") as Long
-                                var vidId = it.get("vidId") as String
-                                var exercise: Excercise = Excercise(
-                                    name,
-                                    type,
-                                    exerciseId,
-                                    duration,
-                                    img,
-                                    vidId,
-                                    isRestTime,
-                                    isTime,
-                                    rep,
-                                    equipmentNeeded,
-                                    weight
-                                )
-                                Routines["mon"]?.add(exercise)
+                                Routines["mon"]?.add(createExercise(it, exerciseId))
                                 routineRecyclerViewAdapter.notifyItemInserted(Routines["mon"]!!.size - 1)
                             }
                     }
@@ -109,31 +87,7 @@ class RoutinesListFragment : Fragment() {
                         firestore.collection("Exercise").document(exerciseId)
                             .get()
                             .addOnSuccessListener {
-                                var name = it.get("name") as String
-                                var type = it.get("type") as String
-                                var duration = it.get("duration") as Long
-                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
-                                var img = it.get("img") as String
-                                var isRestTime = it.get("isRestTime") as Boolean
-                                var isTime = it.get("isTimed") as Boolean
-                                var rep = it.get("rep") as Long
-                                var weight = it.get("weight") as Long
-                                var vidId = it.get("vidId") as String
-                                var exercise: Excercise = Excercise(
-                                    name,
-                                    type,
-                                    exerciseId,
-                                    duration,
-                                    img,
-                                    vidId,
-                                    isRestTime,
-                                    isTime,
-                                    rep,
-                                    equipmentNeeded,
-                                    weight
-                                )
-
-                                Routines["tue"]?.add(exercise)
+                                Routines["tue"]?.add(createExercise(it, exerciseId))
                                 routineRecyclerViewAdapter.notifyItemInserted(Routines["tue"]!!.size - 1)
                             }
                     }
@@ -150,30 +104,7 @@ class RoutinesListFragment : Fragment() {
                         firestore.collection("Exercise").document(exerciseId)
                             .get()
                             .addOnSuccessListener {
-                                var name = it.get("name") as String
-                                var type = it.get("type") as String
-                                var duration = it.get("duration") as Long
-                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
-                                var img = it.get("img") as String
-                                var isRestTime = it.get("isRestTime") as Boolean
-                                var isTime = it.get("isTimed") as Boolean
-                                var rep = it.get("rep") as Long
-                                var weight = it.get("weight") as Long
-                                var vidId = it.get("vidId") as String
-                                var exercise: Excercise = Excercise(
-                                    name,
-                                    type,
-                                    exerciseId,
-                                    duration,
-                                    img,
-                                    vidId,
-                                    isRestTime,
-                                    isTime,
-                                    rep,
-                                    equipmentNeeded,
-                                    weight
-                                )
-                                Routines["wed"]?.add(exercise)
+                                Routines["wed"]?.add(createExercise(it, exerciseId))
                                 routineRecyclerViewAdapter.notifyItemInserted(Routines["wed"]!!.size - 1)
                             }
                     }
@@ -190,30 +121,7 @@ class RoutinesListFragment : Fragment() {
                         firestore.collection("Exercise").document(exerciseId)
                             .get()
                             .addOnSuccessListener {
-                                var name = it.get("name") as String
-                                var type = it.get("type") as String
-                                var duration = it.get("duration") as Long
-                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
-                                var img = it.get("img") as String
-                                var isRestTime = it.get("isRestTime") as Boolean
-                                var isTime = it.get("isTimed") as Boolean
-                                var rep = it.get("rep") as Long
-                                var weight = it.get("weight") as Long
-                                var vidId = it.get("vidId") as String
-                                var exercise: Excercise = Excercise(
-                                    name,
-                                    type,
-                                    exerciseId,
-                                    duration,
-                                    img,
-                                    vidId,
-                                    isRestTime,
-                                    isTime,
-                                    rep,
-                                    equipmentNeeded,
-                                    weight
-                                )
-                                Routines["thu"]?.add(exercise)
+                                Routines["thu"]?.add(createExercise(it, exerciseId))
                                 routineRecyclerViewAdapter.notifyItemInserted(Routines["thu"]!!.size - 1)
                             }
                     }
@@ -229,30 +137,7 @@ class RoutinesListFragment : Fragment() {
                         firestore.collection("Exercise").document(exerciseId)
                             .get()
                             .addOnSuccessListener {
-                                var name = it.get("name") as String
-                                var type = it.get("type") as String
-                                var duration = it.get("duration") as Long
-                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
-                                var img = it.get("img") as String
-                                var isRestTime = it.get("isRestTime") as Boolean
-                                var isTime = it.get("isTimed") as Boolean
-                                var rep = it.get("rep") as Long
-                                var weight = it.get("weight") as Long
-                                var vidId = it.get("vidId") as String
-                                var exercise: Excercise = Excercise(
-                                    name,
-                                    type,
-                                    exerciseId,
-                                    duration,
-                                    img,
-                                    vidId,
-                                    isRestTime,
-                                    isTime,
-                                    rep,
-                                    equipmentNeeded,
-                                    weight
-                                )
-                                Routines["fri"]?.add(exercise)
+                                Routines["fri"]?.add(createExercise(it, exerciseId))
                                 routineRecyclerViewAdapter.notifyItemInserted(Routines["fri"]!!.size - 1)
                             }
                     }
@@ -269,30 +154,7 @@ class RoutinesListFragment : Fragment() {
                         firestore.collection("Exercise").document(exerciseId)
                             .get()
                             .addOnSuccessListener {
-                                var name = it.get("name") as String
-                                var type = it.get("type") as String
-                                var duration = it.get("duration") as Long
-                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
-                                var img = it.get("img") as String
-                                var isRestTime = it.get("isRestTime") as Boolean
-                                var isTime = it.get("isTimed") as Boolean
-                                var rep = it.get("rep") as Long
-                                var weight = it.get("weight") as Long
-                                var vidId = it.get("vidId") as String
-                                var exercise: Excercise = Excercise(
-                                    name,
-                                    type,
-                                    exerciseId,
-                                    duration,
-                                    img,
-                                    vidId,
-                                    isRestTime,
-                                    isTime,
-                                    rep,
-                                    equipmentNeeded,
-                                    weight
-                                )
-                                Routines["sat"]?.add(exercise)
+                                Routines["sat"]?.add(createExercise(it, exerciseId))
                                 routineRecyclerViewAdapter.notifyItemInserted(Routines["sat"]!!.size - 1)
                             }
                     }
@@ -309,30 +171,7 @@ class RoutinesListFragment : Fragment() {
                         firestore.collection("Exercise").document(exerciseId)
                             .get()
                             .addOnSuccessListener {
-                                var name = it.get("name") as String
-                                var type = it.get("type") as String
-                                var duration = it.get("duration") as Long
-                                var equipmentNeeded = it.get("equipmentNeeded") as Boolean
-                                var img = it.get("img") as String
-                                var isRestTime = it.get("isRestTime") as Boolean
-                                var isTime = it.get("isTimed") as Boolean
-                                var rep = it.get("rep") as Long
-                                var weight = it.get("weight") as Long
-                                var vidId = it.get("vidId") as String
-                                var exercise: Excercise = Excercise(
-                                    name,
-                                    type,
-                                    exerciseId,
-                                    duration,
-                                    img,
-                                    vidId,
-                                    isRestTime,
-                                    isTime,
-                                    rep,
-                                    equipmentNeeded,
-                                    weight
-                                )
-                                Routines["sun"]?.add(exercise)
+                                Routines["sun"]?.add(createExercise(it, exerciseId))
                                 routineRecyclerViewAdapter.notifyItemInserted(Routines["sun"]!!.size - 1)
                             }
                     }
@@ -454,6 +293,36 @@ class RoutinesListFragment : Fragment() {
         super.onResume()
 
         initiateRoutine()
+    }
+
+    private fun createExercise(it: DocumentSnapshot, exerciseId: String): Excercise{
+        var name = it.get("name") as String
+        var type = it.get("type") as String
+        var duration = it.get("duration") as Long
+        var equipmentNeeded = it.get("equipmentNeeded") as Boolean
+        var img = it.get("img") as String
+        var isRestTime = it.get("isRestTime") as Boolean
+        var isTime = it.get("isTimed") as Boolean
+        var rep = it.get("rep") as Long
+        var weight = it.get("weight") as Long
+        var vidId = it.get("vidId") as String
+        var createdBy = it.get("createdBy") as String
+        var exercise = Excercise(
+            name,
+            type,
+            exerciseId,
+            duration,
+            img,
+            vidId,
+            isRestTime,
+            isTime,
+            rep,
+            equipmentNeeded,
+            weight,
+            createdBy
+        )
+
+        return exercise
     }
 
     private fun startEditActivity(Routines : HashMap<String, ArrayList<Excercise>>, dateCode: Int){
