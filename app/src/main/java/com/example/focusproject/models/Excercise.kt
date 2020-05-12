@@ -4,29 +4,15 @@ import java.io.Serializable
 
 class Excercise(name: String, type: String, uid: String, duration: Long,  img: String, vidId: String, isRestTime: Boolean,
                 isTimed: Boolean, rep:Long, equipmentNeeded: Boolean, weight: Long) : Serializable{
-    var name: String
-    var uid: String
-    var img: String
-    var vidId: String
-    var isRestTime: Boolean
-    var isTimed: Boolean
-    var rep: Long
-    var equipmentNeeded: Boolean
-    var weight: Long
-    var duration: Long
-    var type: String
-
-    init{
-        this.name = name
-        this.uid = uid
-        this.img = img
-        this.isRestTime = isRestTime
-        this.vidId = vidId
-        this.rep = rep
-        this.weight = weight
-        this.duration = duration
-        this.isTimed = isTimed
-        this.equipmentNeeded = equipmentNeeded
-        this.type = type
-    }
+    var name: String = name
+    var uid: String = uid
+    var img: String = img
+    var vidId: String = vidId
+    var isRestTime: Boolean = isRestTime
+    var isTimed: Boolean = isTimed
+    var rep: Long = rep
+    var equipmentNeeded: Boolean = equipmentNeeded
+    var weight: Long = weight
+    var duration: Long = duration
+    var type: String = type
 }

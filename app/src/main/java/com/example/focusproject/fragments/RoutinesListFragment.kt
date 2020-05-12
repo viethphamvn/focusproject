@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.StartRoutineActivity
@@ -32,6 +33,7 @@ class RoutinesListFragment : Fragment() {
     private lateinit var currentButton : TextView
     private var buttonArray : HashMap<Int, TextView> = HashMap()
     private var data : Map<String, Any> = HashMap()
+    private lateinit var routineRecyclerViewAdapter : RoutineRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,20 +49,21 @@ class RoutinesListFragment : Fragment() {
         Routines.put("fri", ArrayList())
         Routines.put("sat", ArrayList())
         Routines.put("sun", ArrayList())
-
-        initiateRoutine()
     }
 
     private fun initiateRoutine(){
-        var firestore = FirebaseFirestore.getInstance()
+       var firestore = FirebaseFirestore.getInstance()
         var currentUser = FirebaseAuth.getInstance().currentUser!!
         firestore.collection("Users").document(currentUser.uid)
             .get()
             .addOnSuccessListener {
                 data = it["routine"] as HashMap<String, Any>
 
-
                 var tempArrayList = data.get("mon") as ArrayList<String>
+                if (tempArrayList.size > 0){
+                    Routines["mon"]?.clear()
+                    routineRecyclerViewAdapter.notifyDataSetChanged()
+                }
                 for (exerciseId in tempArrayList) {
                     if (exerciseId != "") {
                         firestore.collection("Exercise").document(exerciseId)
@@ -90,12 +93,17 @@ class RoutinesListFragment : Fragment() {
                                     weight
                                 )
                                 Routines["mon"]?.add(exercise)
+                                routineRecyclerViewAdapter.notifyItemInserted(Routines["mon"]!!.size - 1)
                             }
                     }
                 }
 
 
                 tempArrayList = data.get("tue") as ArrayList<String>
+                if (tempArrayList.size > 0){
+                    Routines["tue"]?.clear()
+                    routineRecyclerViewAdapter.notifyDataSetChanged()
+                }
                 for (exerciseId in tempArrayList) {
                     if (exerciseId != "") {
                         firestore.collection("Exercise").document(exerciseId)
@@ -126,12 +134,17 @@ class RoutinesListFragment : Fragment() {
                                 )
 
                                 Routines["tue"]?.add(exercise)
+                                routineRecyclerViewAdapter.notifyItemInserted(Routines["tue"]!!.size - 1)
                             }
                     }
                 }
 
 
                 tempArrayList = data.get("wed") as ArrayList<String>
+                if (tempArrayList.size > 0){
+                    Routines["wed"]?.clear()
+                    routineRecyclerViewAdapter.notifyDataSetChanged()
+                }
                 for (exerciseId in tempArrayList) {
                     if (exerciseId != "") {
                         firestore.collection("Exercise").document(exerciseId)
@@ -161,12 +174,17 @@ class RoutinesListFragment : Fragment() {
                                     weight
                                 )
                                 Routines["wed"]?.add(exercise)
+                                routineRecyclerViewAdapter.notifyItemInserted(Routines["wed"]!!.size - 1)
                             }
                     }
                 }
 
 
                 tempArrayList = data.get("thu") as ArrayList<String>
+                if (tempArrayList.size > 0){
+                    Routines["thu"]?.clear()
+                    routineRecyclerViewAdapter.notifyDataSetChanged()
+                }
                 for (exerciseId in tempArrayList) {
                     if (exerciseId != "") {
                         firestore.collection("Exercise").document(exerciseId)
@@ -196,11 +214,16 @@ class RoutinesListFragment : Fragment() {
                                     weight
                                 )
                                 Routines["thu"]?.add(exercise)
+                                routineRecyclerViewAdapter.notifyItemInserted(Routines["thu"]!!.size - 1)
                             }
                     }
                 }
 
                 tempArrayList = data.get("fri") as ArrayList<String>
+                if (tempArrayList.size > 0){
+                    Routines["fri"]?.clear()
+                    routineRecyclerViewAdapter.notifyDataSetChanged()
+                }
                 for (exerciseId in tempArrayList) {
                     if (exerciseId != "") {
                         firestore.collection("Exercise").document(exerciseId)
@@ -230,12 +253,17 @@ class RoutinesListFragment : Fragment() {
                                     weight
                                 )
                                 Routines["fri"]?.add(exercise)
+                                routineRecyclerViewAdapter.notifyItemInserted(Routines["fri"]!!.size - 1)
                             }
                     }
                 }
 
 
                 tempArrayList = data.get("sat") as ArrayList<String>
+                if (tempArrayList.size > 0){
+                    Routines["sat"]?.clear()
+                    routineRecyclerViewAdapter.notifyDataSetChanged()
+                }
                 for (exerciseId in tempArrayList) {
                     if (exerciseId != "") {
                         firestore.collection("Exercise").document(exerciseId)
@@ -265,12 +293,17 @@ class RoutinesListFragment : Fragment() {
                                     weight
                                 )
                                 Routines["sat"]?.add(exercise)
+                                routineRecyclerViewAdapter.notifyItemInserted(Routines["sat"]!!.size - 1)
                             }
                     }
                 }
 
 
                 tempArrayList = data.get("sun") as ArrayList<String>
+                if (tempArrayList.size > 0){
+                    Routines["sun"]?.clear()
+                    routineRecyclerViewAdapter.notifyDataSetChanged()
+                }
                 for (exerciseId in tempArrayList) {
                     if (exerciseId != "") {
                         firestore.collection("Exercise").document(exerciseId)
@@ -300,6 +333,7 @@ class RoutinesListFragment : Fragment() {
                                     weight
                                 )
                                 Routines["sun"]?.add(exercise)
+                                routineRecyclerViewAdapter.notifyItemInserted(Routines["sun"]!!.size - 1)
                             }
                     }
                 }
@@ -416,6 +450,12 @@ class RoutinesListFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        initiateRoutine()
+    }
+
     private fun startEditActivity(Routines : HashMap<String, ArrayList<Excercise>>, dateCode: Int){
         var copyRoutine = HashMap(Routines)
         val intent = Intent(context, RoutineEditActivity::class.java)
@@ -435,15 +475,15 @@ class RoutinesListFragment : Fragment() {
     }
 
     private fun getCurrentActiveList(selectedDate: Int): ArrayList<Excercise>{
-        when(selectedDate){
-            2 -> ActiveRoutineList = Routines.get("mon") as ArrayList<Excercise>
-            3 -> ActiveRoutineList = Routines.get("tue") as ArrayList<Excercise>
-            4 -> ActiveRoutineList = Routines.get("wed") as ArrayList<Excercise>
-            5 -> ActiveRoutineList = Routines.get("thu") as ArrayList<Excercise>
-            6 -> ActiveRoutineList = Routines.get("fri") as ArrayList<Excercise>
-            7 -> ActiveRoutineList = Routines.get("sat") as ArrayList<Excercise>
-            else -> ActiveRoutineList = Routines.get("sun") as ArrayList<Excercise>
-        }
+        ActiveRoutineList = when(selectedDate){
+            2 -> if (Routines.get("mon") != null) Routines.get("mon") else ArrayList()
+            3 -> if (Routines.get("tue") != null) Routines.get("tue") else ArrayList()
+            4 -> if (Routines.get("wed") != null) Routines.get("wed") else ArrayList()
+            5 -> if (Routines.get("thu") != null) Routines.get("thu") else ArrayList()
+            6 -> if (Routines.get("fri") != null) Routines.get("fri") else ArrayList()
+            7 -> if (Routines.get("sat") != null) Routines.get("sat") else ArrayList()
+            else -> if (Routines.get("sun") != null) Routines.get("sun") else ArrayList()
+        } as ArrayList<Excercise>
         return ActiveRoutineList
     }
 

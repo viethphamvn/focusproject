@@ -65,6 +65,7 @@ class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerVie
         var imageView = itemView.excerciseImageHolder
         var excerciseNameTextView = itemView.excerciseNameTextView
         var equipmentOrWeightTextView = itemView.equipmentOrWeightTextView
+        var repTextView = itemView.reprange_textview
         var timeTextView = itemView.time_textview
 
         fun bind(excercise : Excercise){
@@ -74,6 +75,12 @@ class RoutineRecyclerViewAdapter(Excercises: ArrayList<Excercise>) : RecyclerVie
                     equipmentOrWeightTextView.text = String.format("%d %%RM", excercise.weight)
                 } else {
                     equipmentOrWeightTextView.text = "NA"
+                }
+
+                if (excercise.rep > 0){
+                    repTextView.text = "REPETITION: ${excercise.rep}"
+                } else {
+                    repTextView.text = "REPETITION: NA"
                 }
                 //Bind image
                 var url = ""
