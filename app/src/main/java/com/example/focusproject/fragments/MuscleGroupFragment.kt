@@ -41,7 +41,7 @@ class MuscleGroupFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_arms, container, false)
         view.excerciseItemRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
-            excerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(exercises) { item -> doClick(item)}
+            excerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(exercises) {item -> doClick(item)}
             adapter = excerciseRecyclerViewAdapter
         }
         return view

@@ -9,8 +9,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import com.example.focusproject.CreateExcerciseActivity
 
 import com.example.focusproject.R
+import com.example.focusproject.RoutineEditActivity
+import com.example.focusproject.models.Exercise
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -62,10 +65,9 @@ class NewWorkoutEditFragment : Fragment() {
                 var youtubeUrl = workoutVideoUrlEditText.editText?.text.toString()
                 var rep = repTextView.text.toString().toLong()
                 var weight = weightTextView.text.toString().toLong()
-                var duration = hours * 3600 + minutes * 60 + seconds
-
+                var duration = (hours * 3600 + minutes * 60 + seconds).toLong()
                 var firestore = FirebaseFirestore.getInstance()
-                var ref = firestore.collection("Customized").document()
+                var ref = firestore.collection("Exercise").document()
 
                 var exercise : HashMap<String, Any> = HashMap()
                 exercise.put("isRestTime", isRestTime)
@@ -76,6 +78,7 @@ class NewWorkoutEditFragment : Fragment() {
                 exercise.put("img", gifUrl)
                 exercise.put("vidId", youtubeUrl)
                 exercise.put("rep", rep)
+                exercise.put("isTimed",duration > 0)
                 exercise.put("weight", weight)
                 exercise.put("duration", duration)
                 exercise.put("createdBy", FirebaseAuth.getInstance().currentUser?.uid!!)
@@ -84,10 +87,34 @@ class NewWorkoutEditFragment : Fragment() {
                 ref.set(exercise).addOnSuccessListener {
                     Toast.makeText(context, "Exercise Created", Toast.LENGTH_SHORT).show()
                 }
+                exerciseCreatedCallBack(exercise)
             }
         }
 
         return fragmentView
+    }
+
+    private fun exerciseCreatedCallBack(exercise: HashMap<String, Any>){
+        var newExercise = Exercise(
+            exercise.get("name") as String,
+            exercise.get("type") as String,
+            exercise.get("uid") as String,
+            exercise.get("duration") as Long,
+            exercise.get("img") as String,
+            exercise.get("vidId") as String,
+            exercise.get("isRestTime") as Boolean,
+            exercise.get("isTimed") as Boolean,
+            exercise.get("rep") as Long,
+            exercise.get("equipmentNeeded") as Boolean,
+            exercise.get("weight") as Long,
+            exercise.get("createdBy") as String,
+            exercise.get("desc") as String)
+
+        if (activity is RoutineEditActivity){
+            (activity as RoutineEditActivity).onItemClick(newExercise)
+        } else if (activity is CreateExcerciseActivity){
+            (activity as CreateExcerciseActivity).onItemClick(newExercise)
+        }
     }
 
     private fun setUpSpinner(){
