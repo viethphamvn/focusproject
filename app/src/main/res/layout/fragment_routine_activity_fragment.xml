@@ -16,7 +16,7 @@
         app:layout_constraintHeight_percent="0.08">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/mon_textview"
+            android:id="@+id/mon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,11 +29,11 @@
             android:background="@color/darkgrey"
             android:gravity="center_horizontal|center_vertical"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tue_textview"
+            android:id="@+id/tue"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/mon_textview"
+            app:layout_constraintLeft_toRightOf="@id/mon"
             android:text="TUE"
             app:layout_constraintWidth_percent="0.14"
             android:textColor="@color/white"
@@ -41,11 +41,11 @@
             android:textSize="15sp"
             android:gravity="center_horizontal|center_vertical"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/wed_textview"
+            android:id="@+id/wed"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/tue_textview"
+            app:layout_constraintLeft_toRightOf="@id/tue"
             android:text="WED"
             app:layout_constraintWidth_percent="0.14"
             android:textColor="@color/white"
@@ -54,11 +54,11 @@
             android:textSize="15sp"
             android:gravity="center_horizontal|center_vertical"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/thu_textview"
+            android:id="@+id/thu"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/wed_textview"
+            app:layout_constraintLeft_toRightOf="@id/wed"
             android:text="THU"
             app:layout_constraintWidth_percent="0.14"
             android:textColor="@color/white"
@@ -67,11 +67,11 @@
             android:textSize="15sp"
             android:gravity="center_horizontal|center_vertical"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/fri_textview"
+            android:id="@+id/fri"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/thu_textview"
+            app:layout_constraintLeft_toRightOf="@id/thu"
             android:text="FRI"
             app:layout_constraintWidth_percent="0.14"
             android:textColor="@color/white"
@@ -80,11 +80,11 @@
             android:textSize="15sp"
             android:gravity="center_horizontal|center_vertical"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sat_textview"
+            android:id="@+id/sat"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/fri_textview"
+            app:layout_constraintLeft_toRightOf="@id/fri"
             android:text="SAT"
             app:layout_constraintWidth_percent="0.14"
             android:textColor="@color/white"
@@ -93,11 +93,11 @@
             android:textSize="15sp"
             android:gravity="center_horizontal|center_vertical"/>
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sun_textview"
+            android:id="@+id/sun"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/sat_textview"
+            app:layout_constraintLeft_toRightOf="@id/sat"
             android:text="SUN"
             app:layout_constraintWidth_percent="0.14"
             android:textColor="@color/white"

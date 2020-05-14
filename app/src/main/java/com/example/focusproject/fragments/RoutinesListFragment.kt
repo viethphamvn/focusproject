@@ -18,13 +18,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.*
-import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.mon_textview
+import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.mon
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
 
-class RoutinesListFragment : Fragment() {
+class RoutinesListFragment : Fragment(), View.OnClickListener {
     private lateinit var activeRoutineList: ArrayList<Exercise>
     private var routines : HashMap<String, ArrayList<Exercise>> = HashMap()
     private var selectedDate : Int = 0
@@ -179,13 +179,13 @@ class RoutinesListFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_routine_activity_fragment, container, false)
 
         //Create a Array of dateButton for easier control
-        buttonArray.put(2, view.mon_textview)
-        buttonArray.put(3, view.tue_textview)
-        buttonArray.put(4, view.wed_textview)
-        buttonArray.put(5, view.thu_textview)
-        buttonArray.put(6, view.fri_textview)
-        buttonArray.put(7, view.sat_textview)
-        buttonArray.put(1, view.sun_textview)
+        buttonArray.put(2, view.mon)
+        buttonArray.put(3, view.tue)
+        buttonArray.put(4, view.wed)
+        buttonArray.put(5, view.thu)
+        buttonArray.put(6, view.fri)
+        buttonArray.put(7, view.sat)
+        buttonArray.put(1, view.sun)
         //Initiate RecyclerView with Adapter
         view.routine_recycler_list_view.apply {
             layoutManager = LinearLayoutManager(context)
@@ -197,79 +197,18 @@ class RoutinesListFragment : Fragment() {
 
         //Handle Views Behavior
         view.apply {
-            mon_textview.setOnClickListener {
-                changeSelectedDate(2)
-                routineRecyclerViewAdapter.apply {
-                    updateDataSet(getCurrentActiveList(selectedDate))
-                    notifyDataSetChanged()
-                }
-                currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
-                currentButton = buttonArray.get(selectedDate)!!
-                currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-            }
-            tue_textview.setOnClickListener {
-                changeSelectedDate(3)
-                routineRecyclerViewAdapter.apply {
-                    updateDataSet(getCurrentActiveList(selectedDate))
-                    notifyDataSetChanged()
-                }
-                currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
-                currentButton = buttonArray.get(selectedDate)!!
-                currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-            }
-            wed_textview.setOnClickListener {
-                changeSelectedDate(4)
-                routineRecyclerViewAdapter.apply {
-                    updateDataSet(getCurrentActiveList(selectedDate))
-                    notifyDataSetChanged()
-                }
-                currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
-                currentButton = buttonArray.get(selectedDate)!!
-                currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-            }
-            thu_textview.setOnClickListener {
-                changeSelectedDate(5)
-                routineRecyclerViewAdapter.apply {
-                    updateDataSet(getCurrentActiveList(selectedDate))
-                    notifyDataSetChanged()
-                }
-                currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
-                currentButton = buttonArray.get(selectedDate)!!
-                currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-            }
-            fri_textview.setOnClickListener {
-                changeSelectedDate(6)
-                routineRecyclerViewAdapter.apply {
-                    updateDataSet(getCurrentActiveList(selectedDate))
-                    notifyDataSetChanged()
-                }
-                currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
-                currentButton = buttonArray.get(selectedDate)!!
-                currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-            }
-            sat_textview.setOnClickListener {
-                changeSelectedDate(7)
-                routineRecyclerViewAdapter.apply {
-                    updateDataSet(getCurrentActiveList(selectedDate))
-                    notifyDataSetChanged()
-                }
-                currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
-                currentButton = buttonArray.get(selectedDate)!!
-                currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-            }
-            sun_textview.setOnClickListener {
-                changeSelectedDate(1)
-                routineRecyclerViewAdapter.apply {
-                    updateDataSet(getCurrentActiveList(selectedDate))
-                    notifyDataSetChanged()
-                }
-                currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
-                currentButton = buttonArray.get(selectedDate)!!
-                currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-            }
+            mon.setOnClickListener(this@RoutinesListFragment)
+            tue.setOnClickListener (this@RoutinesListFragment)
+            wed.setOnClickListener (this@RoutinesListFragment)
+            thu.setOnClickListener (this@RoutinesListFragment)
+            fri.setOnClickListener (this@RoutinesListFragment)
+            sat.setOnClickListener(this@RoutinesListFragment)
+            sun.setOnClickListener (this@RoutinesListFragment)
+
             edit_routine_btn.setOnClickListener {
                 startEditActivity(routines, selectedDate)
             }
+
             start_workout_btn.setOnClickListener{
                 var intent = Intent(context, StartRoutineActivity::class.java)
                 intent.putExtra("routine", activeRoutineList)
@@ -435,6 +374,29 @@ class RoutinesListFragment : Fragment() {
             if (data != null) {
                 updateDatabase(data.getSerializableExtra("routine") as HashMap<String, ArrayList<Exercise>>)
             }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        if (v != null) {
+            changeSelectedDate(
+                when (v.id) {
+                    R.id.mon -> 2
+                    R.id.tue -> 3
+                    R.id.wed -> 4
+                    R.id.thu -> 5
+                    R.id.fri -> 6
+                    R.id.sat -> 7
+                    else -> 1
+                }
+            )
+            routineRecyclerViewAdapter.apply {
+                updateDataSet(getCurrentActiveList(selectedDate))
+                notifyDataSetChanged()
+            }
+            currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
+            currentButton = buttonArray.get(selectedDate)!!
+            currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
         }
     }
 }
