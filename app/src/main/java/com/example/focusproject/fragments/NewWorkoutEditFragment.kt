@@ -41,7 +41,7 @@ class NewWorkoutEditFragment : Fragment() {
 
         setUpSpinner()
 
-        fragmentView?.changeDurationButton?.setOnClickListener {
+        fragmentView.changeDurationButton?.setOnClickListener {
             MyTimePickerDialog(context,
                 MyTimePickerDialog.OnTimeSetListener {_, hourOfDay, minute, seconds ->
                     run {
