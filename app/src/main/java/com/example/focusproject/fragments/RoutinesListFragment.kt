@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.mo
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
 
 class RoutinesListFragment : Fragment(), View.OnClickListener {
     private lateinit var activeRoutineList: ArrayList<Exercise>
@@ -44,6 +43,8 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
             changeSelectedDate(it.getInt(DAY_OF_WEEK))
         }
 
+        //Initiate the routines Hashmap with arraylists that will hold exerciseIds that will be fetched from
+        //the database
         routines.put("mon", ArrayList())
         routines.put("tue", ArrayList())
         routines.put("wed", ArrayList())
@@ -60,9 +61,9 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
                 data = it["routine"] as HashMap<String, Any>
 
                 var tempArrayList = data.get("mon") as ArrayList<String>
+                routines["mon"]?.clear()
+                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
-                    routines["mon"]?.clear()
-                    routineRecyclerViewAdapter.notifyDataSetChanged()
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
                             firestore.collection("Exercise").document(exerciseId)
@@ -76,13 +77,12 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
 
                 tempArrayList = data.get("tue") as ArrayList<String>
+                routines["tue"]?.clear()
+                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
-                    routines["tue"]?.clear()
-                    routineRecyclerViewAdapter.notifyDataSetChanged()
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
-                            firestore.collection("Exercise").document(exerciseId)
-                                .get()
+                            firestore.collection("Exercise").document(exerciseId).get()
                                 .addOnSuccessListener {
                                     createExercise(it, exerciseId, "tue")
                                 }
@@ -92,9 +92,9 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
 
                 tempArrayList = data.get("wed") as ArrayList<String>
+                routines["wed"]?.clear()
+                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
-                    routines["wed"]?.clear()
-                    routineRecyclerViewAdapter.notifyDataSetChanged()
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
                             firestore.collection("Exercise").document(exerciseId)
@@ -108,9 +108,9 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
 
                 tempArrayList = data.get("thu") as ArrayList<String>
+                routines["thu"]?.clear()
+                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
-                    routines["thu"]?.clear()
-                    routineRecyclerViewAdapter.notifyDataSetChanged()
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
                             firestore.collection("Exercise").document(exerciseId)
@@ -123,9 +123,9 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
                 }
 
                 tempArrayList = data.get("fri") as ArrayList<String>
+                routines["fri"]?.clear()
+                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
-                    routines["fri"]?.clear()
-                    routineRecyclerViewAdapter.notifyDataSetChanged()
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
                             firestore.collection("Exercise").document(exerciseId)
@@ -139,9 +139,9 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
 
                 tempArrayList = data.get("sat") as ArrayList<String>
+                routines["sat"]?.clear()
+                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
-                    routines["sat"]?.clear()
-                    routineRecyclerViewAdapter.notifyDataSetChanged()
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
                             firestore.collection("Exercise").document(exerciseId)
@@ -155,9 +155,9 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
 
                 tempArrayList = data.get("sun") as ArrayList<String>
+                routines["sun"]?.clear()
+                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
-                    routines["sun"]?.clear()
-                    routineRecyclerViewAdapter.notifyDataSetChanged()
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
                             firestore.collection("Exercise").document(exerciseId)
@@ -169,6 +169,11 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
                     }
                 }
             }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initiateRoutine()
     }
 
     override fun onCreateView(
@@ -233,12 +238,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        initiateRoutine()
-    }
-
     private fun createExercise(it: DocumentSnapshot, exerciseId: String, date: String){
         var name = it.get("name") as String
         var type = it.get("type") as String
@@ -269,8 +268,22 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
         )
 
         routines[date]!!.add(exercise)
-        if (date == selectedDateAsString){
-            routineRecyclerViewAdapter.notifyItemInserted(routines[date]!!.size - 1)
+
+        if (routines[date]!!.size == (data.get(date) as ArrayList<String>).size){
+            var sortedArray = ArrayList<Exercise>()
+            for (id in data.get(date) as ArrayList<String>){
+                for (exercise in routines[date]!!){
+                    if (exercise.uid == id){
+                        sortedArray.add(exercise)
+                        break
+                    }
+                }
+            }
+            routines[date] = sortedArray
+            if (date == selectedDateAsString){
+                routineRecyclerViewAdapter.updateDataSet(routines[date]!!)
+                routineRecyclerViewAdapter.notifyDataSetChanged()
+            }
         }
     }
 
@@ -365,7 +378,9 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
         exerciseIdArray.clear()
 
 
-        firestore.collection("Users").document(currentUser.uid).update("routine", updatedRoutine)
+        firestore.collection("Users").document(currentUser.uid).update("routine", updatedRoutine).addOnCompleteListener {
+            initiateRoutine()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

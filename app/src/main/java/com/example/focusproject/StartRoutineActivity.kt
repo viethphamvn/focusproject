@@ -188,6 +188,7 @@ class StartRoutineActivity : AppCompatActivity() {
 
         activeRoutineList.forEach {
             if (it.isRestTime){
+                it.img = "https://68.media.tumblr.com/6e42c179cefc75b1cc8e0cc52a374b84/tumblr_oqstb6MdLH1w9ge4xo1_400.gif"
                 tempList.add(it)
             } else {
                 var readyTime = Exercise("GET READY","","",10,it.img,it.vidId,false,true,it.rep, false, it.weight, it.createdBy, it.desc)

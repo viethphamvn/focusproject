@@ -66,6 +66,7 @@ class NewWorkoutEditFragment : Fragment() {
                 var rep = repTextView.text.toString().toLong()
                 var weight = weightTextView.text.toString().toLong()
                 var duration = (hours * 3600 + minutes * 60 + seconds).toLong()
+
                 var firestore = FirebaseFirestore.getInstance()
                 var ref = firestore.collection("Exercise").document()
 
@@ -86,6 +87,8 @@ class NewWorkoutEditFragment : Fragment() {
 
                 ref.set(exercise).addOnSuccessListener {
                     Toast.makeText(context, "Exercise Created", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener{
+
                 }
                 exerciseCreatedCallBack(exercise)
             }
