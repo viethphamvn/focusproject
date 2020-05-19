@@ -59,10 +59,8 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
             .get()
             .addOnSuccessListener {
                 data = it["routine"] as HashMap<String, Any>
-
                 var tempArrayList = data.get("mon") as ArrayList<String>
                 routines["mon"]?.clear()
-                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
@@ -78,7 +76,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
                 tempArrayList = data.get("tue") as ArrayList<String>
                 routines["tue"]?.clear()
-                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
@@ -93,7 +90,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
                 tempArrayList = data.get("wed") as ArrayList<String>
                 routines["wed"]?.clear()
-                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
@@ -109,7 +105,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
                 tempArrayList = data.get("thu") as ArrayList<String>
                 routines["thu"]?.clear()
-                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
@@ -124,7 +119,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
                 tempArrayList = data.get("fri") as ArrayList<String>
                 routines["fri"]?.clear()
-                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
@@ -140,7 +134,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
                 tempArrayList = data.get("sat") as ArrayList<String>
                 routines["sat"]?.clear()
-                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
@@ -156,7 +149,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
                 tempArrayList = data.get("sun") as ArrayList<String>
                 routines["sun"]?.clear()
-                routineRecyclerViewAdapter.notifyDataSetChanged()
                 if (tempArrayList.size > 0) {
                     for (exerciseId in tempArrayList) {
                         if (exerciseId != "") {
@@ -282,7 +274,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
             routines[date] = sortedArray
             if (date == selectedDateAsString){
                 routineRecyclerViewAdapter.updateDataSet(routines[date]!!)
-                routineRecyclerViewAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -407,7 +398,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
             )
             routineRecyclerViewAdapter.apply {
                 updateDataSet(getCurrentActiveList(selectedDate))
-                notifyDataSetChanged()
             }
             currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
             currentButton = buttonArray.get(selectedDate)!!

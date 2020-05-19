@@ -21,6 +21,7 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
 
     fun updateDataSet(exercises: ArrayList<Exercise>){
         this.Exercises = exercises
+        notifyDataSetChanged()
     }
 
     fun removeItemAt(position: Int){
