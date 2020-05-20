@@ -19,8 +19,12 @@ class ExcercisePickerFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_excercise_picker, container, false)
         var viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
-        viewPagerAdapter.addFragment(NewWorkoutEditFragment.newInstance(),"New")
-        viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("Abs"), "Abs")
+
+        viewPagerAdapter.addFragment(NewWorkoutEditFragment.newInstance(),"New Exercise")
+        viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("", true), "By You")
+        viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("Abs", false), "Abs")
+        viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("Arms", false), "Abs")
+
         view.viewpager.adapter = viewPagerAdapter
         view.tablayout.setupWithViewPager(view.viewpager)
         return view

@@ -12,22 +12,27 @@ import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.adapters.ExcerciseRecyclerViewAdapter
 import com.example.focusproject.models.Exercise
+import com.example.focusproject.tools.CreateExercise
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_arms.view.excerciseItemRecyclerView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val MUSCL_GRP = "param1"
+private const val SELF_CREATED = "param2"
 
 class MuscleGroupFragment : Fragment() {
-    private var doc_name: String = ""
+    private var doc_name: String? = ""
+    private var self: Boolean? = false
     private lateinit var excerciseRecyclerViewAdapter: ExcerciseRecyclerViewAdapter
     private var exercises: ArrayList<Exercise> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            doc_name = it.getString(MUSCL_GRP)!!
+            doc_name = if (it.getString(MUSCL_GRP) != null) it.getString(MUSCL_GRP) else ""
+            self = if (it.getBoolean(SELF_CREATED) != null) it.getBoolean(SELF_CREATED) else false
         }
     }
 
@@ -61,23 +66,13 @@ class MuscleGroupFragment : Fragment() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result){
-                    if (document.data.get("type") == doc_name) {
-                        var excercise = Exercise(
-                            document.data.get("name").toString(),
-                            document.data.get("type").toString(),
-                            document.data.get("uid").toString(),
-                            document.data.get("duration") as Long,
-                            document.data.get("img").toString(),
-                            document.data.get("vidId").toString(),
-                            document.data.get("isRestTime") as Boolean,
-                            document.data.get("isTimed") as Boolean,
-                            document.data.get("rep") as Long,
-                            document.data.get("equipmentNeeded") as Boolean,
-                            document.data.get("weight") as Long,
-                            document.data.get("createdBy") as String,
-                            document.data.get("desc") as String
-                        )
+                    if (document.get("type") as String == doc_name && !self!!) {
+                        var excercise = CreateExercise.createExercise(document)
                         exercises.add(excercise)
+                        excerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
+                    } else if (self!! && document.get("createdBy") as String == FirebaseAuth.getInstance().currentUser!!.uid && !(document.get("isRestTime") as Boolean)){
+                        var exercise = CreateExercise.createExercise(document)
+                        exercises.add(exercise)
                         excerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
                     }
                 }
@@ -86,10 +81,11 @@ class MuscleGroupFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(doc_name: String) =
+        fun newInstance(doc_name: String, self: Boolean) =
             MuscleGroupFragment().apply {
                 arguments = Bundle().apply {
                     putString(MUSCL_GRP, doc_name)
+                    putBoolean(SELF_CREATED, self)
                 }
             }
     }
