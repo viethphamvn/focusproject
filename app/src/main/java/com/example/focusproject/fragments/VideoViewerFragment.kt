@@ -22,7 +22,8 @@ class VideoViewerFragment : Fragment(){
     private var vidUrl: String = ""
     private lateinit var mYoutubePlayer : YouTubePlayer
     private lateinit var theview: View
-    var isCued: Boolean = false
+    var duration: Long = 0
+    var currentSecond: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +44,8 @@ class VideoViewerFragment : Fragment(){
             }
 
             override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
-                System.out.println(second)
+                currentSecond = second.toLong() * 1000
+                (activity as StartRoutineActivity).videoIsPlaying(currentSecond, duration)
             }
 
             override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
@@ -75,7 +77,7 @@ class VideoViewerFragment : Fragment(){
                     isFinished()
                 }
                 if (state == PlayerConstants.PlayerState.VIDEO_CUED){
-                    isCued = true
+                    playVideo()
                 }
                 if (state == PlayerConstants.PlayerState.PLAYING){
                     (activity as StartRoutineActivity).playVideo()
@@ -86,7 +88,7 @@ class VideoViewerFragment : Fragment(){
             }
 
             override fun onVideoDuration(youTubePlayer: YouTubePlayer, duration: Float) {
-
+                this@VideoViewerFragment.duration = duration.toLong() * 1000
             }
 
             override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
@@ -105,6 +107,7 @@ class VideoViewerFragment : Fragment(){
 
     fun playVideo(){
         if (this::mYoutubePlayer.isInitialized){
+            println("Play video ${mYoutubePlayer}")
             mYoutubePlayer.play()
         }
     }

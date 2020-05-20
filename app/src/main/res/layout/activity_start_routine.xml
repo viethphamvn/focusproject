@@ -19,8 +19,8 @@
         app:layout_constraintRight_toRightOf="parent"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/excerciseMediaViewPager"
+    <FrameLayout
+        android:id="@+id/excerciseMediaContainer"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
@@ -33,7 +33,7 @@
         android:id="@id/excerciseNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/excerciseMediaViewPager"
+        app:layout_constraintTop_toBottomOf="@id/excerciseMediaContainer"
         app:layout_constraintBottom_toTopOf="@id/clockContainer"
         android:text="Pull Up"
         android:textSize="30sp"

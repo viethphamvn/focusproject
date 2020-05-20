@@ -1,6 +1,7 @@
 package com.example.focusproject
 
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import com.example.focusproject.models.Exercise
 import com.example.focusproject.tools.CreateExercise
 import com.example.focusproject.tools.OnSwipeTouchListener
 import kotlinx.android.synthetic.main.activity_start_routine.*
+import java.time.Duration
 
 
 class StartRoutineActivity : AppCompatActivity() {
@@ -22,11 +24,12 @@ class StartRoutineActivity : AppCompatActivity() {
     private lateinit var activeRoutineList: ArrayList<Exercise>
     private var selectedDate = 0
     private var currentWorkoutPosition : Int = 0
-    private var fragmentHolder : ArrayList<Fragment> = ArrayList()
     private lateinit var progressBar : ProgressBar
-    private lateinit var excerciseNameTextView : TextView
-    private var isPaused : Boolean = false
+    private lateinit var exerciseNameTextView : TextView
+    var isPaused : Boolean = false
     private var fragmentCountDown: Fragment? = null
+    private var fragmentVideoPlayer: Fragment? = null
+    private var fragmentImageViewer: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +45,8 @@ class StartRoutineActivity : AppCompatActivity() {
         progressBar.max = activeRoutineList.size
         progressBar.min = 0
 
-        excerciseNameTextView = findViewById(R.id.excerciseNameTextView)
+        exerciseNameTextView = findViewById(R.id.excerciseNameTextView)
 
-        setUpFragmentPager()
         startWorkout(currentWorkoutPosition)
 
         controlLayout = findViewById(R.id.controlBar)
@@ -57,14 +59,7 @@ class StartRoutineActivity : AppCompatActivity() {
                     text = "PAUSE"
                 }
 
-                if (activeRoutineList.get(currentWorkoutPosition).vidId != "") {
-                    (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
-                }
-                var fragment =
-                    supportFragmentManager.findFragmentByTag("countDownFragment") as CountdownFragment
-                if (fragment != null) {
-                    fragment.startTimer()
-                }
+                playVideo()
             }
 
             override fun onSwipeRight() {
@@ -84,21 +79,41 @@ class StartRoutineActivity : AppCompatActivity() {
                         setBackgroundColor(resources.getColor(R.color.darkgrey))
                         text = "RESUME"
                     }
-
-                    if (activeRoutineList.get(currentWorkoutPosition).vidId != "") {
-                        (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
-                    }
-                    var fragment =
-                        supportFragmentManager.findFragmentByTag("countDownFragment") as CountdownFragment
-                    if (fragment != null) {
-                        fragment.pauseTimer()
-                    }
+                    pauseVideo()
             }
         })
     }
 
-    private fun startWorkout(position: Int){ //Need to rework this section since set is removed
-       updateProgressBar(position)
+    private fun startWorkout(position: Int){
+
+        updateProgressBar(position)
+
+        if (activeRoutineList[position].vidId != "") {
+            fragmentVideoPlayer = supportFragmentManager.findFragmentByTag("videofragment")
+            if (fragmentVideoPlayer != null){
+                supportFragmentManager.beginTransaction()
+                    .remove(fragmentVideoPlayer as VideoViewerFragment)
+                    .commit()
+            }
+            fragmentVideoPlayer = VideoViewerFragment.newInstance(activeRoutineList[position].vidId)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.excerciseMediaContainer, fragmentVideoPlayer as VideoViewerFragment, "videofragment")
+                .commit()
+
+        } else {
+            fragmentImageViewer = supportFragmentManager.findFragmentByTag("imagefragment")
+            if (fragmentImageViewer != null){
+                supportFragmentManager.beginTransaction()
+                    .remove(fragmentImageViewer as ImageViewerFragment)
+                    .commit()
+            }
+            fragmentImageViewer = ImageViewerFragment.newInstance(activeRoutineList[position].img)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.excerciseMediaContainer, fragmentImageViewer as ImageViewerFragment, "imagefragment")
+                .commit()
+
+        }
+
         activeRoutineList.get(position).apply {
             excerciseNameTextView.text = this.name
 
@@ -110,20 +125,12 @@ class StartRoutineActivity : AppCompatActivity() {
                     .commit()
             }
             if (this.isTimed){
-                fragmentCountDown = CountdownFragment.newInstance(this.duration, this.isRestTime)
+                fragmentCountDown = CountdownFragment.newInstance()
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.clockContainer, fragmentCountDown as CountdownFragment,"countDownFragment")
                     .commit()
+                (fragmentCountDown as CountdownFragment).setTimer(activeRoutineList[position].duration)
             }
-
-            if (activeRoutineList.get(currentWorkoutPosition).vidId != "") {
-                var waitForVideoBeReady = Thread{
-                        while (!(fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).isCued) {}
-                        runOnUiThread {playVideo()}
-                }
-                waitForVideoBeReady.start()
-            }
-
 
             if (this.isRestTime){
                 (fragmentCountDown as CountdownFragment).startTimer()
@@ -144,44 +151,35 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     fun nextExcercise(){
-        //Pause or Stop video for previous fragment
-        if (activeRoutineList.get(currentWorkoutPosition).vidId != "") {
-            (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).pauseVideo()
-        }
         increaseCurrentWorkoutPosition()
-        excerciseMediaViewPager.currentItem = currentWorkoutPosition
         startWorkout(currentWorkoutPosition)
-
     }
 
     fun playVideo(){
-        if (activeRoutineList.get(currentWorkoutPosition).vidId != ""){
-            (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
+        fragmentCountDown =
+            supportFragmentManager.findFragmentByTag("countDownFragment") as CountdownFragment
+        if (fragmentCountDown != null && activeRoutineList.get(currentWorkoutPosition).isRestTime) {
             (fragmentCountDown as CountdownFragment).startTimer()
+        }
+
+        if (activeRoutineList.get(currentWorkoutPosition).vidId != ""){
+            (fragmentVideoPlayer as VideoViewerFragment).playVideo()
+        }
+    }
+
+    fun videoIsPlaying(currentSecond: Long, duration: Long){
+        if (fragmentCountDown != null && !activeRoutineList[currentWorkoutPosition].isRestTime) {
+            (fragmentCountDown as CountdownFragment).updateTextView(currentSecond, duration)
         }
     }
 
     fun pauseVideo(){
+        if (activeRoutineList.get(currentWorkoutPosition).vidId != ""){
+            (fragmentVideoPlayer as VideoViewerFragment).pauseVideo()
+        }
         (fragmentCountDown as CountdownFragment).pauseTimer()
     }
 
-    private fun setUpFragmentPager(){
-        var viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
-
-        activeRoutineList.forEach {
-            if (it.img != "" ){
-                fragmentHolder.add(ImageViewerFragment.newInstance(it.img))
-            } else {
-                fragmentHolder.add(VideoViewerFragment.newInstance(it.vidId))
-            }
-        }
-
-        fragmentHolder.forEach {
-            viewPagerAdapter.addFragment(it, "")
-        }
-
-        excerciseMediaViewPager.adapter = viewPagerAdapter
-    }
 
     private fun decreaseCurrentWorkoutPosition(){
         if (currentWorkoutPosition > 0){
