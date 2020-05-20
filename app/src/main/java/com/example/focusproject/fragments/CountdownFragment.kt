@@ -29,7 +29,7 @@ class CountdownFragment : Fragment() {
     private lateinit var chronometer : Chronometer
     private lateinit var countdownTextView : TextView
     var countUp: Boolean = false
-    private lateinit var countdownTimer : CountDownTimer
+    private var countdownTimer : CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,12 +50,7 @@ class CountdownFragment : Fragment() {
         return view
     }
 
-    override fun onStart() {
-        super.onStart()
-        startTimer()
-    }
-
-    fun startTimer(){
+     fun startTimer(){
         countdownTimer = object : CountDownTimer(duration, 1000){
             override fun onFinish() {
                 if (countUp) {
@@ -67,7 +62,9 @@ class CountdownFragment : Fragment() {
                     chronometer.start()
                 } else {
                     countdownTextView.setBackgroundColor(Color.parseColor("#C62828"))
-                    (activity as StartRoutineActivity).nextExcercise()
+                    if (activity != null) {
+                        (activity as StartRoutineActivity).nextExcercise()
+                    }
                 }
             }
 
@@ -77,7 +74,7 @@ class CountdownFragment : Fragment() {
             }
 
         }
-        countdownTimer.start()
+        countdownTimer?.start()
     }
 
     fun setTimer(duration: Long){
@@ -85,8 +82,10 @@ class CountdownFragment : Fragment() {
     }
 
     fun pauseTimer(){
-        countdownTimer.cancel()
-        countdownTextView.text = "PAUSED"
+        if (countdownTimer != null) {
+            countdownTimer?.cancel()
+            countdownTextView.text = "PAUSED"
+        }
     }
 
     private fun updateTextView(remainingTimeInMillis : Long){
@@ -112,6 +111,8 @@ class CountdownFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        countdownTimer.cancel()
+        if (countdownTimer != null) {
+            countdownTimer?.cancel()
+        }
     }
 }

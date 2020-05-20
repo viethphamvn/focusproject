@@ -23,7 +23,7 @@ class ExcercisePickerFragment : Fragment() {
         viewPagerAdapter.addFragment(NewWorkoutEditFragment.newInstance(),"New Exercise")
         viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("", true), "By You")
         viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("Abs", false), "Abs")
-        viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("Arms", false), "Abs")
+        viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("Arms", false), "Arms")
 
         view.viewpager.adapter = viewPagerAdapter
         view.tablayout.setupWithViewPager(view.viewpager)

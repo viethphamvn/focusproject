@@ -22,7 +22,6 @@
         android:layout_height="match_parent"
         android:textSize="70dp"
         android:textColor="@color/white"
-        android:text="12:00"
         android:textStyle="bold"
         android:gravity="center_horizontal|center_vertical"/>
 </FrameLayout>

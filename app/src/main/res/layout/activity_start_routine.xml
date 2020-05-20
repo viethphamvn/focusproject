@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/excerciseMediaViewPager"
         app:layout_constraintBottom_toTopOf="@id/clockContainer"
         android:text="Pull Up"
-        android:textSize="40dp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="@color/white"
@@ -45,7 +45,7 @@
     <FrameLayout
         android:id="@+id/clockContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/excerciseNameTextView"
         app:layout_constraintBottom_toTopOf="@id/progressContainer"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -54,7 +54,7 @@
     <FrameLayout
         android:id="@+id/progressContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/clockContainer"
         app:layout_constraintBottom_toTopOf="@id/extraBanner"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,7 +64,7 @@
     <TextView
         android:id="@+id/extraBanner"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/controlBar"

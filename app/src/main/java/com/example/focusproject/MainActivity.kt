@@ -3,7 +3,6 @@ package com.example.focusproject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import com.example.focusproject.fragments.RoutinesListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         //Setup Views
         findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
-            startActivity(Intent(this, CreateExcerciseActivity::class.java))
+            startActivity(Intent(this, CreateRoutineActivity::class.java))
         }
         findViewById<CircleImageView>(R.id.user_profile_button).setOnClickListener{
             startActivity(Intent(this, UserProfileActivity::class.java))

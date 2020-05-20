@@ -65,5 +65,9 @@ class CreateExercise {
                 desc
             )
         }
+
+        fun createReadyExercise(duration: Long, upcomingExercise: Exercise): Exercise{
+            return Exercise("GET READY","","",duration,upcomingExercise.img,upcomingExercise.vidId,false,true,upcomingExercise.rep, false, upcomingExercise.weight, upcomingExercise.createdBy, upcomingExercise.desc)
+        }
     }
 }

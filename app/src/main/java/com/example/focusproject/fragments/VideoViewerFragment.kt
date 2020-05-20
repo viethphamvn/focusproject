@@ -21,6 +21,8 @@ class VideoViewerFragment : Fragment(){
     // TODO: Rename and change types of parameters
     private var vidUrl: String = ""
     private lateinit var mYoutubePlayer : YouTubePlayer
+    private lateinit var theview: View
+    var isCued: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +36,14 @@ class VideoViewerFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_video_viewer, container, false)
-        view.videoPlayerView.getPlayerUiController().showFullscreenButton(true)
-        view.videoPlayerView.addYouTubePlayerListener(object : YouTubePlayerListener {
+        theview = inflater.inflate(R.layout.fragment_video_viewer, container, false)
+        theview.videoPlayerView.getPlayerUiController().showFullscreenButton(true)
+        theview.videoPlayerView.addYouTubePlayerListener(object : YouTubePlayerListener {
             override fun onApiChange(youTubePlayer: YouTubePlayer) {
             }
 
             override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+                System.out.println(second)
             }
 
             override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
@@ -62,7 +65,6 @@ class VideoViewerFragment : Fragment(){
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 mYoutubePlayer = youTubePlayer
                 mYoutubePlayer.cueVideo(vidUrl, 0f)
-                (activity as StartRoutineActivity).playVideo()
             }
 
             override fun onStateChange(
@@ -71,6 +73,15 @@ class VideoViewerFragment : Fragment(){
             ) {
                 if (state == PlayerConstants.PlayerState.ENDED){
                     isFinished()
+                }
+                if (state == PlayerConstants.PlayerState.VIDEO_CUED){
+                    isCued = true
+                }
+                if (state == PlayerConstants.PlayerState.PLAYING){
+                    (activity as StartRoutineActivity).playVideo()
+                }
+                if (state == PlayerConstants.PlayerState.PAUSED){
+                    (activity as StartRoutineActivity).pauseVideo()
                 }
             }
 
@@ -89,7 +100,7 @@ class VideoViewerFragment : Fragment(){
 
             }
         })
-        return view
+        return theview
     }
 
     fun playVideo(){
@@ -114,6 +125,11 @@ class VideoViewerFragment : Fragment(){
                     putString(VIDEO_URL, vidUrl)
                 }
             }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        theview.videoPlayerView.release()
     }
 
 }

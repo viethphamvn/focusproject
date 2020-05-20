@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
@@ -161,6 +162,10 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
                         }
                     }
                 }
+                //Handle empty routines[date]
+                if (routines[selectedDateAsString]!!.size == 0){
+                    routineRecyclerViewAdapter.notifyDataSetChanged()
+                }
             }
     }
 
@@ -208,10 +213,14 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
             }
 
             start_workout_btn.setOnClickListener{
-                var intent = Intent(context, StartRoutineActivity::class.java)
-                intent.putExtra("routine", activeRoutineList)
-                intent.putExtra("selectedDate", selectedDate)
-                startActivity(intent)
+                if (activeRoutineList.size > 0) {
+                    var intent = Intent(context, StartRoutineActivity::class.java)
+                    intent.putExtra("routine", activeRoutineList)
+                    intent.putExtra("selectedDate", selectedDate)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(context, "You don't have any exercises", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -286,7 +295,7 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
     private fun updateDatabase(newRoutine: HashMap<String, ArrayList<Exercise>>){ //This function will update Firestore with new dataset
         var updatedRoutine = HashMap<String, ArrayList<String>>()
-        var exerciseIdArray = ArrayList<String>()
+        var exerciseIdArray= ArrayList<String>()
         for (exercise in newRoutine["mon"]!!){
             if (exercise.uid != ""){
                 exerciseIdArray.add(exercise.uid)
@@ -341,7 +350,6 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
             }
         }
         updatedRoutine["sun"] = ArrayList(exerciseIdArray)
-        exerciseIdArray.clear()
 
 
         firestore.collection("Users").document(currentUser.uid).update("routine", updatedRoutine).addOnCompleteListener {

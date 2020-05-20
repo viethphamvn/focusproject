@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.focusproject.CreateExcerciseActivity
+import com.example.focusproject.CreateRoutineActivity
 
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
@@ -53,8 +53,8 @@ class MuscleGroupFragment : Fragment() {
     }
 
     fun doClick(item: Exercise){
-        if (activity is CreateExcerciseActivity){
-            (activity as CreateExcerciseActivity).onItemClick(item)
+        if (activity is CreateRoutineActivity){
+            (activity as CreateRoutineActivity).onItemClick(item)
         } else if (activity is RoutineEditActivity){
             (activity as RoutineEditActivity).onItemClick(item)
         }

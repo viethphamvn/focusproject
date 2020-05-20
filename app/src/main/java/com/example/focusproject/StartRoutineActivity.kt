@@ -11,6 +11,7 @@ import com.example.focusproject.fragments.ExcerciseProgressFragment
 import com.example.focusproject.fragments.ImageViewerFragment
 import com.example.focusproject.fragments.VideoViewerFragment
 import com.example.focusproject.models.Exercise
+import com.example.focusproject.tools.CreateExercise
 import com.example.focusproject.tools.OnSwipeTouchListener
 import kotlinx.android.synthetic.main.activity_start_routine.*
 
@@ -24,9 +25,8 @@ class StartRoutineActivity : AppCompatActivity() {
     private var fragmentHolder : ArrayList<Fragment> = ArrayList()
     private lateinit var progressBar : ProgressBar
     private lateinit var excerciseNameTextView : TextView
-    private var totalSetFinished : Int = 0
-    private var totalSetRequired: Int = 0
     private var isPaused : Boolean = false
+    private var fragmentCountDown: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,26 +102,37 @@ class StartRoutineActivity : AppCompatActivity() {
         activeRoutineList.get(position).apply {
             excerciseNameTextView.text = this.name
 
-            //If excercise has vid --> Play
-            if (this.vidId != ""){
-                (fragmentHolder.get(position) as VideoViewerFragment).playVideo()
-            }
             //Start timer if it's timed workout
-            var fragment = supportFragmentManager.findFragmentByTag("countDownFragment")
-            if (fragment != null) {
+            fragmentCountDown = supportFragmentManager.findFragmentByTag("countDownFragment")
+            if (fragmentCountDown != null) {
                 supportFragmentManager.beginTransaction()
-                    .remove(fragment)
+                    .remove(fragmentCountDown!!)
                     .commit()
             }
             if (this.isTimed){
+                fragmentCountDown = CountdownFragment.newInstance(this.duration, this.isRestTime)
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.clockContainer, CountdownFragment.newInstance(this.duration, this.isRestTime),"countDownFragment")
+                    .replace(R.id.clockContainer, fragmentCountDown as CountdownFragment,"countDownFragment")
                     .commit()
             }
-            fragment = supportFragmentManager.findFragmentByTag("progressFragment")
-            if (fragment != null) {
+
+            if (activeRoutineList.get(currentWorkoutPosition).vidId != "") {
+                var waitForVideoBeReady = Thread{
+                        while (!(fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).isCued) {}
+                        runOnUiThread {playVideo()}
+                }
+                waitForVideoBeReady.start()
+            }
+
+
+            if (this.isRestTime){
+                (fragmentCountDown as CountdownFragment).startTimer()
+            }
+
+            var fragmentProgress = supportFragmentManager.findFragmentByTag("progressFragment")
+            if (fragmentProgress != null) {
                 supportFragmentManager.beginTransaction()
-                    .remove(fragment)
+                    .remove(fragmentProgress)
                     .commit()
             }
             if (this.rep > 0 || this.weight > 0){
@@ -146,7 +157,12 @@ class StartRoutineActivity : AppCompatActivity() {
     fun playVideo(){
         if (activeRoutineList.get(currentWorkoutPosition).vidId != ""){
             (fragmentHolder.get(currentWorkoutPosition) as VideoViewerFragment).playVideo()
+            (fragmentCountDown as CountdownFragment).startTimer()
         }
+    }
+
+    fun pauseVideo(){
+        (fragmentCountDown as CountdownFragment).pauseTimer()
     }
 
     private fun setUpFragmentPager(){
@@ -188,10 +204,13 @@ class StartRoutineActivity : AppCompatActivity() {
 
         activeRoutineList.forEach {
             if (it.isRestTime){
-                it.img = "https://68.media.tumblr.com/6e42c179cefc75b1cc8e0cc52a374b84/tumblr_oqstb6MdLH1w9ge4xo1_400.gif"
+                if (it.img == "") {
+                    it.img =
+                        "https://68.media.tumblr.com/6e42c179cefc75b1cc8e0cc52a374b84/tumblr_oqstb6MdLH1w9ge4xo1_400.gif"
+                }
                 tempList.add(it)
             } else {
-                var readyTime = Exercise("GET READY","","",10,it.img,it.vidId,false,true,it.rep, false, it.weight, it.createdBy, it.desc)
+                var readyTime = CreateExercise.createReadyExercise(10, it)
                 tempList.add(readyTime)
                 tempList.add(it)
             }

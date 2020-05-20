@@ -9,16 +9,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import com.example.focusproject.CreateExcerciseActivity
+import com.example.focusproject.CreateRoutineActivity
 
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.models.Exercise
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ikovac.timepickerwithseconds.MyTimePickerDialog
-import kotlinx.android.synthetic.main.fragment_new_workout_edit.*
 import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.*
 import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.isRestTimeCheckBox
 
@@ -115,8 +113,8 @@ class NewWorkoutEditFragment : Fragment() {
 
         if (activity is RoutineEditActivity){
             (activity as RoutineEditActivity).onItemClick(newExercise)
-        } else if (activity is CreateExcerciseActivity){
-            (activity as CreateExcerciseActivity).onItemClick(newExercise)
+        } else if (activity is CreateRoutineActivity){
+            (activity as CreateRoutineActivity).onItemClick(newExercise)
         }
     }
 
