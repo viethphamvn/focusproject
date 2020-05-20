@@ -14,6 +14,7 @@ import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.StartRoutineActivity
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.models.Exercise
+import com.example.focusproject.tools.CreateExercise
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -231,33 +232,7 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun createExercise(it: DocumentSnapshot, exerciseId: String, date: String){
-        var name = it.get("name") as String
-        var type = it.get("type") as String
-        var duration = it.get("duration") as Long
-        var equipmentNeeded = it.get("equipmentNeeded") as Boolean
-        var img = it.get("img") as String
-        var isRestTime = it.get("isRestTime") as Boolean
-        var isTime = it.get("isTimed") as Boolean
-        var rep = it.get("rep") as Long
-        var weight = it.get("weight") as Long
-        var vidId = it.get("vidId") as String
-        var createdBy = it.get("createdBy") as String
-        var desc = it.get("desc") as String
-        var exercise = Exercise(
-            name,
-            type,
-            exerciseId,
-            duration,
-            img,
-            vidId,
-            isRestTime,
-            isTime,
-            rep,
-            equipmentNeeded,
-            weight,
-            createdBy,
-            desc
-        )
+        var exercise = CreateExercise.createExercise(it, exerciseId)
 
         routines[date]!!.add(exercise)
 
