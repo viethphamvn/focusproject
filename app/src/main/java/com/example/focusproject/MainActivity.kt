@@ -15,19 +15,14 @@ class MainActivity : AppCompatActivity() {
 
     private var firebaseUser = FirebaseAuth.getInstance().currentUser
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         if (firebaseUser == null){
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
-
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         addRoutineFragment()
 

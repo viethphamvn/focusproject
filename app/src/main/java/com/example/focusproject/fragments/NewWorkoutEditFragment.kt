@@ -29,8 +29,6 @@ class NewWorkoutEditFragment : Fragment() {
     var seconds: Int = 0
     lateinit var fragmentView : View
     lateinit var typeSpinner : Spinner
-    var selectedType : String = ""
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
