@@ -35,26 +35,13 @@ class CountdownFragment : Fragment() {
     }
 
      fun startTimer(){
-         countdownTimer = object : CountDownTimer(duration, 1000) {
-             override fun onFinish() {
-                 countdownTextView!!.setBackgroundColor(Color.parseColor("#C62828"))
-                 if (activity != null) {
-                     (activity as StartRoutineActivity).nextExcercise()
-                 }
-             }
-
-             override fun onTick(millisUntilFinished: Long) {
-                 updateTextView(millisUntilFinished)
-                 duration = millisUntilFinished
-             }
-
-         }
+         createCountDownTimer()
          if (activity != null && !(activity as StartRoutineActivity).isPaused) {
              countdownTimer?.start()
          }
     }
 
-    fun startTimerForImage(){
+    private fun createCountDownTimer(){
         countdownTimer = object : CountDownTimer(duration, 1000) {
             override fun onFinish() {
                 countdownTextView!!.setBackgroundColor(Color.parseColor("#C62828"))
@@ -69,6 +56,10 @@ class CountdownFragment : Fragment() {
             }
 
         }
+    }
+
+    fun startTimerForImage(){
+        createCountDownTimer()
         countdownTimer?.start()
     }
 
