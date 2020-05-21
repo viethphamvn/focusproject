@@ -64,8 +64,14 @@ class NewWorkoutEditFragment : Fragment() {
                 val type = spinnerExerciseType.selectedItem.toString()
                 val gifUrl = workoutImgUrlEditText.editText?.text.toString()
                 val youtubeUrl = workoutVideoUrlEditText.editText?.text.toString()
-                val rep = repTextView.text.toString().toLong()
-                val weight = weightTextView.text.toString().toLong()
+                var rep = 0L
+                if (repTextView.text.toString() != "") {
+                    rep = repTextView.text.toString().toLong()
+                }
+                var weight = 0L
+                if (weightTextView.text.toString() != "") {
+                    var weight = weightTextView.text.toString().toLong()
+                }
                 val duration = (hours * 3600 + minutes * 60 + seconds).toLong()
 
                 if (validateInfo(isRestTime, exerciseName, type, gifUrl, youtubeUrl, duration)) { //Check information before submit
