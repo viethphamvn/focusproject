@@ -97,7 +97,7 @@ class NewWorkoutEditFragment : Fragment() {
                         Toast.makeText(context, "Exercise Created", Toast.LENGTH_SHORT).show()
                         exerciseCreatedCallBack(exercise)
                     }.addOnFailureListener {
-                        Toast.makeText(context, "Error Occured", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Error Occur", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(context, "Info missing", Toast.LENGTH_SHORT).show()
