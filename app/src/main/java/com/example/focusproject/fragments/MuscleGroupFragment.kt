@@ -23,15 +23,15 @@ private const val MUSCL_GRP = "param1"
 private const val SELF_CREATED = "param2"
 
 class MuscleGroupFragment : Fragment() {
-    private var doc_name: String? = ""
+    private var docName: String? = ""
     private var self: Boolean? = false
-    private lateinit var excerciseRecyclerViewAdapter: ExcerciseRecyclerViewAdapter
+    private lateinit var exerciseRecyclerViewAdapter: ExcerciseRecyclerViewAdapter
     private var exercises: ArrayList<Exercise> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            doc_name = if (it.getString(MUSCL_GRP) != null) it.getString(MUSCL_GRP) else ""
+            docName = if (it.getString(MUSCL_GRP) != null) it.getString(MUSCL_GRP) else ""
             self = if (it.getBoolean(SELF_CREATED) != null) it.getBoolean(SELF_CREATED) else false
         }
     }
@@ -46,8 +46,8 @@ class MuscleGroupFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_arms, container, false)
         view.excerciseItemRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
-            excerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(exercises) {item -> doClick(item)}
-            adapter = excerciseRecyclerViewAdapter
+            exerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(exercises) { item -> doClick(item)}
+            adapter = exerciseRecyclerViewAdapter
         }
         return view
     }
@@ -65,15 +65,17 @@ class MuscleGroupFragment : Fragment() {
         firestore.collection("Exercise")
             .get()
             .addOnSuccessListener { result ->
+                exercises.clear()
+                exerciseRecyclerViewAdapter.notifyDataSetChanged()
                 for (document in result){
-                    if (document.get("type") as String == doc_name && !self!!) {
-                        var excercise = CreateExercise.createExercise(document)
-                        exercises.add(excercise)
-                        excerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
+                    if (document.get("type") as String == docName && !self!!) {
+                        var exercise = CreateExercise.createExercise(document)
+                        exercises.add(exercise)
+                        exerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
                     } else if (self!! && document.get("createdBy") as String == FirebaseAuth.getInstance().currentUser!!.uid && !(document.get("isRestTime") as Boolean)){
                         var exercise = CreateExercise.createExercise(document)
                         exercises.add(exercise)
-                        excerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
+                        exerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
                     }
                 }
             }
