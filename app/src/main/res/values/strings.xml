@@ -4,7 +4,28 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="typeNotSet">"Not set</string>
+    <string name="your_customized_workout">Your customized workout</string>
+    <string name="is_rest_time">is rest time</string>
+    <string name="exercise_name">Exercise Name</string>
+    <string name="equipment_needed">Equipment Needed</string>
+    <string name="exercise_description">Exercise Description</string>
+    <string name="gif_url">Gif URL</string>
+    <string name="media_content">Media Content</string>
+    <string name="youtube_link">Youtube Link</string>
+    <string name="repetition">REPETITION</string>
+    <string name="weight_one_rep_max">WEIGHT ONE REP-MAX</string>
+    <string name="duration">DURATION</string>
+    <string name="change_duration">Change duration</string>
+    <string name="save">SAVE</string>
+    <string name="rest_time">REST TIME</string>
+    <string name="decrease_repetition_button">decrease repetition button</string>
+    <string name="increase_repetition_button">Increase Repetition Button</string>
+    <string name="decrease_weight_button">Decrease Weight Button</string>
+    <string name="increase_weight_butotn">Increase Weight Butotn</string>
+
     <string-array name="type_array">
+        <item>Not set</item>
         <item>Arms</item>
         <item>Abs</item>
         <item>Legs</item>

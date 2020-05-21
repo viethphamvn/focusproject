@@ -9,7 +9,7 @@
     android:fillViewport="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
         <TextView
@@ -20,7 +20,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:text="Your customized workout" />
+            android:text="@string/your_customized_workout" />
 
         <CheckBox
             android:id="@+id/isRestTimeCheckBox"
@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@id/textView"
             app:layout_constraintLeft_toRightOf="@id/isRestTimeCheckBox"
             android:layout_marginTop="10dp"
-            android:text="is rest time"
+            android:text="@string/is_rest_time"
             android:textSize="20sp"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -48,7 +48,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="10dp"
             app:endIconMode="clear_text"
-            android:hint="Exercise Name">
+            android:hint="@string/exercise_name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
             app:layout_constraintTop_toBottomOf="@id/workoutNameEditText"
             app:layout_constraintLeft_toRightOf="@id/needEquipmentCheckBox"
             android:layout_marginTop="10dp"
-            android:text="Equipment Needed"
+            android:text="@string/equipment_needed"
             android:textSize="20sp"/>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -81,7 +81,7 @@
             app:layout_constraintTop_toBottomOf="@id/needEquipmentTextView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:endIconMode="clear_text"
-            android:hint="Excercise Description"
+            android:hint="@string/exercise_description"
             android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -105,10 +105,11 @@
             app:layout_constraintTop_toBottomOf="@id/textView2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:endIconMode="clear_text"
-            android:hint="Gif URL"
+            android:hint="@string/gif_url"
             android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/imageInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textUri"/>
@@ -124,7 +125,7 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Media Content"/>
+            android:text="@string/media_content"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/workoutVideoUrlEditText"
@@ -133,10 +134,11 @@
             app:layout_constraintTop_toBottomOf="@id/workoutImgUrlEditText"
             app:layout_constraintLeft_toLeftOf="parent"
             app:endIconMode="clear_text"
-            android:hint="Youtube Link"
+            android:hint="@string/youtube_link"
             android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/videoInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textUri"/>
@@ -151,7 +153,7 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="REPETITION"/>
+            android:text="@string/repetition"/>
 
         <LinearLayout
             android:id="@+id/rep_layout"
@@ -166,14 +168,16 @@
                 android:id="@+id/decreaseRepButton"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginRight="20dp"
+                android:contentDescription="@string/decrease_repetition_button"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_down"/>
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/repTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12"
+                android:autofillHints="12"
+                android:hint="12"
                 android:textSize="50sp"
                 android:textStyle="bold"
                 android:maxLength="2"
@@ -183,7 +187,8 @@
                 android:id="@+id/increaseRepButton"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginLeft="20dp"
+                android:contentDescription="@string/increase_repetition_button"
+                android:layout_marginStart="20dp"
                 android:background="@drawable/ic_up"/>
 
         </LinearLayout>
@@ -197,7 +202,7 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="WEIGHT ONE REP-MAX"/>
+            android:text="@string/weight_one_rep_max"/>
 
         <LinearLayout
             android:id="@+id/weight_layout"
@@ -212,16 +217,18 @@
                 android:id="@+id/decreaseWeightButton"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginRight="20dp"
+                android:contentDescription="@string/decrease_weight_button"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_down"/>
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/weightTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:maxLength="2"
-                android:text="45"
+                android:autofillHints="45"
+                android:hint="45"
                 android:textSize="50sp"
                 android:textStyle="bold" />
 
@@ -229,7 +236,8 @@
                 android:id="@+id/increaseWeightButton"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginLeft="20dp"
+                android:contentDescription="@string/increase_weight_butotn"
+                android:layout_marginStart="20dp"
                 android:background="@drawable/ic_up"/>
 
         </LinearLayout>
@@ -243,7 +251,7 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="DURATION"/>
+            android:text="@string/duration"/>
         <LinearLayout
             android:id="@+id/durationLayout"
             android:layout_width="match_parent"
@@ -258,14 +266,14 @@
                 android:id="@+id/currentDurationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00:00:45"
+                android:text="00:00:00"
                 android:textSize="50sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/changeDurationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change duration"
+                android:text="@string/change_duration"
                 android:backgroundTint="@color/colorPrimaryDark"/>
         </LinearLayout>
 
@@ -276,7 +284,7 @@
             app:layout_constraintTop_toBottomOf="@id/durationLayout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="SAVE"
+            android:text="@string/save"
             android:backgroundTint="@color/colorPrimaryDark"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
