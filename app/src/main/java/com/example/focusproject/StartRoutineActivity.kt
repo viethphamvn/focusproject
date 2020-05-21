@@ -27,6 +27,7 @@ class StartRoutineActivity : AppCompatActivity() {
     private lateinit var progressBar : ProgressBar
     private lateinit var exerciseNameTextView : TextView
     var isPaused : Boolean = false
+    var isImage: Boolean = false
     private var fragmentCountDown: Fragment? = null
     private var fragmentVideoPlayer: Fragment? = null
     private var fragmentImageViewer: Fragment? = null
@@ -46,8 +47,6 @@ class StartRoutineActivity : AppCompatActivity() {
         progressBar.min = 0
 
         exerciseNameTextView = findViewById(R.id.excerciseNameTextView)
-
-        startWorkout(currentWorkoutPosition)
 
         controlLayout = findViewById(R.id.controlBar)
         controlLayout.setOnTouchListener(object :OnSwipeTouchListener(this) {
@@ -82,36 +81,40 @@ class StartRoutineActivity : AppCompatActivity() {
                     pauseVideo()
             }
         })
+
+        startWorkout(currentWorkoutPosition)
     }
 
     private fun startWorkout(position: Int){
 
         updateProgressBar(position)
 
+        fragmentVideoPlayer = supportFragmentManager.findFragmentByTag("videofragment")
+        if (fragmentVideoPlayer != null){
+            supportFragmentManager.beginTransaction()
+                .remove(fragmentVideoPlayer as VideoViewerFragment)
+                .commit()
+        }
+        fragmentImageViewer = supportFragmentManager.findFragmentByTag("imagefragment")
+        if (fragmentImageViewer != null){
+            supportFragmentManager.beginTransaction()
+                .remove(fragmentImageViewer as ImageViewerFragment)
+                .commit()
+        }
+
         if (activeRoutineList[position].vidId != "") {
-            fragmentVideoPlayer = supportFragmentManager.findFragmentByTag("videofragment")
-            if (fragmentVideoPlayer != null){
-                supportFragmentManager.beginTransaction()
-                    .remove(fragmentVideoPlayer as VideoViewerFragment)
-                    .commit()
-            }
             fragmentVideoPlayer = VideoViewerFragment.newInstance(activeRoutineList[position].vidId)
             supportFragmentManager.beginTransaction()
                 .add(R.id.excerciseMediaContainer, fragmentVideoPlayer as VideoViewerFragment, "videofragment")
                 .commit()
-
+            isImage = false
         } else {
-            fragmentImageViewer = supportFragmentManager.findFragmentByTag("imagefragment")
-            if (fragmentImageViewer != null){
-                supportFragmentManager.beginTransaction()
-                    .remove(fragmentImageViewer as ImageViewerFragment)
-                    .commit()
-            }
             fragmentImageViewer = ImageViewerFragment.newInstance(activeRoutineList[position].img)
             supportFragmentManager.beginTransaction()
                 .add(R.id.excerciseMediaContainer, fragmentImageViewer as ImageViewerFragment, "imagefragment")
                 .commit()
-
+            isImage = true
+            print("Is Image")
         }
 
         activeRoutineList.get(position).apply {
@@ -130,10 +133,8 @@ class StartRoutineActivity : AppCompatActivity() {
                     .replace(R.id.clockContainer, fragmentCountDown as CountdownFragment,"countDownFragment")
                     .commit()
                 (fragmentCountDown as CountdownFragment).setTimer(activeRoutineList[position].duration)
-            }
-
-            if (this.isRestTime){
-                (fragmentCountDown as CountdownFragment).startTimer()
+                println("Set timer to ${activeRoutineList[position].duration}")
+                if (!isImage){(fragmentCountDown as CountdownFragment).startTimer()} else {(fragmentCountDown as CountdownFragment).startTimerForImage()}
             }
 
             var fragmentProgress = supportFragmentManager.findFragmentByTag("progressFragment")
@@ -157,7 +158,7 @@ class StartRoutineActivity : AppCompatActivity() {
 
     fun playVideo(){
         fragmentCountDown =
-            supportFragmentManager.findFragmentByTag("countDownFragment") as CountdownFragment
+            supportFragmentManager.findFragmentByTag("countDownFragment")
         if (fragmentCountDown != null && activeRoutineList.get(currentWorkoutPosition).isRestTime) {
             (fragmentCountDown as CountdownFragment).startTimer()
         }
@@ -177,7 +178,9 @@ class StartRoutineActivity : AppCompatActivity() {
         if (activeRoutineList.get(currentWorkoutPosition).vidId != ""){
             (fragmentVideoPlayer as VideoViewerFragment).pauseVideo()
         }
-        (fragmentCountDown as CountdownFragment).pauseTimer()
+        if (fragmentCountDown as CountdownFragment != null) {
+            (fragmentCountDown as CountdownFragment).pauseTimer()
+        }
     }
 
 

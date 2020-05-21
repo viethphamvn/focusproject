@@ -54,6 +54,24 @@ class CountdownFragment : Fragment() {
          }
     }
 
+    fun startTimerForImage(){
+        countdownTimer = object : CountDownTimer(duration, 1000) {
+            override fun onFinish() {
+                countdownTextView!!.setBackgroundColor(Color.parseColor("#C62828"))
+                if (activity != null) {
+                    (activity as StartRoutineActivity).nextExcercise()
+                }
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                updateTextView(millisUntilFinished)
+                duration = millisUntilFinished
+            }
+
+        }
+        countdownTimer?.start()
+    }
+
     fun updateTextView(current: Long, duration: Long){
         var remainingTimeInMillis = duration - current
         val minutes: Long = (remainingTimeInMillis / (60 * 1000))

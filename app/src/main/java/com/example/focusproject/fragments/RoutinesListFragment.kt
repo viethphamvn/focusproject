@@ -26,7 +26,6 @@ import kotlin.collections.HashMap
 
 
 class RoutinesListFragment : Fragment(), View.OnClickListener {
-    private lateinit var activeRoutineList: ArrayList<Exercise>
     private var routines : HashMap<String, ArrayList<Exercise>> = HashMap()
     private var selectedDate : Int = 0
     private var selectedDateAsString: String = ""
@@ -213,9 +212,9 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
             }
 
             start_workout_btn.setOnClickListener{
-                if (activeRoutineList.size > 0) {
+                if (getCurrentActiveList(selectedDate).size > 0) {
                     var intent = Intent(context, StartRoutineActivity::class.java)
-                    intent.putExtra("routine", activeRoutineList)
+                    intent.putExtra("routine", getCurrentActiveList(selectedDate))
                     intent.putExtra("selectedDate", selectedDate)
                     startActivity(intent)
                 } else {
@@ -281,16 +280,15 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getCurrentActiveList(selectedDate: Int): ArrayList<Exercise>{
-        activeRoutineList = when(selectedDate){
-            2 -> if (routines.get("mon") != null) routines.get("mon") else ArrayList()
-            3 -> if (routines.get("tue") != null) routines.get("tue") else ArrayList()
-            4 -> if (routines.get("wed") != null) routines.get("wed") else ArrayList()
-            5 -> if (routines.get("thu") != null) routines.get("thu") else ArrayList()
-            6 -> if (routines.get("fri") != null) routines.get("fri") else ArrayList()
-            7 -> if (routines.get("sat") != null) routines.get("sat") else ArrayList()
-            else -> if (routines.get("sun") != null) routines.get("sun") else ArrayList()
+        return when(selectedDate){
+            2 -> if (routines.get("mon") != null) routines["mon"] else ArrayList()
+            3 -> if (routines.get("tue") != null) routines["tue"] else ArrayList()
+            4 -> if (routines.get("wed") != null) routines["wed"] else ArrayList()
+            5 -> if (routines.get("thu") != null) routines["thu"] else ArrayList()
+            6 -> if (routines.get("fri") != null) routines["fri"] else ArrayList()
+            7 -> if (routines.get("sat") != null) routines["sat"] else ArrayList()
+            else -> if (routines.get("sun") != null) routines["sun"] else ArrayList()
         } as ArrayList<Exercise>
-        return activeRoutineList
     }
 
     private fun updateDatabase(newRoutine: HashMap<String, ArrayList<Exercise>>){ //This function will update Firestore with new dataset
@@ -383,7 +381,7 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
                 updateDataSet(getCurrentActiveList(selectedDate))
             }
             currentButton.setBackgroundColor(resources.getColor(R.color.darkgrey))
-            currentButton = buttonArray.get(selectedDate)!!
+            currentButton = buttonArray[selectedDate]!!
             currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
         }
     }

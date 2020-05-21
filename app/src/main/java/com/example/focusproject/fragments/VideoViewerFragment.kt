@@ -78,8 +78,6 @@ class VideoViewerFragment : Fragment(){
                 }
                 if (state == PlayerConstants.PlayerState.VIDEO_CUED){
                     playVideo()
-                }
-                if (state == PlayerConstants.PlayerState.PLAYING){
                     (activity as StartRoutineActivity).playVideo()
                 }
                 if (state == PlayerConstants.PlayerState.PAUSED){
