@@ -19,8 +19,7 @@ import com.example.focusproject.tools.CreateExercise
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.*
-import kotlinx.android.synthetic.main.fragment_routine_activity_fragment.view.mon
+import kotlinx.android.synthetic.main.fragment_routine_activity.view.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -178,7 +177,7 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_routine_activity_fragment, container, false)
+        var view = inflater.inflate(R.layout.fragment_routine_activity, container, false)
 
         //Create a Array of dateButton for easier control
         buttonArray.put(2, view.mon)
