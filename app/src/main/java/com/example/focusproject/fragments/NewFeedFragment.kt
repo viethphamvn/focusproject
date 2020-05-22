@@ -5,57 +5,75 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.example.focusproject.R
+import com.example.focusproject.adapters.FeedRecyclerViewAdapter
+import com.example.focusproject.models.Routine
+import com.example.focusproject.tools.CreateRoutine
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_new_feed.view.*
+import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.collections.ArrayList
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NewFeedFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class NewFeedFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+    private lateinit var fragmentView: View
+    private var routineList: ArrayList<Routine> = ArrayList()
+    lateinit var feedRecyclerViewAdapter: FeedRecyclerViewAdapter
+    var tempArray = ArrayList<Routine>()
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_feed, container, false)
+        fragmentView =  inflater.inflate(R.layout.fragment_new_feed, container, false)
+
+        swipeRefreshLayout = fragmentView.swipeToRefreshLayout as SwipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener(this)
+
+        fragmentView.feedRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            feedRecyclerViewAdapter = FeedRecyclerViewAdapter(routineList)
+            adapter = feedRecyclerViewAdapter
+        }
+        return fragmentView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchData()
+    }
+
+    private fun fetchData(){
+        FirebaseFirestore.getInstance().collection("Routines")
+            .get()
+            .addOnSuccessListener { result ->
+                routineList.clear()
+                tempArray.clear()
+                feedRecyclerViewAdapter.notifyDataSetChanged()
+                for (routine in result) {
+                    //Check if routine is belong to followed users
+                    tempArray.add(CreateRoutine.createRoutine(routine))
+                }
+                if (tempArray.size > 0) {
+                    //routineList = tempArray.sortWith(Routine.COMPARATOR) as ArrayList<Routine>
+                    routineList = ArrayList(tempArray)
+                    feedRecyclerViewAdapter.setNewData(routineList)
+                }
+            }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NewFeedFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NewFeedFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() =
+            NewFeedFragment()
+    }
+
+    override fun onRefresh() {
+        fetchData()
+        swipeRefreshLayout.isRefreshing = false
     }
 }

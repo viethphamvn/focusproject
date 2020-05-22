@@ -23,6 +23,7 @@
     <string name="increase_repetition_button">Increase Repetition Button</string>
     <string name="decrease_weight_button">Decrease Weight Button</string>
     <string name="increase_weight_butotn">Increase Weight Butotn</string>
+    <string name="newFeedFragmentTag">newfeedfragment</string>
 
     <string-array name="type_array">
         <item>Not set</item>

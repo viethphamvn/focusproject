@@ -52,7 +52,7 @@ class MuscleGroupFragment : Fragment() {
         return view
     }
 
-    fun doClick(item: Exercise){
+    private fun doClick(item: Exercise){
         if (activity is CreateRoutineActivity){
             (activity as CreateRoutineActivity).onItemClick(item)
         } else if (activity is RoutineEditActivity){

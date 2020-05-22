@@ -3,6 +3,7 @@ package com.example.focusproject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.focusproject.fragments.NewFeedFragment
 import com.example.focusproject.fragments.RoutinesListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,17 +25,19 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        addRoutineFragment()
+        addWeeklyRoutineFragment()
 
         //BottomNavigation Handle
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_routine -> {
-                    addRoutineFragment()
+                    addWeeklyRoutineFragment()
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.action_excercise -> {
-                    //Implement Excercise Fragment
+                R.id.action_new_feed -> {
+                    //Implement New Feed Fragment
+                    addNewFeedFragment()
+                    return@OnNavigationItemSelectedListener true
                 }
             }
             false
@@ -49,16 +52,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addRoutineFragment(){
+    private fun addNewFeedFragment() {
+        var newFeedFragment = supportFragmentManager.findFragmentByTag(getString(R.string.newFeedFragmentTag))
+        if (newFeedFragment != null){
+            supportFragmentManager.beginTransaction().remove(newFeedFragment)
+                .commit()
+        }
+        supportFragmentManager.beginTransaction().replace(R.id.container, NewFeedFragment.newInstance(),getString(R.string.newFeedFragmentTag))
+            .commit()
+    }
+
+    private fun addWeeklyRoutineFragment(){
         var calendar = Calendar.getInstance()
         var todayDate = calendar.get(Calendar.DAY_OF_WEEK)
         var routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
         if (routineFragment != null){
-            supportFragmentManager.beginTransaction().replace(R.id.container, routineFragment,"routineFragment")
-                .commit()
-        } else {
-            supportFragmentManager.beginTransaction().replace(R.id.container, RoutinesListFragment.newInstance(todayDate),"routineFragment")
+            supportFragmentManager.beginTransaction().remove(routineFragment)
                 .commit()
         }
+        supportFragmentManager.beginTransaction().replace(R.id.container, RoutinesListFragment.newInstance(todayDate),"routineFragment")
+            .commit()
     }
 }

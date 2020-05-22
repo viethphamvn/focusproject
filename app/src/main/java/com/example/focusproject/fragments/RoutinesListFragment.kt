@@ -58,111 +58,113 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
         firestore.collection("Users").document(currentUser.uid)
             .get()
             .addOnSuccessListener {
-                data = it["routine"] as HashMap<String, Any>
-                var tempArrayList = data.get("mon") as ArrayList<String>
-                routines["mon"]?.clear()
-                if (tempArrayList.size > 0) {
-                    for (exerciseId in tempArrayList) {
-                        if (exerciseId != "") {
-                            firestore.collection("Exercise").document(exerciseId)
-                                .get()
-                                .addOnSuccessListener {
-                                    createExercise(it, exerciseId, "mon")
-                                }
+                if (it["routine"] != null) {
+                    data = it["routine"] as HashMap<String, Any>
+                    var tempArrayList = data.get("mon") as ArrayList<String>
+                    routines["mon"]?.clear()
+                    if (tempArrayList.size > 0) {
+                        for (exerciseId in tempArrayList) {
+                            if (exerciseId != "") {
+                                firestore.collection("Exercise").document(exerciseId)
+                                    .get()
+                                    .addOnSuccessListener {
+                                        createExercise(it, exerciseId, "mon")
+                                    }
+                            }
                         }
                     }
-                }
 
 
-                tempArrayList = data.get("tue") as ArrayList<String>
-                routines["tue"]?.clear()
-                if (tempArrayList.size > 0) {
-                    for (exerciseId in tempArrayList) {
-                        if (exerciseId != "") {
-                            firestore.collection("Exercise").document(exerciseId).get()
-                                .addOnSuccessListener {
-                                    createExercise(it, exerciseId, "tue")
-                                }
+                    tempArrayList = data.get("tue") as ArrayList<String>
+                    routines["tue"]?.clear()
+                    if (tempArrayList.size > 0) {
+                        for (exerciseId in tempArrayList) {
+                            if (exerciseId != "") {
+                                firestore.collection("Exercise").document(exerciseId).get()
+                                    .addOnSuccessListener {
+                                        createExercise(it, exerciseId, "tue")
+                                    }
+                            }
                         }
                     }
-                }
 
 
-                tempArrayList = data.get("wed") as ArrayList<String>
-                routines["wed"]?.clear()
-                if (tempArrayList.size > 0) {
-                    for (exerciseId in tempArrayList) {
-                        if (exerciseId != "") {
-                            firestore.collection("Exercise").document(exerciseId)
-                                .get()
-                                .addOnSuccessListener {
-                                    createExercise(it, exerciseId,"wed")
-                                }
+                    tempArrayList = data.get("wed") as ArrayList<String>
+                    routines["wed"]?.clear()
+                    if (tempArrayList.size > 0) {
+                        for (exerciseId in tempArrayList) {
+                            if (exerciseId != "") {
+                                firestore.collection("Exercise").document(exerciseId)
+                                    .get()
+                                    .addOnSuccessListener {
+                                        createExercise(it, exerciseId, "wed")
+                                    }
+                            }
                         }
                     }
-                }
 
 
-                tempArrayList = data.get("thu") as ArrayList<String>
-                routines["thu"]?.clear()
-                if (tempArrayList.size > 0) {
-                    for (exerciseId in tempArrayList) {
-                        if (exerciseId != "") {
-                            firestore.collection("Exercise").document(exerciseId)
-                                .get()
-                                .addOnSuccessListener {
-                                    createExercise(it, exerciseId,"thu")
-                                }
+                    tempArrayList = data.get("thu") as ArrayList<String>
+                    routines["thu"]?.clear()
+                    if (tempArrayList.size > 0) {
+                        for (exerciseId in tempArrayList) {
+                            if (exerciseId != "") {
+                                firestore.collection("Exercise").document(exerciseId)
+                                    .get()
+                                    .addOnSuccessListener {
+                                        createExercise(it, exerciseId, "thu")
+                                    }
+                            }
                         }
                     }
-                }
 
-                tempArrayList = data.get("fri") as ArrayList<String>
-                routines["fri"]?.clear()
-                if (tempArrayList.size > 0) {
-                    for (exerciseId in tempArrayList) {
-                        if (exerciseId != "") {
-                            firestore.collection("Exercise").document(exerciseId)
-                                .get()
-                                .addOnSuccessListener {
-                                    createExercise(it, exerciseId, "fri")
-                                }
+                    tempArrayList = data.get("fri") as ArrayList<String>
+                    routines["fri"]?.clear()
+                    if (tempArrayList.size > 0) {
+                        for (exerciseId in tempArrayList) {
+                            if (exerciseId != "") {
+                                firestore.collection("Exercise").document(exerciseId)
+                                    .get()
+                                    .addOnSuccessListener {
+                                        createExercise(it, exerciseId, "fri")
+                                    }
+                            }
                         }
                     }
-                }
 
 
-                tempArrayList = data.get("sat") as ArrayList<String>
-                routines["sat"]?.clear()
-                if (tempArrayList.size > 0) {
-                    for (exerciseId in tempArrayList) {
-                        if (exerciseId != "") {
-                            firestore.collection("Exercise").document(exerciseId)
-                                .get()
-                                .addOnSuccessListener {
-                                    createExercise(it, exerciseId, "sat")
-                                }
+                    tempArrayList = data.get("sat") as ArrayList<String>
+                    routines["sat"]?.clear()
+                    if (tempArrayList.size > 0) {
+                        for (exerciseId in tempArrayList) {
+                            if (exerciseId != "") {
+                                firestore.collection("Exercise").document(exerciseId)
+                                    .get()
+                                    .addOnSuccessListener {
+                                        createExercise(it, exerciseId, "sat")
+                                    }
+                            }
                         }
                     }
-                }
 
 
-                tempArrayList = data.get("sun") as ArrayList<String>
-                routines["sun"]?.clear()
-                if (tempArrayList.size > 0) {
-                    for (exerciseId in tempArrayList) {
-                        if (exerciseId != "") {
-                            firestore.collection("Exercise").document(exerciseId)
-                                .get()
-                                .addOnSuccessListener {
-                                    createExercise(it, exerciseId, "sun")
-                                }
+                    tempArrayList = data.get("sun") as ArrayList<String>
+                    routines["sun"]?.clear()
+                    if (tempArrayList.size > 0) {
+                        for (exerciseId in tempArrayList) {
+                            if (exerciseId != "") {
+                                firestore.collection("Exercise").document(exerciseId)
+                                    .get()
+                                    .addOnSuccessListener {
+                                        createExercise(it, exerciseId, "sun")
+                                    }
+                            }
                         }
                     }
-                }
-                //Handle empty routines[date]
-                if (routines[selectedDateAsString]!!.size == 0){
-                    routineRecyclerViewAdapter.notifyDataSetChanged()
+                    //Handle empty routines[date]
+                    if (routines[selectedDateAsString]!!.size == 0) {
+                        routineRecyclerViewAdapter.notifyDataSetChanged()
+                    }
                 }
             }
     }

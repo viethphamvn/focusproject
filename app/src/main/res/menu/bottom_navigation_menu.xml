@@ -8,7 +8,7 @@
         android:title="Routine"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_excercise"
+        android:id="@+id/action_new_feed"
         android:enabled="true"
         android:icon="@drawable/ic_excercise"
         android:title="Excercise"
