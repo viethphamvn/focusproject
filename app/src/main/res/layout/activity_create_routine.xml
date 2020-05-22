@@ -52,11 +52,21 @@
 
     </RelativeLayout>
 
+    <EditText
+        android:id="@+id/newRoutineNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/topLayout"
+        app:layout_constraintBottom_toTopOf="@id/routine_recycler_list_view_layout"
+        android:hint="New Routine Name"
+        android:textSize="20sp"
+        />
+
     <RelativeLayout
         android:id="@+id/routine_recycler_list_view_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/topLayout"
+        app:layout_constraintTop_toBottomOf="@id/newRoutineNameTextView"
         app:layout_constraintBottom_toTopOf="@id/excercisePickerContainer">
 
         <androidx.recyclerview.widget.RecyclerView

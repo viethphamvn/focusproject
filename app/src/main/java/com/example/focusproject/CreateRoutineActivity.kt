@@ -1,11 +1,8 @@
 package com.example.focusproject
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.widget.Button
-import android.widget.FrameLayout
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,15 +12,19 @@ import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.fragments.ExcercisePickerFragment
 import com.example.focusproject.models.Exercise
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class CreateRoutineActivity : AppCompatActivity() {
 
     private var newWorkout : ArrayList<Exercise> = ArrayList()
+    private var newWorkoutJustId: ArrayList<String> = ArrayList()
     private lateinit var touchHelper : ItemTouchHelper
-    private lateinit var routine_recycler_list_view: RecyclerView
+    private lateinit var routineRecyclerListView: RecyclerView
     private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
 
     private lateinit var deleteIcon: Drawable
@@ -38,27 +39,34 @@ class CreateRoutineActivity : AppCompatActivity() {
         var saveBtn = findViewById<Button>(R.id.saveButton)
         var cancelBtn = findViewById<Button>(R.id.cancel_button)
         var addBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction)
+        var routineName = findViewById<EditText>(R.id.newRoutineNameTextView) as TextView
 
         saveBtn.setOnClickListener {
-            var returnIntent: Intent = Intent()
-            returnIntent.putExtra("newworkout", newWorkout)
-            setResult(Activity.RESULT_OK, returnIntent)
-            finish()
+            if (newWorkout.size > 0 && routineName.text.toString() != "") {
+                uploadData(routineName.text.toString())
+            } else {
+                if (newWorkout.size == 0){
+                    Toast.makeText(this, "Your routine is empty!", Toast.LENGTH_SHORT).show()
+                }
+                if (routineName.text.toString() == ""){
+                    Toast.makeText(this, "Your routine needs a title", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         addBtn.setOnClickListener{
-            var excercisePickerFragment = supportFragmentManager.findFragmentByTag("pickerFragment")
-            if (excercisePickerFragment != null){
+            var exercisePickerFragment = supportFragmentManager.findFragmentByTag("pickerFragment")
+            if (exercisePickerFragment != null){
                 supportFragmentManager.beginTransaction()
-                    .remove(excercisePickerFragment)
+                    .remove(exercisePickerFragment)
                     .commit()
                 val display = windowManager.defaultDisplay
                 val layout = findViewById<FrameLayout>(R.id.excercisePickerContainer)
-                var screen_height = display.height
-                screen_height = 0
-                val parms = layout.layoutParams
-                parms.height = screen_height
-                layout.layoutParams = parms
+                var screenHeight = display.height
+                screenHeight = 0
+                val params = layout.layoutParams
+                params.height = screenHeight
+                layout.layoutParams = params
                 addBtn.setImageResource(R.drawable.ic_add)
             } else {
                 supportFragmentManager.beginTransaction()
@@ -66,10 +74,10 @@ class CreateRoutineActivity : AppCompatActivity() {
                     .commit()
                 val display = windowManager.defaultDisplay
                 val layout = findViewById<FrameLayout>(R.id.excercisePickerContainer)
-                var screen_height = display.height
-                screen_height = (0.60 * screen_height).toInt()
+                var screenHeight = display.height
+                screenHeight = (0.60 * screenHeight).toInt()
                 val parms = layout.layoutParams
-                parms.height = screen_height
+                parms.height = screenHeight
                 layout.layoutParams = parms
                 addBtn.setImageResource(R.drawable.ic_down)
             }
@@ -81,8 +89,22 @@ class CreateRoutineActivity : AppCompatActivity() {
 
     }
 
+    private fun uploadData(routineName: String) {
+        var firestore = FirebaseFirestore.getInstance().collection("Routines")
+        var newRoutineHashMap = HashMap<String, Any>()
+        newRoutineHashMap["createdBy"] = FirebaseAuth.getInstance().currentUser!!.uid
+        newRoutineHashMap["createdOn"] = System.currentTimeMillis()
+        newRoutineHashMap["name"] = routineName
+        newRoutineHashMap["exercises"] = newWorkoutJustId
+        firestore.document().set(newRoutineHashMap).addOnSuccessListener {
+            Toast.makeText(this, "Your routine has been posted!", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+    }
+
     fun onItemClick(item: Exercise){
         newWorkout.add(item)
+        newWorkoutJustId.add(item.uid)
         routineRecyclerViewAdapter.notifyItemInserted(newWorkout.size-1)
     }
 
@@ -151,12 +173,12 @@ class CreateRoutineActivity : AppCompatActivity() {
             }
 
         })
-        routine_recycler_list_view = findViewById(R.id.routine_recycler_list_view)
-        routine_recycler_list_view.apply {
+        routineRecyclerListView = findViewById(R.id.routine_recycler_list_view)
+        routineRecyclerListView.apply {
             layoutManager = LinearLayoutManager(context)
             routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(newWorkout)
             adapter = routineRecyclerViewAdapter
         }
-        touchHelper.attachToRecyclerView(routine_recycler_list_view)
+        touchHelper.attachToRecyclerView(routineRecyclerListView)
     }
 }

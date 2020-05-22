@@ -11,6 +11,9 @@ import com.example.focusproject.models.Routine
 import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.routine_item.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -42,11 +45,13 @@ class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>) : RecyclerView.A
     inner class UserViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
         var profileImageView: CircleImageView = itemView.user_profile_picture
         private var usernameTextView: TextView = itemView.username_textview
-        var routineNameTextView: TextView = itemView.routine_name
+        private var routineNameTextView: TextView = itemView.routine_name
+        private var timestampTextView: TextView = itemView.timeStampTextView
 
         fun bind(routine : Routine){
             getInfo(routine)
             routineNameTextView.text = routine.name
+            timestampTextView.text = "Created on ${getDate(routine.createdOn, "dd/MM/yyyy hh:mm:ss")}"
             itemView.setOnClickListener {
                 //launch a new activity or a dialog window
             }
@@ -74,6 +79,16 @@ class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>) : RecyclerView.A
                             .into(profileImageView)
                     }
                 }
+        }
+
+        fun getDate(milliSeconds: Long, dateFormat: String?): String {
+            // Create a DateFormatter object for displaying date in specified format.
+            val formatter = SimpleDateFormat(dateFormat)
+
+            // Create a calendar object that will convert the date and time value in milliseconds to date.
+            val calendar: Calendar = Calendar.getInstance()
+            calendar.timeInMillis = milliSeconds
+            return formatter.format(calendar.time)
         }
     }
 
