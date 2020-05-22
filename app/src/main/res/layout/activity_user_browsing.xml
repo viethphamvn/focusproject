@@ -18,16 +18,19 @@
         android:background="@color/darkgrey">
 
         <EditText
+            android:id="@+id/searchEditText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="John Smith"/>
 
         <ImageButton
+            android:id="@+id/searchbtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitXY"
             android:background="@color/white"
-            android:src="@drawable/ic_search"/>
+            android:src="@drawable/ic_search"
+            android:layout_marginStart="10dp"/>
 
     </LinearLayout>
 

@@ -50,6 +50,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<CircleImageView>(R.id.user_profile_button).setOnClickListener{
             startActivity(Intent(this, UserProfileActivity::class.java))
         }
+        findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener{
+            startActivity(Intent(this, UserBrowsingActivity::class.java))
+        }
     }
 
     private fun addNewFeedFragment() {
