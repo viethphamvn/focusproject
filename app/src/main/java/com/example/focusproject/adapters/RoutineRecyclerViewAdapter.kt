@@ -7,15 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.focusproject.R
 import com.example.focusproject.models.Exercise
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.excercise_item.view.excerciseImageHolder
-import kotlinx.android.synthetic.main.excercise_item.view.excerciseNameTextView
+import kotlinx.android.synthetic.main.excercise_thumbnail_item.view.excerciseImageHolder
+import kotlinx.android.synthetic.main.excercise_thumbnail_item.view.excerciseNameTextView
 import kotlinx.android.synthetic.main.resttime_item.view.*
-import kotlinx.android.synthetic.main.rountine_item.view.*
+import kotlinx.android.synthetic.main.exercise_item.view.*
 
 class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var Exercises = exercises
-    private var firestore = FirebaseFirestore.getInstance()
     val REST = 1
     val EXCERCISE = 2
 
@@ -35,7 +33,7 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
         if (viewType == REST){
             routine_item = inflater.inflate(R.layout.resttime_item, parent, false)
         } else {
-            routine_item = inflater.inflate(R.layout.rountine_item, parent, false)
+            routine_item = inflater.inflate(R.layout.exercise_item, parent, false)
         }
         var routinerViewHolder = RoutineRecyclerViewAdapter.RoutineViewHolder(routine_item)
         return routinerViewHolder

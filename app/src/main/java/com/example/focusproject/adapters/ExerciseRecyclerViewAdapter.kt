@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.focusproject.R
 import com.example.focusproject.models.Exercise
-import kotlinx.android.synthetic.main.excercise_item.view.*
+import kotlinx.android.synthetic.main.excercise_thumbnail_item.view.*
 
 class ExerciseRecyclerViewAdapter(exercises: ArrayList<Exercise>, val adapterOnClick: (Exercise) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var Exercises = exercises
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var inflater = LayoutInflater.from(parent.context)
-        var exerciseItem = inflater.inflate(R.layout.excercise_item, parent, false)
+        var exerciseItem = inflater.inflate(R.layout.excercise_thumbnail_item, parent, false)
         return ExerciseViewHolder(exerciseItem)
     }
 
