@@ -60,8 +60,7 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     tempArray.add(CreateRoutine.createRoutine(routine))
                 }
                 if (tempArray.size > 0) {
-                    //routineList = tempArray.sortWith(Routine.COMPARATOR) as ArrayList<Routine>
-                    routineList = ArrayList(tempArray)
+                    routineList = ArrayList(tempArray.sortedDescending().toList())
                     feedRecyclerViewAdapter.setNewData(routineList)
                 }
             }
