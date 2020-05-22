@@ -9,17 +9,39 @@
     <FrameLayout
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHeight_percent="0.07">
+        app:layout_constraintLeft_toLeftOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_profile_button"
             android:layout_width="40sp"
             android:layout_height="40sp"
             android:src="@mipmap/ic_launcher"
-            android:layout_gravity="center_vertical|center_horizontal"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="left"/>
+
+        <TextView
+            android:id="@+id/mainBannerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Welcome"
+            android:textSize="30dp"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/friendsButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_friends"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            />
 
     </FrameLayout>
 
@@ -30,8 +52,7 @@
         app:layout_constraintTop_toBottomOf="@id/topLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomLayout"
-        app:layout_constraintHeight_percent="0.86"/>
+        app:layout_constraintBottom_toTopOf="@id/bottomLayout"/>
 
 
     <FrameLayout
