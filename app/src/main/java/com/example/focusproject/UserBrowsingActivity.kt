@@ -1,5 +1,6 @@
 package com.example.focusproject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -26,7 +27,7 @@ class UserBrowsingActivity : AppCompatActivity() {
 
         findViewById<RecyclerView>(R.id.user_list_recycler_view).apply {
             layoutManager = GridLayoutManager(this@UserBrowsingActivity, 3)
-            userRecyclerViewAdapter = UserRecyclerViewAdapter(userList)
+            userRecyclerViewAdapter = UserRecyclerViewAdapter(userList){item -> onUserClick(item)}
             adapter = userRecyclerViewAdapter
         }
 
@@ -55,6 +56,12 @@ class UserBrowsingActivity : AppCompatActivity() {
         })
 
         getFriends()
+    }
+
+    private fun onUserClick(item: User) {
+        var intent = Intent(this, UserDetailActivity::class.java)
+        intent.putExtra("user", item)
+        startActivity(intent)
     }
 
     private fun findFriends(searchText: String){

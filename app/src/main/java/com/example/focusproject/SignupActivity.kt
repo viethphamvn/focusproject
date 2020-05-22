@@ -35,7 +35,7 @@ class SignupActivity : AppCompatActivity() {
             var password = password_edittext.editText?.text.toString()
             signUpandIn(username, email, password)
 
-            System.out.println(username + " " + email + " " + password)
+            println("$username $email $password")
         }
     }
 
@@ -74,7 +74,7 @@ class SignupActivity : AppCompatActivity() {
                         }
                 } else {
                     //Add message
-                    System.out.println("failed")
+                    println("failed")
                 }
             }
     }

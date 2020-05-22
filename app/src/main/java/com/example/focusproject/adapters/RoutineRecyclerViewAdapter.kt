@@ -35,8 +35,7 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
         } else {
             routine_item = inflater.inflate(R.layout.exercise_item, parent, false)
         }
-        var routinerViewHolder = RoutineRecyclerViewAdapter.RoutineViewHolder(routine_item)
-        return routinerViewHolder
+        return RoutineViewHolder(routine_item)
     }
 
     override fun getItemCount(): Int {

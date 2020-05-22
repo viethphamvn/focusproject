@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 
 class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var routineList = routineList
+    var routineList = routineList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var inflater = LayoutInflater.from(parent.context)

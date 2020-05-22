@@ -1,6 +1,8 @@
 package com.example.focusproject.models
 
-class User {
+import java.io.Serializable
+
+class User : Serializable{
     var username: String = ""
     var profilePicture: String = ""
     var follower = ArrayList<String>()

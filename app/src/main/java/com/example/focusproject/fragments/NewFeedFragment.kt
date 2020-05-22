@@ -54,12 +54,12 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             .addOnSuccessListener { result ->
                 routineList.clear()
                 tempArray.clear()
-                feedRecyclerViewAdapter.notifyDataSetChanged()
                 for (routine in result) {
                     //Check if routine is belong to followed users
                     tempArray.add(CreateRoutine.createRoutine(routine))
                 }
                 if (tempArray.size > 0) {
+                    feedRecyclerViewAdapter.notifyDataSetChanged()
                     routineList = ArrayList(tempArray.sortedDescending().toList())
                     feedRecyclerViewAdapter.setNewData(routineList)
                 }

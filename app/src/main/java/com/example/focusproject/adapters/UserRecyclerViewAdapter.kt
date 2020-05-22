@@ -11,7 +11,7 @@ import com.example.focusproject.models.User
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.user_card.view.*
 
-class UserRecyclerViewAdapter (Users: ArrayList<User>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UserRecyclerViewAdapter (Users: ArrayList<User>, val onClick: (User) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var userList = Users
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -57,7 +57,7 @@ class UserRecyclerViewAdapter (Users: ArrayList<User>) : RecyclerView.Adapter<Re
                 .into(profileImageView)
 
             itemView.setOnClickListener {
-                //launch a new activity or a dialog window
+                onClick(user)
             }
         }
     }
