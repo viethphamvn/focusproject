@@ -10,7 +10,7 @@ import com.example.focusproject.CreateRoutineActivity
 
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
-import com.example.focusproject.adapters.ExcerciseRecyclerViewAdapter
+import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
 import com.example.focusproject.models.Exercise
 import com.example.focusproject.tools.CreateExercise
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +25,7 @@ private const val SELF_CREATED = "param2"
 class MuscleGroupFragment : Fragment() {
     private var docName: String? = ""
     private var self: Boolean? = false
-    private lateinit var exerciseRecyclerViewAdapter: ExcerciseRecyclerViewAdapter
+    private lateinit var exerciseRecyclerViewAdapter: ExerciseRecyclerViewAdapter
     private var exercises: ArrayList<Exercise> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class MuscleGroupFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_arms, container, false)
         view.excerciseItemRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
-            exerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(exercises) { item -> doClick(item)}
+            exerciseRecyclerViewAdapter = ExerciseRecyclerViewAdapter(exercises) { item -> doClick(item)}
             adapter = exerciseRecyclerViewAdapter
         }
         return view

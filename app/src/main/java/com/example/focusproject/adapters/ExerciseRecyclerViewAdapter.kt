@@ -9,29 +9,28 @@ import com.example.focusproject.R
 import com.example.focusproject.models.Exercise
 import kotlinx.android.synthetic.main.excercise_item.view.*
 
-class ExcerciseRecyclerViewAdapter(exercises: ArrayList<Exercise>, val adapterOnClick: (Exercise) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var Excercises = exercises
+class ExerciseRecyclerViewAdapter(exercises: ArrayList<Exercise>, val adapterOnClick: (Exercise) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var Exercises = exercises
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var inflater = LayoutInflater.from(parent.context)
-        var excercise_item = inflater.inflate(R.layout.excercise_item, parent, false)
-        var excerciseViewHolder = ExcerciseViewHolder(excercise_item)
-        return excerciseViewHolder
+        var exerciseItem = inflater.inflate(R.layout.excercise_item, parent, false)
+        return ExerciseViewHolder(exerciseItem)
     }
 
     override fun getItemCount(): Int {
-        return Excercises.size
+        return Exercises.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
-            is ExcerciseViewHolder -> {
-                holder.bind(Excercises.get(position))
+            is ExerciseViewHolder -> {
+                holder.bind(Exercises[position])
             }
         }
     }
 
-    inner class ExcerciseViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ExerciseViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imageView = itemView.excerciseImageHolder
         var excerciseNameTextView = itemView.excerciseNameTextView
 
@@ -44,10 +43,10 @@ class ExcerciseRecyclerViewAdapter(exercises: ArrayList<Exercise>, val adapterOn
             } else if (exercise.vidId != ""){
                 url = "https://img.youtube.com/vi/" + exercise.vidId + "/0.jpg"
             }
-            Glide.with(itemView.context)  //2
-                .load(url) //3
-                .centerCrop() //4
-                .into(imageView) //8
+            Glide.with(itemView.context)
+                .load(url)
+                .centerCrop()
+                .into(imageView)
             setItem(exercise)
         }
 
