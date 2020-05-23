@@ -42,9 +42,9 @@ class UserBrowsingActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString() == ""){
                     getFriends()
-                } else {
-                    findFriends(s.toString())
-                }
+                } //else {
+//                    findFriends(s.toString())
+//                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -114,11 +114,5 @@ class UserBrowsingActivity : AppCompatActivity() {
                 userList.add(CreateUser.createUser(it))
                 userRecyclerViewAdapter.notifyItemInserted(userList.size - 1)
             }
-    }
-
-    private fun testUpdateFirestore(){
-        var fireStore = FireStore.fireStore
-        fireStore.collection("Users").document("8Zr79a8ayzcOEJpmwKbNArCCjyu2")
-            .update("followed", FieldValue.arrayUnion("Hi"))
     }
 }

@@ -13,6 +13,8 @@ import com.example.focusproject.R
 import com.example.focusproject.adapters.FeedRecyclerViewAdapter
 import com.example.focusproject.models.Routine
 import com.example.focusproject.tools.CreateRoutine
+import com.example.focusproject.tools.CreateUser
+import com.example.focusproject.tools.FireStore
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_new_feed.view.*
 import java.util.*
@@ -49,19 +51,27 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun fetchData(){
-        FirebaseFirestore.getInstance().collection("Routines")
+        FireStore.fireStore.collection("Users").document(FireStore.currentUser!!.uid)
             .get()
-            .addOnSuccessListener { result ->
-                routineList.clear()
-                tempArray.clear()
-                for (routine in result) {
-                    //Check if routine is belong to followed users
-                    tempArray.add(CreateRoutine.createRoutine(routine))
-                }
-                if (tempArray.size > 0) {
-                    feedRecyclerViewAdapter.notifyDataSetChanged()
-                    routineList = ArrayList(tempArray.sortedDescending().toList())
-                    feedRecyclerViewAdapter.setNewData(routineList)
+            .addOnSuccessListener {
+                var currentUser = CreateUser.createUser(it)
+                if (currentUser.following.size > 0){
+                    FireStore.fireStore.collection("Routines")
+                        .get()
+                        .addOnSuccessListener { result ->
+                            routineList.clear()
+                            tempArray.clear()
+                            for (routine in result) {
+                                //Check if routine is belong to followed users
+                                if (currentUser.following.contains(routine.get("createdBy").toString())) {
+                                    tempArray.add(CreateRoutine.createRoutine(routine))
+                                }
+                            }
+                            if (tempArray.size > 0) {
+                                routineList = ArrayList(tempArray.sortedDescending().toList())
+                                feedRecyclerViewAdapter.setNewData(routineList)
+                            }
+                        }
                 }
             }
     }
