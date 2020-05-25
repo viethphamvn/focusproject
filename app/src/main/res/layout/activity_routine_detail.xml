@@ -13,7 +13,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="Routine Name Here"
         android:gravity="center"
         android:textSize="30sp"/>
 
@@ -54,7 +53,6 @@
             app:layout_constraintTop_toBottomOf="@id/totalDurationBanner"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/totalExerciseTextView"
-            android:text="3 mins"
             android:gravity="center"
             android:textSize="25sp"/>
 
@@ -65,7 +63,6 @@
             app:layout_constraintTop_toBottomOf="@id/totalExerciseBanner"
             app:layout_constraintLeft_toRightOf="@id/totalDurationTextView"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="5"
             android:gravity="center"
             android:textSize="25sp"/>
 
