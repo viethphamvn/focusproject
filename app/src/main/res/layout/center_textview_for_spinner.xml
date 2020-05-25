@@ -10,7 +10,7 @@
     android:textColor="#FFFFFF"
     android:textSize="23sp"
     android:textStyle="bold"
-    android:text="Hello"
+    android:fontFamily="@font/nunito"
     android:textAlignment="gravity"
     android:gravity="center"
     />

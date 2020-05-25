@@ -40,7 +40,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Abcd1234"
+                android:fontFamily="@font/nunito"
                 android:layout_marginTop="10dp"
                 android:inputType="textShortMessage" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:text="vietpham@temple.edu" />
+                android:fontFamily="@font/nunito" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -78,7 +78,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Abcd1234"
+                android:fontFamily="@font/nunito"
                 android:layout_marginTop="10dp"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -88,6 +88,7 @@
             android:layout_width="200dp"
             android:layout_height="60dp"
             android:text="Signup"
+            android:fontFamily="@font/nunito"
             app:backgroundTint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

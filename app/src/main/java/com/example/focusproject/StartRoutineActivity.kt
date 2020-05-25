@@ -1,12 +1,10 @@
 package com.example.focusproject
 
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.focusproject.adapters.ViewPagerAdapter
 import com.example.focusproject.fragments.CountdownFragment
 import com.example.focusproject.fragments.ExcerciseProgressFragment
 import com.example.focusproject.fragments.ImageViewerFragment
@@ -14,8 +12,6 @@ import com.example.focusproject.fragments.VideoViewerFragment
 import com.example.focusproject.models.Exercise
 import com.example.focusproject.tools.CreateExercise
 import com.example.focusproject.tools.OnSwipeTouchListener
-import kotlinx.android.synthetic.main.activity_start_routine.*
-import java.time.Duration
 
 
 class StartRoutineActivity : AppCompatActivity() {
@@ -46,7 +42,7 @@ class StartRoutineActivity : AppCompatActivity() {
         progressBar.max = activeRoutineList.size
         progressBar.min = 0
 
-        exerciseNameTextView = findViewById(R.id.excerciseNameTextView)
+        exerciseNameTextView = findViewById(R.id.exerciseNameTextView)
 
         controlLayout = findViewById(R.id.controlBar)
         controlLayout.setOnTouchListener(object :OnSwipeTouchListener(this) {
@@ -118,7 +114,7 @@ class StartRoutineActivity : AppCompatActivity() {
         }
 
         activeRoutineList.get(position).apply {
-            excerciseNameTextView.text = this.name
+            exerciseNameTextView.text = this.name
 
             //Start timer if it's timed workout
             fragmentCountDown = supportFragmentManager.findFragmentByTag("countDownFragment")

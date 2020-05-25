@@ -19,5 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/user_profile_picture"
         android:textSize="18sp"
+        android:fontFamily="@font/nunito"
         android:gravity="center"/>
 </RelativeLayout>

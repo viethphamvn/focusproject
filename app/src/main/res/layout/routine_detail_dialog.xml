@@ -13,6 +13,7 @@
        app:layout_constraintLeft_toLeftOf="parent"
        app:layout_constraintRight_toRightOf="parent"
        android:text="Routine Name Here"
+       android:fontFamily="@font/nunito"
        android:gravity="center"
        android:textSize="30sp"/>
 
@@ -34,6 +35,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/totalExerciseBanner"
             android:text="Duration"
+            android:fontFamily="@font/nunito"
             android:gravity="center"/>
 
         <TextView
@@ -44,6 +46,7 @@
             app:layout_constraintLeft_toRightOf="@id/totalDurationBanner"
             app:layout_constraintRight_toRightOf="parent"
             android:text="Total Exercises"
+            android:fontFamily="@font/nunito"
             android:gravity="center"/>
 
         <TextView
@@ -53,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/totalDurationBanner"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/totalExerciseTextView"
-            android:text="3 mins"
+            android:fontFamily="@font/nunito"
             android:gravity="center"
             android:textSize="25sp"/>
 
@@ -64,7 +67,7 @@
             app:layout_constraintTop_toBottomOf="@id/totalExerciseBanner"
             app:layout_constraintLeft_toRightOf="@id/totalDurationTextView"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="5"
+            android:fontFamily="@font/nunito"
             android:gravity="center"
             android:textSize="25sp"/>
 

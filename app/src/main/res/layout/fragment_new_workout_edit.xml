@@ -18,9 +18,11 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:text="@string/your_customized_workout" />
+            android:text="@string/your_customized_workout"
+            android:fontFamily="@font/nunito"/>
 
         <CheckBox
             android:id="@+id/isRestTimeCheckBox"
@@ -38,7 +40,8 @@
             app:layout_constraintLeft_toRightOf="@id/isRestTimeCheckBox"
             android:layout_marginTop="10dp"
             android:text="@string/is_rest_time"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:fontFamily="@font/nunito"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/workoutNameEditText"
@@ -53,7 +56,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textShortMessage" />
+                android:inputType="textShortMessage"
+                android:fontFamily="@font/nunito"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
@@ -72,7 +76,8 @@
             app:layout_constraintLeft_toRightOf="@id/needEquipmentCheckBox"
             android:layout_marginTop="10dp"
             android:text="@string/equipment_needed"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:fontFamily="@font/nunito"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/workoutDescEditText"
@@ -87,7 +92,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textAutoCorrect"/>
+                android:inputType="textAutoCorrect"
+                android:fontFamily="@font/nunito"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
@@ -112,7 +118,8 @@
                 android:id="@+id/imageInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textUri"/>
+                android:inputType="textUri"
+                android:fontFamily="@font/nunito"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -125,7 +132,8 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="@string/media_content"/>
+            android:text="@string/media_content"
+            android:fontFamily="@font/nunito" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/workoutVideoUrlEditText"
@@ -141,7 +149,8 @@
                 android:id="@+id/videoInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textUri"/>
+                android:inputType="textUri"
+                android:fontFamily="@font/nunito"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -153,7 +162,8 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="@string/repetition"/>
+            android:text="@string/repetition"
+            android:fontFamily="@font/nunito"/>
 
         <LinearLayout
             android:id="@+id/rep_layout"
@@ -180,7 +190,8 @@
                 android:textSize="50sp"
                 android:textStyle="bold"
                 android:maxLength="2"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:fontFamily="@font/nunito"/>
 
             <ImageButton
                 android:id="@+id/increaseRepButton"
@@ -228,7 +239,8 @@
                 android:maxLength="2"
                 android:hint="45"
                 android:textSize="50sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="@font/nunito"/>
 
             <ImageButton
                 android:id="@+id/increaseWeightButton"
@@ -265,14 +277,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00:00:00"
-                android:textSize="50sp" />
+                android:textSize="50sp"
+                android:fontFamily="@font/nunito"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/changeDurationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:text="@string/change_duration"
-                android:backgroundTint="@color/colorPrimaryDark"/>
+                android:fontFamily="@font/nunito"/>
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -283,6 +297,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:text="@string/save"
-            android:backgroundTint="@color/colorPrimaryDark"/>
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:fontFamily="@font/nunito"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

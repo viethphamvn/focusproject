@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:text="% ONE-RM"
+        android:fontFamily="@font/nunito"
         android:textSize="30sp"
         android:textStyle="bold"
         android:gravity="center_horizontal|center_vertical"
@@ -27,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="REP"
+        android:fontFamily="@font/nunito"
         android:textSize="30sp"
         android:textStyle="bold"
         android:gravity="center_horizontal|center_vertical"
@@ -42,7 +44,7 @@
         android:textSize="35sp"
         android:textColor="@color/white"
         android:gravity="center_vertical|center_horizontal"
-        android:text="65"/>
+        android:fontFamily="@font/nunito"/>
 
     <TextView
         android:id="@+id/repTextView"
@@ -54,5 +56,5 @@
         android:textSize="35sp"
         android:textColor="@color/white"
         android:gravity="center_vertical|center_horizontal"
-        android:text="8 - 12"/>
+        android:fontFamily="@font/nunito"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

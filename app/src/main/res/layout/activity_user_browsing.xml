@@ -21,7 +21,8 @@
             android:id="@+id/searchEditText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="John Smith"/>
+            android:hint="John Smith"
+            android:fontFamily="@font/nunito"/>
 
         <ImageButton
             android:id="@+id/searchbtn"
