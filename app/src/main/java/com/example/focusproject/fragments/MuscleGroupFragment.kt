@@ -15,7 +15,7 @@ import com.example.focusproject.models.Exercise
 import com.example.focusproject.tools.CreateExercise
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_arms.view.excerciseItemRecyclerView
+import kotlinx.android.synthetic.main.fragment_muscle_group.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,8 +43,8 @@ class MuscleGroupFragment : Fragment() {
         //Get data
         getItemFromDatabase()
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_arms, container, false)
-        view.excerciseItemRecyclerView.apply {
+        var view = inflater.inflate(R.layout.fragment_muscle_group, container, false)
+        view.exerciseItemRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             exerciseRecyclerViewAdapter = ExerciseRecyclerViewAdapter(exercises) { item -> doClick(item)}
             adapter = exerciseRecyclerViewAdapter

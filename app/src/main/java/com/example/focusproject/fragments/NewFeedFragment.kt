@@ -1,30 +1,34 @@
 package com.example.focusproject.fragments
 
+import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.example.focusproject.R
+import com.example.focusproject.RoutineDetailActivity
+import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
 import com.example.focusproject.adapters.FeedRecyclerViewAdapter
+import com.example.focusproject.models.Exercise
 import com.example.focusproject.models.Routine
+import com.example.focusproject.tools.CreateExercise
 import com.example.focusproject.tools.CreateRoutine
 import com.example.focusproject.tools.CreateUser
 import com.example.focusproject.tools.FireStore
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_new_feed.view.*
-import java.util.*
-import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.collections.ArrayList
 
 class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var fragmentView: View
     private var routineList: ArrayList<Routine> = ArrayList()
-    lateinit var feedRecyclerViewAdapter: FeedRecyclerViewAdapter
+    private lateinit var feedRecyclerViewAdapter: FeedRecyclerViewAdapter
     var tempArray = ArrayList<Routine>()
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -39,7 +43,7 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         fragmentView.feedRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            feedRecyclerViewAdapter = FeedRecyclerViewAdapter(routineList)
+            feedRecyclerViewAdapter = FeedRecyclerViewAdapter(routineList){item -> doClick(item)}
             adapter = feedRecyclerViewAdapter
         }
         return fragmentView
@@ -48,6 +52,12 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onResume() {
         super.onResume()
         fetchData()
+    }
+
+    private fun doClick(item: Routine) {
+        var intent = Intent(context, RoutineDetailActivity::class.java)
+        intent.putExtra("routine", item)
+        startActivity(intent)
     }
 
     private fun fetchData(){

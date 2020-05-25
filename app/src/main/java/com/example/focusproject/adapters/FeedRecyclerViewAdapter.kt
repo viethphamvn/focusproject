@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.focusproject.R
 import com.example.focusproject.models.Routine
+import com.example.focusproject.tools.FireStore
 import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.routine_item.view.*
@@ -15,7 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>, val onClick: (Routine) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var routineList = routineList
 
@@ -53,13 +54,12 @@ class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>) : RecyclerView.A
             routineNameTextView.text = routine.name
             timestampTextView.text = "Created on ${getDate(routine.createdOn, "dd/MM/yyyy hh:mm:ss")}"
             itemView.setOnClickListener {
-                //launch a new activity or a dialog window
+                onClick(routine)
             }
         }
 
         private fun getInfo(routine: Routine){
-            var firestore = FirebaseFirestore.getInstance()
-            firestore.collection("Users").document(routine.createdBy)
+            FireStore.fireStore.collection("Users").document(routine.createdBy)
                 .get()
                 .addOnSuccessListener {
                     if (it.get("username") != null) {
@@ -81,7 +81,7 @@ class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>) : RecyclerView.A
                 }
         }
 
-        fun getDate(milliSeconds: Long, dateFormat: String?): String {
+        private fun getDate(milliSeconds: Long, dateFormat: String?): String {
             // Create a DateFormatter object for displaying date in specified format.
             val formatter = SimpleDateFormat(dateFormat)
 

@@ -3,6 +3,8 @@ package com.example.focusproject.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.focusproject.R
@@ -13,9 +15,9 @@ import kotlinx.android.synthetic.main.resttime_item.view.*
 import kotlinx.android.synthetic.main.exercise_item.view.*
 
 class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var Exercises = exercises
-    val REST = 1
-    val EXCERCISE = 2
+    private var Exercises = exercises
+    private val REST = 1
+    private val EXCERCISE = 2
 
     fun updateDataSet(exercises: ArrayList<Exercise>){
         this.Exercises = exercises
@@ -29,13 +31,13 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var inflater = LayoutInflater.from(parent.context)
-        var routine_item : View
-        if (viewType == REST){
-            routine_item = inflater.inflate(R.layout.resttime_item, parent, false)
+        var routineItem : View
+        routineItem = if (viewType == REST){
+            inflater.inflate(R.layout.resttime_item, parent, false)
         } else {
-            routine_item = inflater.inflate(R.layout.exercise_item, parent, false)
+            inflater.inflate(R.layout.exercise_item, parent, false)
         }
-        return RoutineViewHolder(routine_item)
+        return RoutineViewHolder(routineItem)
     }
 
     override fun getItemCount(): Int {
@@ -45,29 +47,29 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
             is RoutineViewHolder -> {
-                holder.bind(Exercises.get(position))
+                holder.bind(Exercises[position])
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (Exercises.get(position).isRestTime){
-            return REST
+        return if (Exercises[position].isRestTime){
+            REST
         } else {
-            return EXCERCISE
+            EXCERCISE
         }
     }
 
     class RoutineViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageView = itemView.excerciseImageHolder
-        var excerciseNameTextView = itemView.excerciseNameTextView
-        var equipmentOrWeightTextView = itemView.equipmentOrWeightTextView
-        var repTextView = itemView.reprange_textview
-        var timeTextView = itemView.time_textview
+        var imageView: ImageView = itemView.excerciseImageHolder
+        private var exerciseNameTextView: TextView = itemView.excerciseNameTextView
+        var equipmentOrWeightTextView: TextView = itemView.equipmentOrWeightTextView
+        var repTextView: TextView = itemView.reprange_textview
+        var timeTextView: TextView? = itemView.time_textview
 
         fun bind(exercise : Exercise){
             if (!exercise.isRestTime) {
-                excerciseNameTextView.text = exercise.name
+                exerciseNameTextView.text = exercise.name
                 if (exercise.weight > 0) {
                     equipmentOrWeightTextView.text = String.format("%d %%RM", exercise.weight)
                 } else {
@@ -91,7 +93,7 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
                     .centerCrop() //4
                     .into(imageView) //8
             } else {
-                timeTextView.text = "${exercise.duration} SECS"
+                timeTextView!!.text = "${exercise.duration} SECS"
             }
         }
     }

@@ -1,6 +1,8 @@
 package com.example.focusproject.models
 
-class Routine : Comparable<Routine> {
+import java.io.Serializable
+
+class Routine : Comparable<Routine>, Serializable {
     var exerciseList: ArrayList<String> = ArrayList()
     var createdOn: Long = 0
     var name: String = ""

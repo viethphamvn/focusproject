@@ -1,21 +1,32 @@
 package com.example.focusproject
 
+import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Slide
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
+import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
 import com.example.focusproject.adapters.FeedRecyclerViewAdapter
-import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
+import com.example.focusproject.models.Exercise
 import com.example.focusproject.models.Routine
 import com.example.focusproject.models.User
+import com.example.focusproject.tools.CreateExercise
 import com.example.focusproject.tools.CreateRoutine
 import com.example.focusproject.tools.FireStore
 import com.google.firebase.firestore.FieldValue
-import de.hdodenhof.circleimageview.CircleImageView
-import org.w3c.dom.Text
+import kotlinx.android.synthetic.main.activity_user_detail.*
 
 class UserDetailActivity : AppCompatActivity() {
     private lateinit var routineRecyclerViewAdapter : FeedRecyclerViewAdapter
@@ -46,7 +57,7 @@ class UserDetailActivity : AppCompatActivity() {
 
         findViewById<RecyclerView>(R.id.routine_recycler_list_view).apply {
             layoutManager = LinearLayoutManager(context)
-            routineRecyclerViewAdapter = FeedRecyclerViewAdapter(routineList)
+            routineRecyclerViewAdapter = FeedRecyclerViewAdapter(routineList){item -> doClick(item)}
             adapter = routineRecyclerViewAdapter
         }
 
@@ -95,6 +106,16 @@ class UserDetailActivity : AppCompatActivity() {
                         }
                 }
         }
+    }
+
+    private fun doClick(item: Routine) {
+        var intent = Intent(this, RoutineDetailActivity::class.java)
+        intent.putExtra("routine", item)
+        startActivity(intent)
+    }
+
+    private fun exerciseOnClick(item: Exercise) {
+
     }
 
     override fun onResume() {
