@@ -61,37 +61,39 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
     }
 
     class RoutineViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageView: ImageView = itemView.excerciseImageHolder
-        private var exerciseNameTextView: TextView = itemView.exerciseNameTextView
-        var equipmentOrWeightTextView: TextView = itemView.equipmentOrWeightTextView
-        var repTextView: TextView = itemView.reprange_textview
+        var imageView: ImageView? = itemView.excerciseImageHolder
+        private var exerciseNameTextView: TextView? = itemView.exerciseNameTextView
+        var equipmentOrWeightTextView: TextView? = itemView.equipmentOrWeightTextView
+        var repTextView: TextView? = itemView.reprange_textview
         var timeTextView: TextView? = itemView.time_textview
 
         fun bind(exercise : Exercise){
             if (!exercise.isRestTime) {
-                exerciseNameTextView.text = exercise.name
+                exerciseNameTextView!!.text = exercise.name
                 if (exercise.weight > 0) {
-                    equipmentOrWeightTextView.text = String.format("%d %%RM", exercise.weight)
+                    equipmentOrWeightTextView!!.text = String.format("%d %%RM", exercise.weight)
                 } else {
-                    equipmentOrWeightTextView.text = "NA"
+                    equipmentOrWeightTextView!!.text = "NA"
                 }
 
                 if (exercise.rep > 0){
-                    repTextView.text = "REPETITION: ${exercise.rep}"
+                    repTextView!!.text = "REPETITION: ${exercise.rep}"
                 } else {
-                    repTextView.text = "REPETITION: NA"
+                    repTextView!!.text = "REPETITION: NA"
                 }
                 //Bind image
-                var url = ""
-                if (exercise.img != ""){
-                    url = exercise.img
-                } else if (exercise.vidId != ""){
-                    url = "https://img.youtube.com/vi/" + exercise.vidId + "/0.jpg"
+                if (imageView != null) {
+                    var url = ""
+                    if (exercise.img != "") {
+                        url = exercise.img
+                    } else if (exercise.vidId != "") {
+                        url = "https://img.youtube.com/vi/" + exercise.vidId + "/0.jpg"
+                    }
+                    Glide.with(itemView.context)
+                        .load(url)
+                        .centerCrop()
+                        .into(imageView!!)
                 }
-                Glide.with(itemView.context)  //2
-                    .load(url) //3
-                    .centerCrop() //4
-                    .into(imageView) //8
             } else {
                 timeTextView!!.text = "${exercise.duration} SECS"
             }

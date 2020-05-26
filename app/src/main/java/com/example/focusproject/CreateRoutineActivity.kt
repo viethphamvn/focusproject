@@ -61,7 +61,7 @@ class CreateRoutineActivity : AppCompatActivity() {
                     .remove(exercisePickerFragment)
                     .commit()
                 val display = windowManager.defaultDisplay
-                val layout = findViewById<FrameLayout>(R.id.excercisePickerContainer)
+                val layout = findViewById<FrameLayout>(R.id.exercisePickerContainer)
                 var screenHeight = display.height
                 screenHeight = 0
                 val params = layout.layoutParams
@@ -70,10 +70,10 @@ class CreateRoutineActivity : AppCompatActivity() {
                 addBtn.setImageResource(R.drawable.ic_add)
             } else {
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.excercisePickerContainer, ExcercisePickerFragment.newInstance(),"pickerFragment")
+                    .add(R.id.exercisePickerContainer, ExcercisePickerFragment.newInstance(),"pickerFragment")
                     .commit()
                 val display = windowManager.defaultDisplay
-                val layout = findViewById<FrameLayout>(R.id.excercisePickerContainer)
+                val layout = findViewById<FrameLayout>(R.id.exercisePickerContainer)
                 var screenHeight = display.height
                 screenHeight = (0.60 * screenHeight).toInt()
                 val parms = layout.layoutParams

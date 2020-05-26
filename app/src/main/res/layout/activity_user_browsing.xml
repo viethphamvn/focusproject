@@ -15,21 +15,23 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@color/darkgrey">
+        android:background="@color/colorPrimary">
 
         <EditText
             android:id="@+id/searchEditText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="John Smith"
+            android:hint="Search Your Friend Here"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:fontFamily="@font/nunito"/>
 
         <ImageButton
             android:id="@+id/searchbtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
             android:scaleType="fitXY"
-            android:background="@color/white"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:src="@drawable/ic_search"
             android:layout_marginStart="10dp"/>
 

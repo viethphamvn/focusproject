@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_profile_picture"
@@ -20,6 +21,7 @@
             android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/followStatsLayout"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -30,6 +32,7 @@
             android:fontFamily="@font/nunito"
             android:textSize="30sp"
             android:textStyle="bold"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@id/followStatsLayout"
             app:layout_constraintLeft_toRightOf="@id/user_profile_picture"
             app:layout_constraintRight_toRightOf="parent"
@@ -37,19 +40,21 @@
 
         <LinearLayout
             android:id="@+id/followStatsLayout"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@id/followButton"
             app:layout_constraintLeft_toRightOf="@id/user_profile_picture"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/username_textview">
+            app:layout_constraintTop_toBottomOf="@id/username_textview"
+            android:background="@color/colorPrimary">
 
             <ImageButton
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_followed" />
+                android:src="@drawable/ic_followed"
+                android:backgroundTint="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/followedTextView"
@@ -57,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="30"
+                android:textColor="@color/white"
                 android:fontFamily="@font/nunito"
                 android:textSize="30sp" />
 
@@ -64,6 +70,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="20dp"
+                android:backgroundTint="@color/colorPrimary"
                 android:src="@drawable/ic_following" />
 
             <TextView
@@ -72,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="30"
+                android:textColor="@color/white"
                 android:fontFamily="@font/nunito"
                 android:textSize="30sp" />
 
@@ -84,6 +92,7 @@
             android:layout_height="wrap_content"
             android:text="Follow"
             android:fontFamily="@font/nunito"
+            android:backgroundTint="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/user_profile_picture"
             app:layout_constraintRight_toRightOf="parent"

@@ -8,6 +8,7 @@
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
     android:textColor="#FFFFFF"
+    android:background="@color/colorPrimary"
     android:textSize="23sp"
     android:textStyle="bold"
     android:fontFamily="@font/nunito"

@@ -101,13 +101,13 @@ class StartRoutineActivity : AppCompatActivity() {
         if (activeRoutineList[position].vidId != "") {
             fragmentVideoPlayer = VideoViewerFragment.newInstance(activeRoutineList[position].vidId)
             supportFragmentManager.beginTransaction()
-                .add(R.id.excerciseMediaContainer, fragmentVideoPlayer as VideoViewerFragment, "videofragment")
+                .add(R.id.exerciseMediaContainer, fragmentVideoPlayer as VideoViewerFragment, "videofragment")
                 .commit()
             isImage = false
         } else {
             fragmentImageViewer = ImageViewerFragment.newInstance(activeRoutineList[position].img)
             supportFragmentManager.beginTransaction()
-                .add(R.id.excerciseMediaContainer, fragmentImageViewer as ImageViewerFragment, "imagefragment")
+                .add(R.id.exerciseMediaContainer, fragmentImageViewer as ImageViewerFragment, "imagefragment")
                 .commit()
             isImage = true
             print("Is Image")
