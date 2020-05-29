@@ -14,6 +14,7 @@ import com.example.focusproject.CreateRoutineActivity
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.models.Exercise
+import com.example.focusproject.tools.YouTubeHelper
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -61,7 +62,7 @@ class NewWorkoutEditFragment : Fragment() {
                 val exerciseDesc = workoutDescEditText.editText?.text.toString()
                 val type = spinnerExerciseType.selectedItem.toString()
                 val gifUrl = workoutImgUrlEditText.editText?.text.toString()
-                val youtubeUrl = workoutVideoUrlEditText.editText?.text.toString()
+                val youtubeUrl = YouTubeHelper.extractVideoIdFromUrl(workoutVideoUrlEditText.editText?.text.toString())
                 var rep = 0L
                 if (repTextView.text.toString() != "") {
                     rep = repTextView.text.toString().toLong()
@@ -70,6 +71,7 @@ class NewWorkoutEditFragment : Fragment() {
                 if (weightTextView.text.toString() != "") {
                     var weight = weightTextView.text.toString().toLong()
                 }
+
                 val duration = (hours * 3600 + minutes * 60 + seconds).toLong()
 
                 if (validateInfo(isRestTime, exerciseName, type, gifUrl, youtubeUrl, duration)) { //Check information before submit
@@ -85,7 +87,11 @@ class NewWorkoutEditFragment : Fragment() {
                     exercise["img"] = gifUrl
                     exercise["vidId"] = youtubeUrl
                     exercise["rep"] = rep
-                    exercise["isTimed"] = duration > 0
+                    exercise["isTimed"] = if (youtubeUrl != ""){
+                        true
+                    } else {
+                        duration > 0
+                    }
                     exercise["weight"] = weight
                     exercise["duration"] = duration
                     exercise["createdBy"] = FirebaseAuth.getInstance().currentUser?.uid!!

@@ -65,24 +65,23 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             .get()
             .addOnSuccessListener {
                 var currentUser = CreateUser.createUser(it)
-                if (currentUser.following.size > 0){
-                    FireStore.fireStore.collection("Routines")
-                        .get()
-                        .addOnSuccessListener { result ->
-                            routineList.clear()
-                            tempArray.clear()
-                            for (routine in result) {
-                                //Check if routine is belong to followed users
-                                if (currentUser.following.contains(routine.get("createdBy").toString())) {
-                                    tempArray.add(CreateRoutine.createRoutine(routine))
-                                }
-                            }
-                            if (tempArray.size > 0) {
-                                routineList = ArrayList(tempArray.sortedDescending().toList())
-                                feedRecyclerViewAdapter.setNewData(routineList)
+                FireStore.fireStore.collection("Routines")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        routineList.clear()
+                        tempArray.clear()
+                        for (routine in result) {
+                            //Check if routine is belong to followed users
+                            if (currentUser.following.contains(routine.get("createdBy").toString()) || routine.get("createdBy") == FireStore.currentUser!!.uid) {
+                                tempArray.add(CreateRoutine.createRoutine(routine))
                             }
                         }
-                }
+                        if (tempArray.size > 0) {
+                            routineList = ArrayList(tempArray.sortedDescending().toList())
+                            feedRecyclerViewAdapter.setNewData(routineList)
+                        }
+                    }
+
             }
     }
 

@@ -19,12 +19,12 @@ import com.example.focusproject.tools.CreateExercise
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_routine_activity.view.*
+import kotlinx.android.synthetic.main.fragment_daily_routine_activity.view.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-class RoutinesListFragment : Fragment(), View.OnClickListener {
+class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
     private var routines : HashMap<String, ArrayList<Exercise>> = HashMap()
     private var selectedDate : Int = 0
     private var selectedDateAsString: String = ""
@@ -179,7 +179,7 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_routine_activity, container, false)
+        var view = inflater.inflate(R.layout.fragment_daily_routine_activity, container, false)
 
         //Create a Array of dateButton for easier control
         buttonArray.put(2, view.mon)
@@ -200,13 +200,13 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
 
         //Handle Views Behavior
         view.apply {
-            mon.setOnClickListener(this@RoutinesListFragment)
-            tue.setOnClickListener (this@RoutinesListFragment)
-            wed.setOnClickListener (this@RoutinesListFragment)
-            thu.setOnClickListener (this@RoutinesListFragment)
-            fri.setOnClickListener (this@RoutinesListFragment)
-            sat.setOnClickListener(this@RoutinesListFragment)
-            sun.setOnClickListener (this@RoutinesListFragment)
+            mon.setOnClickListener(this@DailyRoutinesListFragment)
+            tue.setOnClickListener (this@DailyRoutinesListFragment)
+            wed.setOnClickListener (this@DailyRoutinesListFragment)
+            thu.setOnClickListener (this@DailyRoutinesListFragment)
+            fri.setOnClickListener (this@DailyRoutinesListFragment)
+            sat.setOnClickListener(this@DailyRoutinesListFragment)
+            sun.setOnClickListener (this@DailyRoutinesListFragment)
 
             edit_routine_btn.setOnClickListener {
                 startEditActivity(routines, selectedDate)
@@ -273,7 +273,7 @@ class RoutinesListFragment : Fragment(), View.OnClickListener {
     companion object {
         @JvmStatic
         fun newInstance(todayDate: Int) =
-            RoutinesListFragment().apply {
+            DailyRoutinesListFragment().apply {
                 arguments = Bundle().apply {
                     putInt(DAY_OF_WEEK, todayDate)
                 }

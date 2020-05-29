@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.transition.Slide
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -68,9 +69,13 @@ class UserDetailActivity : AppCompatActivity() {
                 setBackgroundColor(getColor(R.color.darkgrey))
             }
         } else {
-            followBtn.apply {
-                text = "follow"
-                setBackgroundColor(getColor(R.color.colorPrimaryDark))
+            if (user.id == FireStore.currentUser!!.uid){
+                followBtn.visibility = View.GONE
+            } else {
+                followBtn.apply {
+                    text = "follow"
+                    setBackgroundColor(getColor(R.color.colorPrimaryDark))
+                }
             }
         }
 
@@ -79,30 +84,40 @@ class UserDetailActivity : AppCompatActivity() {
                     FireStore.fireStore.collection("Users")
                         .document(FireStore.currentUser!!.uid)
                         .update("following", FieldValue.arrayRemove(user.id))
-                    FireStore.fireStore.collection("Users")
-                        .document(user.id)
-                        .update("follower", FieldValue.arrayRemove(FireStore.currentUser!!.uid))
                         .addOnSuccessListener {
-                            user.follower.remove(FireStore.currentUser!!.uid)
-                            followBtn.apply {
-                                text = "follow"
-                                setBackgroundColor(getColor(R.color.colorPrimaryDark))
-                            }
+                            FireStore.fireStore.collection("Users")
+                                .document(user.id)
+                                .update("follower", FieldValue.arrayRemove(FireStore.currentUser!!.uid))
+                                .addOnSuccessListener {
+                                    user.follower.remove(FireStore.currentUser!!.uid)
+                                    followBtn.apply {
+                                        text = "follow"
+                                        setBackgroundColor(getColor(R.color.colorPrimaryDark))
+                                    }
+                                    followedTextView.text =
+                                        "${followedTextView.text.toString().toLong() - 1}"
+                                }
                         }
-
                 } else {
                     FireStore.fireStore.collection("Users")
                         .document(FireStore.currentUser!!.uid)
                         .update("following", FieldValue.arrayUnion(user.id))
-                    FireStore.fireStore.collection("Users")
-                        .document(user.id)
-                        .update("follower", FieldValue.arrayUnion(FireStore.currentUser!!.uid))
                         .addOnSuccessListener {
-                            user.follower.add(FireStore.currentUser!!.uid)
-                            followBtn.apply {
-                                text = "unfollow"
-                                setBackgroundColor(getColor(R.color.darkgrey))
-                            }
+                            FireStore.fireStore.collection("Users")
+                                .document(user.id)
+                                .update(
+                                    "follower",
+                                    FieldValue.arrayUnion(FireStore.currentUser!!.uid)
+                                )
+                                .addOnSuccessListener {
+                                    user.follower.add(FireStore.currentUser!!.uid)
+                                    followBtn.apply {
+                                        text = "unfollow"
+                                        setBackgroundColor(getColor(R.color.darkgrey))
+                                        followedTextView.text =
+                                            "${followedTextView.text.toString().toLong() + 1}"
+                                    }
+                                }
                         }
                 }
         }
