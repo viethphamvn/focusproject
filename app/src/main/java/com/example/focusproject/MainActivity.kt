@@ -28,7 +28,15 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        addWeeklyRoutineFragment()
+        //Set Up Current User Located in models/User
+        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+            .get()
+            .addOnSuccessListener {user ->
+                User.currentUser = CreateUser.createUser(user)
+                addWeeklyRoutineFragment()
+            }
+
+
 
         //BottomNavigation Handle
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
@@ -56,14 +64,6 @@ class MainActivity : AppCompatActivity() {
         findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener{
             startActivity(Intent(this, UserBrowsingActivity::class.java))
         }
-
-
-        //Set Up Current User Located in models/User
-        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
-            .get()
-            .addOnSuccessListener {user ->
-                User.currentUser = CreateUser.createUser(user)
-            }
     }
 
     private fun addNewFeedFragment() {
