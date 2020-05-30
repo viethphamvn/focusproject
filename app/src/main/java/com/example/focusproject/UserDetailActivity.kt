@@ -14,24 +14,34 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
 import com.example.focusproject.adapters.FeedRecyclerViewAdapter
+import com.example.focusproject.adapters.ViewPagerAdapter
+import com.example.focusproject.fragments.MuscleGroupFragment
+import com.example.focusproject.fragments.NewWorkoutEditFragment
+import com.example.focusproject.fragments.RoutineListFragment
 import com.example.focusproject.models.Exercise
 import com.example.focusproject.models.Routine
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateExercise
 import com.example.focusproject.tools.CreateRoutine
 import com.example.focusproject.tools.FireStore
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.FieldValue
 import kotlinx.android.synthetic.main.activity_user_detail.*
+import kotlinx.android.synthetic.main.fragment_excercise_picker.view.*
 
 private const val routineListFragmentTag = "routineListFragmentInUserDetailActivity"
 class UserDetailActivity : AppCompatActivity() {
     private lateinit var user : User
+    private val tabTitle = arrayOf("User's Routines", "Saved Routines")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,6 +126,17 @@ class UserDetailActivity : AppCompatActivity() {
         }
 
 
+        //Set Up View Pager and Tab Layout
+        var fragments = ArrayList<Fragment>()
+        fragments.add(RoutineListFragment.newInstance(user))
+        fragments.add(RoutineListFragment.newInstance(user, "savedRoutines"))
 
+        var viewpager = findViewById<ViewPager2>(R.id.viewpager)
+        viewpager.adapter = ViewPagerAdapter(2, fragments, this)
+
+        var tabLayout = findViewById<TabLayout>(R.id.tab_layout)
+        TabLayoutMediator(tabLayout, viewpager) { tab, position ->
+            tab.text = tabTitle[position]
+        }.attach()
     }
 }

@@ -15,14 +15,19 @@ import com.example.focusproject.models.Routine
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateRoutine
 import com.example.focusproject.tools.FireStore
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val USER = "param1"
+private const val DOCUMENT = "param2"
 
 class RoutineListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var user: User? = null
+    private var documentPath: String? = null
     private lateinit var routineRecyclerViewAdapter : FeedRecyclerViewAdapter
     private var routineList = ArrayList<Routine>()
 
@@ -30,6 +35,7 @@ class RoutineListFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             user = it.getSerializable(USER) as User
+            documentPath = it.getString(DOCUMENT)
         }
     }
 
@@ -62,29 +68,59 @@ class RoutineListFragment : Fragment() {
                     putSerializable(USER, user)
                 }
             }
+
+        fun newInstance(user: User, documentPath: String) =
+            RoutineListFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(USER, user)
+                    putString(DOCUMENT, documentPath)
+                }
+            }
     }
 
     override fun onResume() {
         super.onResume()
+        routineList.clear()
         fetchData()
     }
 
     private fun fetchData(){
-        FireStore.fireStore.collection("Routines")
-            .get()
-            .addOnSuccessListener { result ->
-                var tempArray = ArrayList<Routine>()
-                routineRecyclerViewAdapter.notifyDataSetChanged()
-                for (routine in result) {
+        if (documentPath == null){
+            FireStore.fireStore.collection("Routines")
+                .get()
+                .addOnSuccessListener { result ->
                     //Check if routine is belong to followed users
-                    if (routine.get("createdBy").toString() == user!!.id) {
-                        tempArray.add(CreateRoutine.createRoutine(routine))
+                    for (routine in result){
+                        if (routine.get("createdBy").toString() == user!!.id){
+                            createRoutines(routine)
+                        }
                     }
                 }
-                if (tempArray.size > 0) {
-                    routineList = ArrayList(tempArray.sortedDescending().toList())
-                    routineRecyclerViewAdapter.setNewData(routineList)
+        } else {
+            FireStore.fireStore.collection("Users").document(user!!.id)
+                .get()
+                .addOnSuccessListener { result ->
+                    if (result.get("savedRoutines") != null) {
+                        var savedRoutines =
+                            result.get("savedRoutines") as ArrayList<String>//this is a list of routine id
+                        for (id in savedRoutines) {
+                            FireStore.fireStore.collection("Routines").document(id)
+                                .get()
+                                .addOnSuccessListener { routine ->
+                                    createRoutines(routine)
+                                }
+                        }
+                    }
                 }
-            }
+        }
     }
+
+    private fun createRoutines(routine: DocumentSnapshot){
+        routineList.add(CreateRoutine.createRoutine(routine))
+        if (routineList.size > 0) {
+            routineList = ArrayList(routineList.sortedDescending().toList())
+            routineRecyclerViewAdapter.setNewData(routineList)
+        }
+    }
+
 }
