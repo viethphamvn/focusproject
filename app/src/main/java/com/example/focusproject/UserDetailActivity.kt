@@ -114,5 +114,8 @@ class UserDetailActivity : AppCompatActivity() {
                         }
                 }
         }
+
+
+
     }
 }
