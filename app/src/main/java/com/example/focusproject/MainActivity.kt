@@ -34,36 +34,33 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener {user ->
                 User.currentUser = CreateUser.createUser(user)
                 addWeeklyRoutineFragment()
-            }
+                //BottomNavigation Handle
+                bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.action_routine -> {
+                            addWeeklyRoutineFragment()
+                            return@OnNavigationItemSelectedListener true
+                        }
+                        R.id.action_new_feed -> {
+                            //Implement New Feed Fragment
+                            addNewFeedFragment()
+                            return@OnNavigationItemSelectedListener true
+                        }
+                    }
+                    false
+                })
 
-
-
-        //BottomNavigation Handle
-        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_routine -> {
-                    addWeeklyRoutineFragment()
-                    return@OnNavigationItemSelectedListener true
+                //Setup Views
+                findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
+                    startActivity(Intent(this, CreateRoutineActivity::class.java))
                 }
-                R.id.action_new_feed -> {
-                    //Implement New Feed Fragment
-                    addNewFeedFragment()
-                    return@OnNavigationItemSelectedListener true
+                findViewById<CircleImageView>(R.id.user_profile_button).setOnClickListener{
+                    startActivity(Intent(this, UserProfileActivity::class.java))
+                }
+                findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener{
+                    startActivity(Intent(this, UserBrowsingActivity::class.java))
                 }
             }
-            false
-        })
-
-        //Setup Views
-        findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
-            startActivity(Intent(this, CreateRoutineActivity::class.java))
-        }
-        findViewById<CircleImageView>(R.id.user_profile_button).setOnClickListener{
-            startActivity(Intent(this, UserProfileActivity::class.java))
-        }
-        findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener{
-            startActivity(Intent(this, UserBrowsingActivity::class.java))
-        }
     }
 
     private fun addNewFeedFragment() {

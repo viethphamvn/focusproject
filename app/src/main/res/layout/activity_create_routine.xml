@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
-            android:backgroundTint="#BB1E31"
+            android:backgroundTint="@color/pastelred"
             android:fontFamily="@font/nunito"
             android:text="CANCEL"
             android:textColor="@color/white"
