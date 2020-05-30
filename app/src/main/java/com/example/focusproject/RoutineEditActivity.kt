@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
-import com.example.focusproject.fragments.ExcercisePickerFragment
+import com.example.focusproject.fragments.ExercisePickerFragment
 import com.example.focusproject.models.Exercise
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
@@ -78,7 +78,7 @@ class RoutineEditActivity : AppCompatActivity() {
                 addBtn.setImageResource(R.drawable.ic_add)
             } else {
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.exercisePickerContainer, ExcercisePickerFragment.newInstance(),"pickerFragment")
+                    .add(R.id.exercisePickerContainer, ExercisePickerFragment.newInstance(),"pickerFragment")
                     .commit()
 
                 val display = windowManager.defaultDisplay

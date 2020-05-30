@@ -1,16 +1,19 @@
 package com.example.focusproject.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 
 import com.example.focusproject.R
 import com.example.focusproject.adapters.ViewPagerAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_excercise_picker.view.*
 
-class ExcercisePickerFragment : Fragment() {
+class ExercisePickerFragment : Fragment() {
+    private val tabTitle = arrayOf("New Workout", "You Created", "Abs", "Arms")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,20 +21,18 @@ class ExcercisePickerFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_excercise_picker, container, false)
-        var viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
 
-        viewPagerAdapter.addFragment(NewWorkoutEditFragment.newInstance(),"New Exercise")
-        viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("", true), "By You")
-        viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("Abs", false), "Abs")
-        viewPagerAdapter.addFragment(MuscleGroupFragment.newInstance("Arms", false), "Arms")
+        view.viewpager.adapter = activity?.let { ViewPagerAdapter(4, it) }
 
-        view.viewpager.adapter = viewPagerAdapter
-        view.tablayout.setupWithViewPager(view.viewpager)
+        var tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
+        TabLayoutMediator(tabLayout, view.viewpager) { tab, position ->
+            tab.text = tabTitle[position]
+        }.attach()
         return view
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = ExcercisePickerFragment()
+        fun newInstance() = ExercisePickerFragment()
     }
 }

@@ -29,9 +29,8 @@ import com.example.focusproject.tools.FireStore
 import com.google.firebase.firestore.FieldValue
 import kotlinx.android.synthetic.main.activity_user_detail.*
 
+private const val routineListFragmentTag = "routineListFragmentInUserDetailActivity"
 class UserDetailActivity : AppCompatActivity() {
-    private lateinit var routineRecyclerViewAdapter : FeedRecyclerViewAdapter
-    private var routineList = ArrayList<Routine>()
     private lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,12 +54,6 @@ class UserDetailActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.followedTextView).text = user.follower.size.toString()
         findViewById<TextView>(R.id.followingTextView).text = user.following.size.toString()
-
-        findViewById<RecyclerView>(R.id.routine_recycler_list_view).apply {
-            layoutManager = LinearLayoutManager(context)
-            routineRecyclerViewAdapter = FeedRecyclerViewAdapter(routineList){item -> doClick(item)}
-            adapter = routineRecyclerViewAdapter
-        }
 
         var followBtn = findViewById<Button>(R.id.followButton)
         if (user.follower.contains(FireStore.currentUser!!.uid)){
@@ -121,39 +114,5 @@ class UserDetailActivity : AppCompatActivity() {
                         }
                 }
         }
-    }
-
-    private fun doClick(item: Routine) {
-        var intent = Intent(this, RoutineDetailActivity::class.java)
-        intent.putExtra("routine", item)
-        startActivity(intent)
-    }
-
-    private fun exerciseOnClick(item: Exercise) {
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        fetchData()
-    }
-
-    private fun fetchData(){
-        FireStore.fireStore.collection("Routines")
-            .get()
-            .addOnSuccessListener { result ->
-                var tempArray = ArrayList<Routine>()
-                routineRecyclerViewAdapter.notifyDataSetChanged()
-                for (routine in result) {
-                    //Check if routine is belong to followed users
-                    if (routine.get("createdBy").toString() == user.id) {
-                        tempArray.add(CreateRoutine.createRoutine(routine))
-                    }
-                }
-                if (tempArray.size > 0) {
-                    routineList = ArrayList(tempArray.sortedDescending().toList())
-                    routineRecyclerViewAdapter.setNewData(routineList)
-                }
-            }
     }
 }
