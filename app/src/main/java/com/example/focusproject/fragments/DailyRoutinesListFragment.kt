@@ -15,8 +15,8 @@ import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.StartRoutineActivity
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.models.Exercise
+import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateExercise
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_daily_routine_activity.view.*
@@ -34,7 +34,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
     private var data : Map<String, Any> = HashMap()
     private lateinit var routineRecyclerViewAdapter : RoutineRecyclerViewAdapter
     private var firestore = FirebaseFirestore.getInstance()
-    private var currentUser = FirebaseAuth.getInstance().currentUser!!
+    private var currentUser = User.currentUser.id
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initiateRoutine(){
-        firestore.collection("Users").document(currentUser.uid)
+        firestore.collection("Users").document(currentUser)
             .get()
             .addOnSuccessListener {
                 if (it["routine"] != null) {
@@ -351,7 +351,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
         updatedRoutine["sun"] = ArrayList(exerciseIdArray)
 
 
-        firestore.collection("Users").document(currentUser.uid).update("routine", updatedRoutine).addOnCompleteListener {
+        firestore.collection("Users").document(currentUser).update("routine", updatedRoutine).addOnCompleteListener {
             initiateRoutine()
         }
     }

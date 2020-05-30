@@ -90,7 +90,7 @@ class UserBrowsingActivity : AppCompatActivity() {
 
     private fun getFriends() {
         var fireStore = FirebaseFirestore.getInstance()
-        fireStore.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+        fireStore.collection("Users").document(User.currentUser.id)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.get("following") != null){

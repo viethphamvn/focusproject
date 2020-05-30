@@ -3,6 +3,7 @@ package com.example.focusproject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.focusproject.models.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_user_profile.*
 
@@ -18,6 +19,12 @@ class UserProfileActivity : AppCompatActivity() {
             firebaseAuth.signOut()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
+        }
+
+        DetailPageButton.setOnClickListener {
+            var intent = Intent(this, UserDetailActivity::class.java)
+            intent.putExtra("user", User.currentUser)
+            startActivity(intent)
         }
 
     }

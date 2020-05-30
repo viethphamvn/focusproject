@@ -14,6 +14,7 @@ import com.example.focusproject.CreateRoutineActivity
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.models.Exercise
+import com.example.focusproject.models.User
 import com.example.focusproject.tools.YouTubeHelper
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -94,7 +95,7 @@ class NewWorkoutEditFragment : Fragment() {
                     }
                     exercise["weight"] = weight
                     exercise["duration"] = duration
-                    exercise["createdBy"] = FirebaseAuth.getInstance().currentUser?.uid!!
+                    exercise["createdBy"] = User.currentUser.id
                     exercise["uid"] = ref.id
 
                     ref.set(exercise).addOnSuccessListener {

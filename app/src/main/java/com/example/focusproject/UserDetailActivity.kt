@@ -46,13 +46,13 @@ class UserDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.followingTextView).text = user.following.size.toString()
 
         var followBtn = findViewById<Button>(R.id.followButton)
-        if (user.follower.contains(FirebaseAuth.getInstance().currentUser!!.uid)){
+        if (user.follower.contains(User.currentUser.id)){
             followBtn.apply {
                 text = "unfollow"
                 setBackgroundColor(getColor(R.color.darkgrey))
             }
         } else {
-            if (user.id == FirebaseAuth.getInstance().currentUser!!.uid){
+            if (user.id == User.currentUser.id){
                 followBtn.visibility = View.GONE
             } else {
                 followBtn.apply {
@@ -63,16 +63,16 @@ class UserDetailActivity : AppCompatActivity() {
         }
 
         followBtn.setOnClickListener {
-                if (user.follower.contains(FirebaseAuth.getInstance().currentUser!!.uid)) {
+                if (user.follower.contains(User.currentUser.id)) {
                     FirebaseFirestore.getInstance().collection("Users")
-                        .document(FirebaseAuth.getInstance().currentUser!!.uid)
+                        .document(User.currentUser.id)
                         .update("following", FieldValue.arrayRemove(user.id))
                         .addOnSuccessListener {
                             FirebaseFirestore.getInstance().collection("Users")
                                 .document(user.id)
-                                .update("follower", FieldValue.arrayRemove(FirebaseAuth.getInstance().currentUser!!.uid))
+                                .update("follower", FieldValue.arrayRemove(User.currentUser.id))
                                 .addOnSuccessListener {
-                                    user.follower.remove(FirebaseAuth.getInstance().currentUser!!.uid)
+                                    user.follower.remove(User.currentUser.id)
                                     followBtn.apply {
                                         text = "follow"
                                         setBackgroundColor(getColor(R.color.colorPrimaryDark))
@@ -83,17 +83,17 @@ class UserDetailActivity : AppCompatActivity() {
                         }
                 } else {
                     FirebaseFirestore.getInstance().collection("Users")
-                        .document(FirebaseAuth.getInstance().currentUser!!.uid)
+                        .document(User.currentUser.id)
                         .update("following", FieldValue.arrayUnion(user.id))
                         .addOnSuccessListener {
                             FirebaseFirestore.getInstance().collection("Users")
                                 .document(user.id)
                                 .update(
                                     "follower",
-                                    FieldValue.arrayUnion(FirebaseAuth.getInstance().currentUser!!.uid)
+                                    FieldValue.arrayUnion(User.currentUser.id)
                                 )
                                 .addOnSuccessListener {
-                                    user.follower.add(FirebaseAuth.getInstance().currentUser!!.uid)
+                                    user.follower.add(User.currentUser.id)
                                     followBtn.apply {
                                         text = "unfollow"
                                         setBackgroundColor(getColor(R.color.darkgrey))

@@ -8,4 +8,9 @@ class User : Serializable{
     var follower = ArrayList<String>()
     var following = ArrayList<String>()
     var id: String = ""
+
+
+    companion object {
+        lateinit var currentUser : User
+    }
 }

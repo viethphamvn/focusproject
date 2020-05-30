@@ -13,9 +13,9 @@ import com.example.focusproject.R
 import com.example.focusproject.RoutineDetailActivity
 import com.example.focusproject.adapters.FeedRecyclerViewAdapter
 import com.example.focusproject.models.Routine
+import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateRoutine
 import com.example.focusproject.tools.CreateUser
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_new_feed.view.*
 import kotlin.collections.ArrayList
@@ -56,7 +56,7 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun fetchData(){
-        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+        FirebaseFirestore.getInstance().collection("Users").document(User.currentUser.id)
             .get()
             .addOnSuccessListener {
                 var currentUser = CreateUser.createUser(it)
@@ -67,7 +67,7 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         tempArray.clear()
                         for (routine in result) {
                             //Check if routine is belong to followed users
-                            if (currentUser.following.contains(routine.get("createdBy").toString()) || routine.get("createdBy") == FirebaseAuth.getInstance().currentUser!!.uid) {
+                            if (currentUser.following.contains(routine.get("createdBy").toString()) || routine.get("createdBy") == User.currentUser.id) {
                                 tempArray.add(CreateRoutine.createRoutine(routine))
                             }
                         }

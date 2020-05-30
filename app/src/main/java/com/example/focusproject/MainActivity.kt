@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.focusproject.fragments.NewFeedFragment
 import com.example.focusproject.fragments.DailyRoutinesListFragment
+import com.example.focusproject.models.User
+import com.example.focusproject.tools.CreateUser
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -53,6 +56,14 @@ class MainActivity : AppCompatActivity() {
         findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener{
             startActivity(Intent(this, UserBrowsingActivity::class.java))
         }
+
+
+        //Set Up Current User Located in models/User
+        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+            .get()
+            .addOnSuccessListener {user ->
+                User.currentUser = CreateUser.createUser(user)
+            }
     }
 
     private fun addNewFeedFragment() {

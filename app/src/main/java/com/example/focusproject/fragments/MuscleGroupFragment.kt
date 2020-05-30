@@ -12,8 +12,8 @@ import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
 import com.example.focusproject.models.Exercise
+import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateExercise
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_muscle_group.view.*
 
@@ -72,7 +72,7 @@ class MuscleGroupFragment : Fragment() {
                         var exercise = CreateExercise.createExercise(document)
                         exercises.add(exercise)
                         exerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
-                    } else if (self!! && document.get("createdBy") as String == FirebaseAuth.getInstance().currentUser!!.uid && !(document.get("isRestTime") as Boolean)){
+                    } else if (self!! && document.get("createdBy") as String == User.currentUser.id && !(document.get("isRestTime") as Boolean)){
                         var exercise = CreateExercise.createExercise(document)
                         exercises.add(exercise)
                         exerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
