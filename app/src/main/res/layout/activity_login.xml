@@ -39,7 +39,6 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="vietpham@templ.edu"
                 android:inputType="textEmailAddress"
                 android:fontFamily="@font/nunito"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -59,7 +58,6 @@
 
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:text="Abcd1234"
                 android:layout_marginTop="10dp"
                 android:inputType="textPassword"
                 android:fontFamily="@font/nunito"/>

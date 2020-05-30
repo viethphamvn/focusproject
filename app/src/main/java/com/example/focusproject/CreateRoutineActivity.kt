@@ -1,4 +1,6 @@
 package com.example.focusproject
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -18,20 +20,46 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-
 class CreateRoutineActivity : AppCompatActivity() {
 
-    private var newWorkout : ArrayList<Exercise> = ArrayList()
-    private var newWorkoutJustId: ArrayList<String> = ArrayList()
+    private lateinit var newWorkout : ArrayList<Exercise>
+    private lateinit var newWorkoutJustId: ArrayList<String>
     private lateinit var touchHelper : ItemTouchHelper
     private lateinit var routineRecyclerListView: RecyclerView
     private lateinit var routineRecyclerViewAdapter: RoutineRecyclerViewAdapter
+    private var routineTitle : String? = null
+    private var routineId : String? = null
 
     private lateinit var deleteIcon: Drawable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_routine)
+
+        newWorkout = if (intent.getSerializableExtra("routine") != null){
+            intent.getSerializableExtra("routine") as ArrayList<Exercise>
+        } else {
+            ArrayList()
+        }
+
+        newWorkoutJustId = if (intent.getSerializableExtra("routinejustid") != null){
+            intent.getSerializableExtra("routinejustid") as ArrayList<String>
+        } else {
+            ArrayList()
+        }
+
+        routineTitle = if (intent.getStringExtra("routinetitle") != null){
+            intent.getStringExtra("routinetitle") as String
+        } else {
+            null
+        }
+
+        routineId = if (intent.getStringExtra("id") != null){
+            intent.getStringExtra("id") as String
+        } else {
+            null
+        }
+
         //Drawable Objects
         deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
         setUpRecyclerView()
@@ -40,6 +68,10 @@ class CreateRoutineActivity : AppCompatActivity() {
         var cancelBtn = findViewById<Button>(R.id.cancel_button)
         var addBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction)
         var routineName = findViewById<EditText>(R.id.newRoutineNameTextView) as TextView
+
+        if (routineTitle != null){
+            routineName.text = routineTitle
+        }
 
         saveBtn.setOnClickListener {
             if (newWorkout.size > 0 && routineName.text.toString() != "") {
@@ -84,6 +116,7 @@ class CreateRoutineActivity : AppCompatActivity() {
         }
 
         cancelBtn.setOnClickListener{
+            setResult(Activity.RESULT_CANCELED)
             finish()
         }
 
@@ -93,15 +126,21 @@ class CreateRoutineActivity : AppCompatActivity() {
         var firestore = FirebaseFirestore.getInstance().collection("Routines")
         var newRoutineHashMap = HashMap<String, Any>()
 
-        var newRoutineId = FirebaseFirestore.getInstance().collection("Routines").document().id
+        if (routineId == null){
+            routineId = FirebaseFirestore.getInstance().collection("Routines").document().id
+        }
 
         newRoutineHashMap["createdBy"] = FirebaseAuth.getInstance().currentUser!!.uid
         newRoutineHashMap["createdOn"] = System.currentTimeMillis()
         newRoutineHashMap["name"] = routineName
         newRoutineHashMap["exercises"] = newWorkoutJustId
-        newRoutineHashMap["id"] = newRoutineId
-        firestore.document(newRoutineId).set(newRoutineHashMap).addOnSuccessListener {
+        newRoutineHashMap["id"] = routineId!!
+        firestore.document(routineId!!).set(newRoutineHashMap).addOnSuccessListener {
             Toast.makeText(this, "Your routine has been posted!", Toast.LENGTH_SHORT).show()
+            var returnIntent = Intent()
+            returnIntent.putExtra("title", routineName)
+            returnIntent.putExtra("routine", newWorkoutJustId)
+            setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }
     }
@@ -131,6 +170,7 @@ class CreateRoutineActivity : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 var deletedItemPosition = viewHolder.adapterPosition
                 routineRecyclerViewAdapter.removeItemAt(deletedItemPosition)
+                newWorkoutJustId.removeAt(deletedItemPosition)
             }
 
             override fun onChildDraw(

@@ -3,6 +3,7 @@ package com.example.focusproject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.focusproject.fragments.NewFeedFragment
 import com.example.focusproject.fragments.DailyRoutinesListFragment
 import com.example.focusproject.models.User
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
             .get()
             .addOnSuccessListener {user ->
+                loadingTextView.visibility = View.GONE
                 User.currentUser = CreateUser.createUser(user)
                 addWeeklyRoutineFragment()
                 //BottomNavigation Handle

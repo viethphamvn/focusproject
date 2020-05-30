@@ -216,7 +216,6 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
                 if (getCurrentActiveList(selectedDate).size > 0) {
                     var intent = Intent(context, StartRoutineActivity::class.java)
                     intent.putExtra("routine", getCurrentActiveList(selectedDate))
-                    intent.putExtra("selectedDate", selectedDate)
                     startActivity(intent)
                 } else {
                     Toast.makeText(context, "You don't have any exercises", Toast.LENGTH_SHORT).show()

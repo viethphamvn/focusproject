@@ -1,5 +1,6 @@
 package com.example.focusproject.fragments
 
+import android.app.DownloadManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.isGone
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.focusproject.CreateRoutineActivity
 
 import com.example.focusproject.R
@@ -19,18 +24,27 @@ import com.example.focusproject.tools.YouTubeHelper
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.gson.Gson
+import com.google.gson.internal.bind.util.ISO8601Utils
 import com.ikovac.timepickerwithseconds.MyTimePickerDialog
+import kotlinx.android.synthetic.main.fragment_new_workout_edit.*
 import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.*
+import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.currentDurationTextView
 import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.isRestTimeCheckBox
+import org.json.JSONObject
 import org.w3c.dom.Text
+import java.net.URL
 import java.time.Duration
 
+private const val API_KEY = "AIzaSyDGVmEwQlfqzbybEhpkyXTfI2L0uSlU1-s"
+
 class NewWorkoutEditFragment : Fragment() {
-    var hours : Int = 0
-    var minutes: Int = 0
-    var seconds: Int = 0
+    var hours : Long = 0
+    var minutes: Long = 0
+    var seconds: Long = 0
     lateinit var fragmentView : View
     lateinit var typeSpinner : Spinner
+    lateinit var currentDurationTextView : TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,19 +52,16 @@ class NewWorkoutEditFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_new_workout_edit, container, false)
-        val currentDurationTextView = fragmentView.currentDurationTextView
 
         setUpSpinner()
+
+        currentDurationTextView = fragmentView.currentDurationTextView
 
         fragmentView.changeDurationButton?.setOnClickListener {
             MyTimePickerDialog(context,
                 MyTimePickerDialog.OnTimeSetListener {_, hourOfDay, minute, seconds ->
                     run {
-                        currentDurationTextView.text =
-                            String.format("%02d:%02d:%02d", hourOfDay, minute, seconds)
-                        hours = hourOfDay
-                        minutes = minute
-                        this.seconds = seconds
+                        setUpDuration(hourOfDay.toLong(), minute.toLong(), seconds.toLong())
                     }
                 }, 0, 0, 0, true).show()
         }
@@ -73,7 +84,7 @@ class NewWorkoutEditFragment : Fragment() {
                     var weight = weightTextView.text.toString().toLong()
                 }
 
-                val duration = (hours * 3600 + minutes * 60 + seconds).toLong()
+                val duration = (hours * 3600 + minutes * 60 + seconds)
 
                 if (validateInfo(isRestTime, exerciseName, type, gifUrl, youtubeUrl, duration)) { //Check information before submit
                     val firestore = FirebaseFirestore.getInstance()
@@ -161,6 +172,25 @@ class NewWorkoutEditFragment : Fragment() {
             videoInput.addTextChangedListener(object: TextWatcher{
                 override fun afterTextChanged(s: Editable?) {
                     workoutImgUrlEditText.isEnabled = s.toString() == ""
+                    val vidId = YouTubeHelper.extractVideoIdFromUrl(s.toString())
+                    val url = "https://www.googleapis.com/youtube/v3/videos?id=$vidId&part=contentDetails&key=$API_KEY"
+                    // Instantiate the RequestQueue.
+                    val queue = Volley.newRequestQueue(context)
+
+                    // Request a string response from the provided URL.
+                    val stringRequest = StringRequest(
+                        Request.Method.GET, url,
+                        Response.Listener<String> { response ->
+                            var resultJson = JSONObject(response)
+                            if (resultJson.get("items").toString() != "[]"){
+                                var dur = Duration.parse(resultJson.getJSONArray("items").getJSONObject(0).getJSONObject("contentDetails").getString("duration"))
+                                setUpDuration(dur.seconds)
+                            }
+                        },
+                        Response.ErrorListener { textView.text = "That didn't work!" })
+
+                    // Add the request to the RequestQueue.
+                    queue.add(stringRequest)
                 }
 
                 override fun beforeTextChanged(
@@ -282,6 +312,26 @@ class NewWorkoutEditFragment : Fragment() {
         }
 
 
+    }
+
+    private fun setUpDuration(hourOfDay: Long, minute: Long, seconds: Long){
+        currentDurationTextView.text =
+            String.format("%02d:%02d:%02d", hourOfDay, minute, seconds)
+        hours = hourOfDay
+        minutes = minute
+        this.seconds = seconds
+    }
+
+    private fun setUpDuration(duration: Long){
+        var hourOfDay = duration / 3600
+        var minute = (duration - (hourOfDay * 3600)) / 60
+        var seconds = (duration - minute*60 - hourOfDay*3600)
+
+        currentDurationTextView.text =
+            String.format("%02d:%02d:%02d", hourOfDay, minute, seconds)
+        hours = hourOfDay
+        minutes = minute
+        this.seconds = seconds
     }
 
     companion object {

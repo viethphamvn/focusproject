@@ -93,6 +93,21 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/start_workout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/floatingActionButton_saveAction"
+        android:layout_marginBottom="10dp"
+        android:text="START WORKOUT"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        app:cornerRadius="100dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton_saveAction"
         android:layout_width="70dp"

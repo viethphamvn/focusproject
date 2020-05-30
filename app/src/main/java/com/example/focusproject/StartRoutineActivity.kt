@@ -18,7 +18,6 @@ class StartRoutineActivity : AppCompatActivity() {
 
     private lateinit var controlLayout: TextView
     private lateinit var activeRoutineList: ArrayList<Exercise>
-    private var selectedDate = 0
     private var currentWorkoutPosition : Int = 0
     private lateinit var progressBar : ProgressBar
     private lateinit var exerciseNameTextView : TextView
@@ -34,7 +33,6 @@ class StartRoutineActivity : AppCompatActivity() {
 
         //Get the data from caller
         activeRoutineList = intent.getSerializableExtra("routine") as ArrayList<Exercise>
-        selectedDate = intent.getIntExtra("date", 2)
 
         setUpRoutineList()
 
