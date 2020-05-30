@@ -92,11 +92,15 @@ class CreateRoutineActivity : AppCompatActivity() {
     private fun uploadData(routineName: String) {
         var firestore = FirebaseFirestore.getInstance().collection("Routines")
         var newRoutineHashMap = HashMap<String, Any>()
+
+        var newRoutineId = FirebaseFirestore.getInstance().collection("Routines").document().id
+
         newRoutineHashMap["createdBy"] = FirebaseAuth.getInstance().currentUser!!.uid
         newRoutineHashMap["createdOn"] = System.currentTimeMillis()
         newRoutineHashMap["name"] = routineName
         newRoutineHashMap["exercises"] = newWorkoutJustId
-        firestore.document().set(newRoutineHashMap).addOnSuccessListener {
+        newRoutineHashMap["id"] = newRoutineId
+        firestore.document(newRoutineId).set(newRoutineHashMap).addOnSuccessListener {
             Toast.makeText(this, "Your routine has been posted!", Toast.LENGTH_SHORT).show()
             finish()
         }

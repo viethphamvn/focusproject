@@ -1,42 +1,22 @@
 package com.example.focusproject
 
-import android.app.Dialog
-import android.content.Context
-import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Slide
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
-import com.example.focusproject.adapters.FeedRecyclerViewAdapter
 import com.example.focusproject.adapters.ViewPagerAdapter
-import com.example.focusproject.fragments.MuscleGroupFragment
-import com.example.focusproject.fragments.NewWorkoutEditFragment
 import com.example.focusproject.fragments.RoutineListFragment
-import com.example.focusproject.models.Exercise
-import com.example.focusproject.models.Routine
 import com.example.focusproject.models.User
-import com.example.focusproject.tools.CreateExercise
-import com.example.focusproject.tools.CreateRoutine
-import com.example.focusproject.tools.FireStore
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_user_detail.*
-import kotlinx.android.synthetic.main.fragment_excercise_picker.view.*
 
 private const val routineListFragmentTag = "routineListFragmentInUserDetailActivity"
 class UserDetailActivity : AppCompatActivity() {
@@ -66,13 +46,13 @@ class UserDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.followingTextView).text = user.following.size.toString()
 
         var followBtn = findViewById<Button>(R.id.followButton)
-        if (user.follower.contains(FireStore.currentUser!!.uid)){
+        if (user.follower.contains(FirebaseAuth.getInstance().currentUser!!.uid)){
             followBtn.apply {
                 text = "unfollow"
                 setBackgroundColor(getColor(R.color.darkgrey))
             }
         } else {
-            if (user.id == FireStore.currentUser!!.uid){
+            if (user.id == FirebaseAuth.getInstance().currentUser!!.uid){
                 followBtn.visibility = View.GONE
             } else {
                 followBtn.apply {
@@ -83,16 +63,16 @@ class UserDetailActivity : AppCompatActivity() {
         }
 
         followBtn.setOnClickListener {
-                if (user.follower.contains(FireStore.currentUser!!.uid)) {
-                    FireStore.fireStore.collection("Users")
-                        .document(FireStore.currentUser!!.uid)
+                if (user.follower.contains(FirebaseAuth.getInstance().currentUser!!.uid)) {
+                    FirebaseFirestore.getInstance().collection("Users")
+                        .document(FirebaseAuth.getInstance().currentUser!!.uid)
                         .update("following", FieldValue.arrayRemove(user.id))
                         .addOnSuccessListener {
-                            FireStore.fireStore.collection("Users")
+                            FirebaseFirestore.getInstance().collection("Users")
                                 .document(user.id)
-                                .update("follower", FieldValue.arrayRemove(FireStore.currentUser!!.uid))
+                                .update("follower", FieldValue.arrayRemove(FirebaseAuth.getInstance().currentUser!!.uid))
                                 .addOnSuccessListener {
-                                    user.follower.remove(FireStore.currentUser!!.uid)
+                                    user.follower.remove(FirebaseAuth.getInstance().currentUser!!.uid)
                                     followBtn.apply {
                                         text = "follow"
                                         setBackgroundColor(getColor(R.color.colorPrimaryDark))
@@ -102,18 +82,18 @@ class UserDetailActivity : AppCompatActivity() {
                                 }
                         }
                 } else {
-                    FireStore.fireStore.collection("Users")
-                        .document(FireStore.currentUser!!.uid)
+                    FirebaseFirestore.getInstance().collection("Users")
+                        .document(FirebaseAuth.getInstance().currentUser!!.uid)
                         .update("following", FieldValue.arrayUnion(user.id))
                         .addOnSuccessListener {
-                            FireStore.fireStore.collection("Users")
+                            FirebaseFirestore.getInstance().collection("Users")
                                 .document(user.id)
                                 .update(
                                     "follower",
-                                    FieldValue.arrayUnion(FireStore.currentUser!!.uid)
+                                    FieldValue.arrayUnion(FirebaseAuth.getInstance().currentUser!!.uid)
                                 )
                                 .addOnSuccessListener {
-                                    user.follower.add(FireStore.currentUser!!.uid)
+                                    user.follower.add(FirebaseAuth.getInstance().currentUser!!.uid)
                                     followBtn.apply {
                                         text = "unfollow"
                                         setBackgroundColor(getColor(R.color.darkgrey))

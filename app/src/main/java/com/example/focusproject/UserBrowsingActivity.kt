@@ -13,9 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.adapters.UserRecyclerViewAdapter
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateUser
-import com.example.focusproject.tools.FireStore
-import com.google.firebase.firestore.FieldValue
-import org.w3c.dom.Text
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class UserBrowsingActivity : AppCompatActivity() {
     private lateinit var userRecyclerViewAdapter : UserRecyclerViewAdapter
@@ -66,7 +65,7 @@ class UserBrowsingActivity : AppCompatActivity() {
 
     private fun findFriends(searchText: String){
         if (searchText != ""){
-            FireStore.fireStore.collection("Users")
+            FirebaseFirestore.getInstance().collection("Users")
                 .get()
                 .addOnSuccessListener { result ->
                     var tempList = ArrayList<String>()
@@ -90,8 +89,8 @@ class UserBrowsingActivity : AppCompatActivity() {
     }
 
     private fun getFriends() {
-        var fireStore = FireStore.fireStore
-        fireStore.collection("Users").document(FireStore.currentUser!!.uid)
+        var fireStore = FirebaseFirestore.getInstance()
+        fireStore.collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.get("following") != null){
@@ -108,7 +107,7 @@ class UserBrowsingActivity : AppCompatActivity() {
     }
 
     private fun getUserInfo(id: String){
-        FireStore.fireStore.collection("Users").document(id)
+        FirebaseFirestore.getInstance().collection("Users").document(id)
             .get()
             .addOnSuccessListener {
                 userList.add(CreateUser.createUser(it))

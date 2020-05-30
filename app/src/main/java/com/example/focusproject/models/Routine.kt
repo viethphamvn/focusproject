@@ -7,6 +7,7 @@ class Routine : Comparable<Routine>, Serializable {
     var createdOn: Long = 0
     var name: String = ""
     var createdBy: String = ""
+    var id: String = ""
 
     override fun compareTo(other: Routine): Int {
         return COMPARATOR.compare(this, other)

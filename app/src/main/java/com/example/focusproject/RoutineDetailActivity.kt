@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.models.Exercise
 import com.example.focusproject.models.Routine
 import com.example.focusproject.tools.CreateExercise
-import com.example.focusproject.tools.FireStore
-import org.w3c.dom.Text
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RoutineDetailActivity : AppCompatActivity() {
     private lateinit var routine : Routine
@@ -31,7 +32,7 @@ class RoutineDetailActivity : AppCompatActivity() {
             }
 
             for (id in routine.exerciseList){
-                FireStore.fireStore.collection("Exercise").document(id)
+                FirebaseFirestore.getInstance().collection("Exercise").document(id)
                     .get()
                     .addOnSuccessListener {
                         exerciseList.add(CreateExercise.createExercise(it))
@@ -41,11 +42,14 @@ class RoutineDetailActivity : AppCompatActivity() {
                     }
             }
 
-
             findViewById<TextView>(R.id.routine_name_text_view).text = routine.name
             findViewById<TextView>(R.id.totalExerciseTextView).text = routine.exerciseList.size.toString()
 
 
+            findViewById<FloatingActionButton>(R.id.floatingActionButton_saveAction).setOnClickListener {
+                FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+                    .update("savedRoutines", FieldValue.arrayUnion(routine.id))
+            }
         }
     }
 }

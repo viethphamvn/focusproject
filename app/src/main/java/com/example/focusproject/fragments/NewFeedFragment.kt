@@ -1,27 +1,22 @@
 package com.example.focusproject.fragments
 
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.example.focusproject.R
 import com.example.focusproject.RoutineDetailActivity
-import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
 import com.example.focusproject.adapters.FeedRecyclerViewAdapter
-import com.example.focusproject.models.Exercise
 import com.example.focusproject.models.Routine
-import com.example.focusproject.tools.CreateExercise
 import com.example.focusproject.tools.CreateRoutine
 import com.example.focusproject.tools.CreateUser
-import com.example.focusproject.tools.FireStore
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_new_feed.view.*
 import kotlin.collections.ArrayList
 
@@ -61,18 +56,18 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun fetchData(){
-        FireStore.fireStore.collection("Users").document(FireStore.currentUser!!.uid)
+        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
             .get()
             .addOnSuccessListener {
                 var currentUser = CreateUser.createUser(it)
-                FireStore.fireStore.collection("Routines")
+                FirebaseFirestore.getInstance().collection("Routines")
                     .get()
                     .addOnSuccessListener { result ->
                         routineList.clear()
                         tempArray.clear()
                         for (routine in result) {
                             //Check if routine is belong to followed users
-                            if (currentUser.following.contains(routine.get("createdBy").toString()) || routine.get("createdBy") == FireStore.currentUser!!.uid) {
+                            if (currentUser.following.contains(routine.get("createdBy").toString()) || routine.get("createdBy") == FirebaseAuth.getInstance().currentUser!!.uid) {
                                 tempArray.add(CreateRoutine.createRoutine(routine))
                             }
                         }

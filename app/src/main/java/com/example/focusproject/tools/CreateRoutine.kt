@@ -11,6 +11,7 @@ class CreateRoutine {
             routine.createdOn = it.get("createdOn") as Long
             routine.name = it.get("name").toString()
             routine.exerciseList = it.get("exercises") as ArrayList<String>
+            routine.id = it.get("id") as String
             return routine
         }
     }

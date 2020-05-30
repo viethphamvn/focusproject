@@ -26,7 +26,6 @@ class SignupActivity : AppCompatActivity() {
         var username_edittext = findViewById<TextInputLayout>(R.id.username_edittext)
         var email_edittext = findViewById<TextInputLayout>(R.id.email_edittext)
         var password_edittext = findViewById<TextInputLayout>(R.id.password_edittext)
-        var signup_btn = findViewById<MaterialButton>(R.id.signUpButton)
 
         signUpButton.setOnClickListener {
             //Check inputs condition

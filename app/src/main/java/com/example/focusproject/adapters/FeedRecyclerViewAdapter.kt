@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.focusproject.R
 import com.example.focusproject.models.Routine
-import com.example.focusproject.tools.FireStore
 import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.routine_item.view.*
@@ -59,7 +58,7 @@ class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>, val onClick: (Ro
         }
 
         private fun getInfo(routine: Routine){
-            FireStore.fireStore.collection("Users").document(routine.createdBy)
+            FirebaseFirestore.getInstance().collection("Users").document(routine.createdBy)
                 .get()
                 .addOnSuccessListener {
                     if (it.get("username") != null) {

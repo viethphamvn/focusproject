@@ -14,10 +14,8 @@ import com.example.focusproject.adapters.FeedRecyclerViewAdapter
 import com.example.focusproject.models.Routine
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateRoutine
-import com.example.focusproject.tools.FireStore
-import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,7 +84,7 @@ class RoutineListFragment : Fragment() {
 
     private fun fetchData(){
         if (documentPath == null){
-            FireStore.fireStore.collection("Routines")
+            FirebaseFirestore.getInstance().collection("Routines")
                 .get()
                 .addOnSuccessListener { result ->
                     //Check if routine is belong to followed users
@@ -97,14 +95,14 @@ class RoutineListFragment : Fragment() {
                     }
                 }
         } else {
-            FireStore.fireStore.collection("Users").document(user!!.id)
+            FirebaseFirestore.getInstance().collection("Users").document(user!!.id)
                 .get()
                 .addOnSuccessListener { result ->
                     if (result.get("savedRoutines") != null) {
                         var savedRoutines =
                             result.get("savedRoutines") as ArrayList<String>//this is a list of routine id
                         for (id in savedRoutines) {
-                            FireStore.fireStore.collection("Routines").document(id)
+                            FirebaseFirestore.getInstance().collection("Routines").document(id)
                                 .get()
                                 .addOnSuccessListener { routine ->
                                     createRoutines(routine)
