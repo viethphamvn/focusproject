@@ -7,6 +7,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.focusproject.tools.YouTubeHelper
 import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.*
 import org.json.JSONObject
 import org.junit.Test
@@ -23,5 +24,12 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }
+
+    @Test
+    fun youtubeTest(){
+        var youtubeHelper = YouTubeHelper
+        var id = youtubeHelper.extractVideoIdFromUrl("https://youtu.be/Fu_oExrPX68")
+        assertEquals("Fu_oExrPX68",id)
     }
 }

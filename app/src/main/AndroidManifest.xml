@@ -3,6 +3,7 @@
     package="com.example.focusproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Material.Light.NoActionBar">
-        <activity android:name=".RoutineDetailActivity"></activity>
+        <activity android:name=".UserInfoActivity"></activity>
+        <activity android:name=".RoutineDetailActivity" />
         <activity android:name=".UserDetailActivity" />
         <activity android:name=".UserBrowsingActivity" />
         <activity android:name=".StartRoutineActivity" />
@@ -19,14 +21,9 @@
         <activity android:name=".CreateRoutineActivity" />
         <activity android:name=".RoutineEditActivity" />
         <activity android:name=".ExerciseDetailActivity" />
-        <activity
-            android:name=".SignupActivity"/>
-
-        <activity
-            android:name=".LoginActivity"/>
-
-        <activity
-            android:name=".MainActivity">
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
