@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
 import java.security.Permission
@@ -34,6 +35,7 @@ class UserInfoActivity : AppCompatActivity() {
     private lateinit var profilePictureView: ImageView
     private lateinit var welcomeTextView: TextView
     private var username = FirebaseAuth.getInstance().currentUser?.displayName
+    private lateinit var doneBtn : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class UserInfoActivity : AppCompatActivity() {
         imageView = findViewById(R.id.imageView1)
         profilePictureView = findViewById(R.id.user_profile_picture)
         welcomeTextView = findViewById(R.id.welcomeTextView)
+        doneBtn = findViewById(R.id.skipBtn)
 
         findViewById<Button>(R.id.changeProfilePictureBtn).setOnClickListener {
             showDialog()
@@ -154,7 +157,11 @@ class UserInfoActivity : AppCompatActivity() {
                 storageRef.downloadUrl.addOnCompleteListener {
                     it.result?.let { uri ->
                         setProfileImage(uri)
+                        FirebaseFirestore.getInstance().collection("Users")
+                            .document(FirebaseAuth.getInstance().currentUser!!.uid)
+                            .update("profilePictureUri", uri.toString())
                     }
+
                     Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show()
                 }
             } else {
@@ -180,6 +187,12 @@ class UserInfoActivity : AppCompatActivity() {
 //            FirebaseAuth.getInstance().signOut()
 //            startActivity(Intent(this, LoginActivity::class.java))
 //            finish()
+        }
+
+        doneBtn.setOnClickListener {
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         //Set up welcome imageview

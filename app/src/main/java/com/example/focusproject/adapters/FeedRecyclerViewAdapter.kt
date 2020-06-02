@@ -64,10 +64,10 @@ class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>, val onClick: (Ro
                     if (it.get("username") != null) {
                         usernameTextView.text = it.get("username").toString()
                     }
-                    if (it.get("profilePicture") != null){
+                    if (it.get("profilePictureUri") != null){
                         var url = ""
-                        if (it.get("profilePicture").toString() != ""){
-                            url = it.get("profilePicture").toString()
+                        if (it.get("profilePictureUri").toString() != ""){
+                            url = it.get("profilePictureUri").toString()
                         } else {
                             //use default profile picture
                             //url = "Some URL"

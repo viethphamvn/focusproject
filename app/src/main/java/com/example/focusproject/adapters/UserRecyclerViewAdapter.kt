@@ -45,8 +45,8 @@ class UserRecyclerViewAdapter (Users: ArrayList<User>, val onClick: (User) -> Un
             usernameTextView.text = user.username
             //Bind image
             var url = ""
-            url = if (user.profilePicture != ""){
-                user.profilePicture
+            url = if (user.profilePictureUri != ""){
+                user.profilePictureUri
             } else {
                 //use default profile picture
                 "https://cdn.vox-cdn.com/thumbor/vbxRVJGeYs4rAJp_dlN2Swx3eKg=/1400x1400/filters:format(png)/cdn.vox-cdn.com/uploads/chorus_asset/file/19921093/mgidarccontentnick.comc008fa9d_d.png"
