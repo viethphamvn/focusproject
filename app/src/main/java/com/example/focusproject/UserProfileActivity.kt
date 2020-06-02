@@ -13,6 +13,7 @@ import android.provider.MediaStore
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.focusproject.models.User
@@ -48,6 +49,8 @@ class UserProfileActivity : AppCompatActivity() {
             }
 
         profilePictureView = findViewById(R.id.user_profile_picture)
+
+        findViewById<TextView>(R.id.username_textview).text = User.currentUser.username
 
         logoutButton.setOnClickListener {
             firebaseAuth.signOut()

@@ -39,43 +39,45 @@ class MainActivity : AppCompatActivity() {
         //Set Up Current User Located in models/User
         FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
             .get()
-            .addOnSuccessListener {user ->
-                loadingTextView.visibility = View.GONE
-                User.currentUser = CreateUser.createUser(user)
+            .addOnSuccessListener { user ->
+                if (user != null) {
+                    loadingTextView.visibility = View.GONE
+                    User.currentUser = CreateUser.createUser(user)
 
-                if (user["profilePictureUri"] != null){
-                    var uri = user["profilePictureUri"] as String;
-                    if (uri != ""){
-                        setProfileImage(Uri.parse(uri))
-                    }
-                }
-
-                addWeeklyRoutineFragment()
-                //BottomNavigation Handle
-                bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.action_routine -> {
-                            addWeeklyRoutineFragment()
-                            return@OnNavigationItemSelectedListener true
-                        }
-                        R.id.action_new_feed -> {
-                            //Implement New Feed Fragment
-                            addNewFeedFragment()
-                            return@OnNavigationItemSelectedListener true
+                    if (user["profilePictureUri"] != null) {
+                        var uri = user["profilePictureUri"] as String;
+                        if (uri != "") {
+                            setProfileImage(Uri.parse(uri))
                         }
                     }
-                    false
-                })
 
-                //Setup Views
-                findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
-                    startActivity(Intent(this, CreateRoutineActivity::class.java))
-                }
-                profilePictureView.setOnClickListener{
-                    startActivity(Intent(this, UserProfileActivity::class.java))
-                }
-                findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener{
-                    startActivity(Intent(this, UserBrowsingActivity::class.java))
+                    addWeeklyRoutineFragment()
+                    //BottomNavigation Handle
+                    bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+                        when (menuItem.itemId) {
+                            R.id.action_routine -> {
+                                addWeeklyRoutineFragment()
+                                return@OnNavigationItemSelectedListener true
+                            }
+                            R.id.action_new_feed -> {
+                                //Implement New Feed Fragment
+                                addNewFeedFragment()
+                                return@OnNavigationItemSelectedListener true
+                            }
+                        }
+                        false
+                    })
+
+                    //Setup Views
+                    findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
+                        startActivity(Intent(this, CreateRoutineActivity::class.java))
+                    }
+                    profilePictureView.setOnClickListener {
+                        startActivity(Intent(this, UserProfileActivity::class.java))
+                    }
+                    findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener {
+                        startActivity(Intent(this, UserBrowsingActivity::class.java))
+                    }
                 }
             }
     }
@@ -94,23 +96,53 @@ class MainActivity : AppCompatActivity() {
 
     private fun addNewFeedFragment() {
         var newFeedFragment = supportFragmentManager.findFragmentByTag(getString(R.string.newFeedFragmentTag))
-        if (newFeedFragment != null){
-            supportFragmentManager.beginTransaction().remove(newFeedFragment)
-                .commit()
-        }
-        supportFragmentManager.beginTransaction().replace(R.id.container, NewFeedFragment.newInstance(),getString(R.string.newFeedFragmentTag))
-            .commit()
-    }
 
-    private fun addWeeklyRoutineFragment(){
-        var calendar = Calendar.getInstance()
-        var todayDate = calendar.get(Calendar.DAY_OF_WEEK)
         var routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
         if (routineFragment != null){
             supportFragmentManager.beginTransaction().remove(routineFragment)
                 .commit()
         }
-        supportFragmentManager.beginTransaction().replace(R.id.container, DailyRoutinesListFragment.newInstance(todayDate),"routineFragment")
-            .commit()
+
+//        if (newFeedFragment != null){
+//            supportFragmentManager.beginTransaction().remove(newFeedFragment)
+//                .commit()
+//        }
+
+        if (newFeedFragment == null) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.container,
+                NewFeedFragment.newInstance(),
+                getString(R.string.newFeedFragmentTag)
+            )
+                .commit()
+        }
+    }
+
+    private fun addWeeklyRoutineFragment(){
+        var newFeedFragment = supportFragmentManager.findFragmentByTag(getString(R.string.newFeedFragmentTag))
+        if (newFeedFragment != null){
+            if (newFeedFragment != null){
+                supportFragmentManager.beginTransaction().remove(newFeedFragment)
+                    .commit()
+            }
+        }
+
+        var routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
+
+        if (routineFragment == null) {
+
+            var calendar = Calendar.getInstance()
+            var todayDate = calendar.get(Calendar.DAY_OF_WEEK)
+            if (routineFragment != null) {
+                supportFragmentManager.beginTransaction().remove(routineFragment)
+                    .commit()
+            }
+            supportFragmentManager.beginTransaction().replace(
+                R.id.container,
+                DailyRoutinesListFragment.newInstance(todayDate),
+                "routineFragment"
+            )
+                .commit()
+        }
     }
 }

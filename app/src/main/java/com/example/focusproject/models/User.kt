@@ -10,6 +10,8 @@ class User : Serializable{
     var profilePictureUri: String = ""
 
 
+
+
     companion object {
         var currentUser : User = User()
     }

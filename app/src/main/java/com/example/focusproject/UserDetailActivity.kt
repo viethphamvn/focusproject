@@ -67,6 +67,8 @@ class UserDetailActivity : AppCompatActivity() {
                         .document(User.currentUser.id)
                         .update("following", FieldValue.arrayRemove(user.id))
                         .addOnSuccessListener {
+                            User.currentUser.following.remove(user.id)
+
                             FirebaseFirestore.getInstance().collection("Users")
                                 .document(user.id)
                                 .update("follower", FieldValue.arrayRemove(User.currentUser.id))
@@ -92,6 +94,8 @@ class UserDetailActivity : AppCompatActivity() {
                                     FieldValue.arrayUnion(User.currentUser.id)
                                 )
                                 .addOnSuccessListener {
+                                    User.currentUser.following.add(user.id)
+
                                     user.follower.add(User.currentUser.id)
                                     followBtn.apply {
                                         text = "unfollow"
