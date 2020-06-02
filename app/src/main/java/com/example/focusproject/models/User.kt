@@ -11,6 +11,6 @@ class User : Serializable{
 
 
     companion object {
-        lateinit var currentUser : User
+        var currentUser : User = User()
     }
 }

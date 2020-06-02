@@ -80,6 +80,11 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setProfileImage(Uri.parse(User.currentUser.profilePictureUri))
+    }
+
     private fun setProfileImage(parse: Uri?) {
         Glide.with(this)
             .load(parse)

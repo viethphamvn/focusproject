@@ -173,7 +173,9 @@ class UserProfileActivity : AppCompatActivity() {
                         setProfileImage(uri)
                         FirebaseFirestore.getInstance().collection("Users")
                             .document(FirebaseAuth.getInstance().currentUser!!.uid)
-                            .update("profilePictureUri", uri.toString())
+                            .update("profilePictureUri", uri.toString()).addOnSuccessListener {
+                                User.currentUser.profilePictureUri = uri.toString()
+                            }
                     }
 
                     Toast.makeText(this, "Image Uploaded", Toast.LENGTH_SHORT).show()
