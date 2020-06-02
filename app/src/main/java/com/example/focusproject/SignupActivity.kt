@@ -65,7 +65,7 @@ class SignupActivity : AppCompatActivity() {
                     firestore.collection("Users").document(firebaseUser.uid)
                         .set(newUser).addOnSuccessListener {
                             //Start MainActivity
-                            startMainActivity()
+                            startWelcomeActivity()
                             finish()
                         }
                         .addOnFailureListener {
@@ -78,8 +78,8 @@ class SignupActivity : AppCompatActivity() {
             }
     }
 
-    private fun startMainActivity(){
-        var intent = Intent(this, MainActivity::class.java)
+    private fun startWelcomeActivity(){
+        var intent = Intent(this, UserInfoActivity::class.java)
         startActivity(intent)
         finish()
     }

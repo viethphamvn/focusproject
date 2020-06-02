@@ -22,8 +22,8 @@ class UserProfileActivity : AppCompatActivity() {
         }
 
         DetailPageButton.setOnClickListener {
-            var intent = Intent(this, UserDetailActivity::class.java)
-            intent.putExtra("user", User.currentUser)
+            var intent = Intent(this, UserInfoActivity::class.java)
+            //intent.putExtra("user", User.currentUser)
             startActivity(intent)
         }
 
