@@ -119,6 +119,32 @@
         app:layout_constraintHeight_percent="0.75"
         android:paddingTop="10dp"/>
 
+   <LinearLayout
+       android:id="@+id/emptyLayout"
+       android:layout_height="wrap_content"
+       android:layout_width="wrap_content"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+       android:orientation="vertical"
+       android:gravity="center"
+       >
+
+       <ImageView
+           android:layout_width="150dp"
+           android:layout_height="150dp"
+           android:src="@drawable/ic_box"
+           android:scaleType="fitCenter"/>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="It's empty here"
+           android:textSize="30dp"
+           android:fontFamily="@font/nunito"/>
+   </LinearLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/edit_routine_btn"
         android:layout_width="190dp"

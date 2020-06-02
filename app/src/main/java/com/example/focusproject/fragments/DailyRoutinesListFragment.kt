@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
     private lateinit var routineRecyclerViewAdapter : RoutineRecyclerViewAdapter
     private var firestore = FirebaseFirestore.getInstance()
     private var currentUser = User.currentUser.id
+    private lateinit var emptyLayout : LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -181,6 +183,8 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_daily_routine_activity, container, false)
 
+        emptyLayout = view.emptyLayout
+
         //Create a Array of dateButton for easier control
         buttonArray.put(2, view.mon)
         buttonArray.put(3, view.tue)
@@ -194,7 +198,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
             layoutManager = LinearLayoutManager(context)
             routineRecyclerViewAdapter = RoutineRecyclerViewAdapter(getCurrentActiveList(selectedDate))
             adapter = routineRecyclerViewAdapter
-            currentButton = buttonArray.get(selectedDate)!!
+            currentButton = buttonArray[selectedDate]!!
             currentButton.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
         }
 
@@ -257,6 +261,11 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
             routines[date] = sortedArray
             if (date == selectedDateAsString){
                 routineRecyclerViewAdapter.updateDataSet(routines[date]!!)
+                if (routines[date]!!.size == 0){
+                    emptyLayout.visibility = View.VISIBLE
+                } else {
+                    emptyLayout.visibility = View.INVISIBLE
+                }
             }
         }
     }
@@ -280,7 +289,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getCurrentActiveList(selectedDate: Int): ArrayList<Exercise>{
-        return when(selectedDate){
+        var returnList = when(selectedDate){
             2 -> if (routines.get("mon") != null) routines["mon"] else ArrayList()
             3 -> if (routines.get("tue") != null) routines["tue"] else ArrayList()
             4 -> if (routines.get("wed") != null) routines["wed"] else ArrayList()
@@ -289,6 +298,14 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
             7 -> if (routines.get("sat") != null) routines["sat"] else ArrayList()
             else -> if (routines.get("sun") != null) routines["sun"] else ArrayList()
         } as ArrayList<Exercise>
+
+        if (returnList.size == 0){
+            emptyLayout.visibility = View.VISIBLE
+        } else {
+            emptyLayout.visibility = View.INVISIBLE
+        }
+
+        return returnList
     }
 
     private fun updateDatabase(newRoutine: HashMap<String, ArrayList<Exercise>>){ //This function will update Firestore with new dataset
