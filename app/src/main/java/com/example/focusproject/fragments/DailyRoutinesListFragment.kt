@@ -1,15 +1,19 @@
 package com.example.focusproject.fragments
 
+import android.animation.LayoutTransition
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
@@ -21,8 +25,6 @@ import com.example.focusproject.tools.CreateExercise
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_daily_routine_activity.view.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
@@ -381,6 +383,19 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    fun scaleView(
+        v: View,
+        startXScale: Float,
+        endXScale: Float
+    ) {
+        val anim: Animation = ScaleAnimation(
+            startXScale, endXScale,1f,1f,Animation.RELATIVE_TO_SELF,1f, Animation.RELATIVE_TO_SELF, 0f)  // Start and end values for the X axis scaling) // Pivot point of Y scaling
+        anim.fillAfter = true // Needed to keep the result of the animation
+        anim.zAdjustment = 100
+        anim.duration = 1000
+        v.startAnimation(anim)
+    }
+
     override fun onClick(v: View?) {
         if (v != null) {
             changeSelectedDate(
@@ -394,6 +409,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
                     else -> 1
                 }
             )
+
             routineRecyclerViewAdapter.apply {
                 updateDataSet(getCurrentActiveList(selectedDate))
             }

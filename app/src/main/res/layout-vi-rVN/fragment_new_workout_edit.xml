@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.NewWorkoutEditFragment"
+    android:fillViewport="true"
+    android:background="#979A9C">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:text="Bài Tập Cá Nhân "
+            android:fontFamily="@font/nunito"/>
+
+        <CheckBox
+            android:id="@+id/isRestTimeCheckBox"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/workoutNameEditText"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView"
+            app:layout_constraintLeft_toRightOf="@id/isRestTimeCheckBox"
+            android:layout_marginTop="10dp"
+            android:text="Là Giờ Nghỉ"
+            android:textSize="20sp"
+            android:fontFamily="@font/nunito"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/workoutNameEditText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/isRestTimeCheckBox"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            app:endIconMode="clear_text"
+            android:hint="Tên Bài Tập">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textShortMessage"
+                android:fontFamily="@font/nunito"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/needEquipmentCheckBox"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/workoutNameEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/workoutDescEditText"/>
+
+        <TextView
+            android:id="@+id/needEquipmentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/workoutNameEditText"
+            app:layout_constraintLeft_toRightOf="@id/needEquipmentCheckBox"
+            android:layout_marginTop="10dp"
+            android:text="Cần Dụng Cụ"
+            android:textSize="20sp"
+            android:fontFamily="@font/nunito"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/workoutDescEditText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/needEquipmentTextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:endIconMode="clear_text"
+            android:hint="Thông Tin Bài Tập"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textAutoCorrect"
+                android:fontFamily="@font/nunito"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinnerExerciseType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/workoutDescEditText"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/workoutImgUrlEditText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:endIconMode="clear_text"
+            android:hint="@string/gif_url"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/imageInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textUri"
+                android:fontFamily="@font/nunito"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/spinnerExerciseType"
+            app:layout_constraintBottom_toTopOf="@id/workoutImgUrlEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Nội Dung Media"
+            android:fontFamily="@font/nunito" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/workoutVideoUrlEditText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/workoutImgUrlEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:endIconMode="clear_text"
+            android:hint="@string/youtube_link"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/videoInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textUri"
+                android:fontFamily="@font/nunito"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/workoutVideoUrlEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Số Lần Lặp Lại"
+            android:fontFamily="@font/nunito"/>
+
+        <LinearLayout
+            android:id="@+id/rep_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal|center_vertical">
+
+            <ImageButton
+                android:id="@+id/decreaseRepButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/decrease_repetition_button"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ic_down"/>
+
+            <EditText
+                android:id="@+id/repTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="12"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:maxLength="2"
+                android:inputType="numberDecimal"
+                android:fontFamily="@font/nunito"/>
+
+            <ImageButton
+                android:id="@+id/increaseRepButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/increase_repetition_button"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_up"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/rep_layout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="% Độ Nặng Lớn Nhất"/>
+
+        <LinearLayout
+            android:id="@+id/weight_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal|center_vertical">
+
+            <ImageButton
+                android:id="@+id/decreaseWeightButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/decrease_weight_button"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ic_down"/>
+
+            <EditText
+                android:id="@+id/weightTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:maxLength="2"
+                android:hint="45"
+                android:textSize="50sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/nunito"/>
+
+            <ImageButton
+                android:id="@+id/increaseWeightButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/increase_weight_butotn"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_up"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/weight_layout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Thời Lượng"/>
+        <LinearLayout
+            android:id="@+id/durationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/currentDurationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00:00"
+                android:textSize="50sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/nunito"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/changeDurationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:text="Thay đổi thời lượng"
+                android:fontFamily="@font/nunito"/>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/durationLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="Lưu"
+            app:icon="@drawable/ic_save_2"
+            android:backgroundTint="#1D9622"
+            android:fontFamily="@font/nunito"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

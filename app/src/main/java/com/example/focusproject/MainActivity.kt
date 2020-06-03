@@ -37,49 +37,53 @@ class MainActivity : AppCompatActivity() {
         profilePictureView = findViewById(R.id.user_profile_picture)
 
         //Set Up Current User Located in models/User
-        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
-            .get()
-            .addOnSuccessListener { user ->
-                if (user != null) {
-                    loadingTextView.visibility = View.GONE
-                    User.currentUser = CreateUser.createUser(user)
+        if (firebaseUser != null) {
+            FirebaseFirestore.getInstance().collection("Users")
+                .document(FirebaseAuth.getInstance().currentUser!!.uid)
+                .get()
+                .addOnSuccessListener { user ->
+                    if (user != null) {
+                        loadingTextView.visibility = View.GONE
+                        User.currentUser = CreateUser.createUser(user)
 
-                    if (user["profilePictureUri"] != null) {
-                        var uri = user["profilePictureUri"] as String;
-                        if (uri != "") {
-                            setProfileImage(Uri.parse(uri))
-                        }
-                    }
-
-                    addWeeklyRoutineFragment()
-                    //BottomNavigation Handle
-                    bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
-                        when (menuItem.itemId) {
-                            R.id.action_routine -> {
-                                addWeeklyRoutineFragment()
-                                return@OnNavigationItemSelectedListener true
-                            }
-                            R.id.action_new_feed -> {
-                                //Implement New Feed Fragment
-                                addNewFeedFragment()
-                                return@OnNavigationItemSelectedListener true
+                        if (user["profilePictureUri"] != null) {
+                            var uri = user["profilePictureUri"] as String;
+                            if (uri != "") {
+                                setProfileImage(Uri.parse(uri))
                             }
                         }
-                        false
-                    })
 
-                    //Setup Views
-                    findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
-                        startActivity(Intent(this, CreateRoutineActivity::class.java))
-                    }
-                    profilePictureView.setOnClickListener {
-                        startActivity(Intent(this, UserProfileActivity::class.java))
-                    }
-                    findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener {
-                        startActivity(Intent(this, UserBrowsingActivity::class.java))
+                        addWeeklyRoutineFragment()
+                        //BottomNavigation Handle
+                        bottomNavigationView.setOnNavigationItemSelectedListener(
+                            BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+                                when (menuItem.itemId) {
+                                    R.id.action_routine -> {
+                                        addWeeklyRoutineFragment()
+                                        return@OnNavigationItemSelectedListener true
+                                    }
+                                    R.id.action_new_feed -> {
+                                        //Implement New Feed Fragment
+                                        addNewFeedFragment()
+                                        return@OnNavigationItemSelectedListener true
+                                    }
+                                }
+                                false
+                            })
+
+                        //Setup Views
+                        findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
+                            startActivity(Intent(this, CreateRoutineActivity::class.java))
+                        }
+                        profilePictureView.setOnClickListener {
+                            startActivity(Intent(this, UserProfileActivity::class.java))
+                        }
+                        findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener {
+                            startActivity(Intent(this, UserBrowsingActivity::class.java))
+                        }
                     }
                 }
-            }
+        }
     }
 
     override fun onResume() {

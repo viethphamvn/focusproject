@@ -38,7 +38,10 @@ class StartRoutineActivity : AppCompatActivity() {
 
         progressBar = findViewById(R.id.progress_horizontal)
         progressBar.max = activeRoutineList.size
-        progressBar.min = 0
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
+            progressBar.min = 0
+        }
+
 
         exerciseNameTextView = findViewById(R.id.exerciseNameTextView)
 
