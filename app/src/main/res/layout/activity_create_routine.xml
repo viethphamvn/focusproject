@@ -17,18 +17,14 @@
         android:orientation="horizontal"
         android:background="@color/colorPrimaryDark">
 
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/cancel_button"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:backgroundTint="@color/pastelred"
-            android:fontFamily="@font/nunito"
-            android:text="CANCEL"
-            android:textColor="@color/white"
-            android:textSize="9dp"
-            android:textStyle="bold" />
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_close"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,21 +36,8 @@
             android:textStyle="bold"
             android:textColor="@color/white"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/saveButton"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="SAVE"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="@font/nunito"
-            android:textSize="9sp"
-            app:backgroundTint="@color/colorPrimary"
-            android:layout_marginRight="10dp"/>
-
-
     </RelativeLayout>
+
 
     <EditText
         android:id="@+id/newRoutineNameTextView"
@@ -86,14 +69,28 @@
             android:id="@+id/floatingActionButton_addAction"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_add"
+            app:srcCompat="@drawable/ic_add"
             android:backgroundTint="@color/colorPrimary"
-            app:fabCustomSize="70dp"
+            app:fabSize="auto"
+            app:tint="@color/white"
             android:clickable="true"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/saveButton"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            app:srcCompat="@drawable/ic_save_2"
+            app:backgroundTint="#1D9622"
+            app:tint="@color/white"
+            app:fabCustomSize="70dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"/>
+
     </RelativeLayout>
 
     <FrameLayout

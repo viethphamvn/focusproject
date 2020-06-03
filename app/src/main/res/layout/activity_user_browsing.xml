@@ -22,15 +22,22 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Search Your Friend Here"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:maxLines="1"
+            android:inputType="textShortMessage"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:fontFamily="@font/nunito"/>
 
         <ImageButton
             android:id="@+id/searchbtn"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:scaleType="fitXY"
+            android:layout_width="55dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:scaleType="center"
             android:backgroundTint="@color/colorPrimaryDark"
             android:src="@drawable/ic_search"
             android:layout_marginStart="10dp"/>

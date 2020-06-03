@@ -293,9 +293,6 @@ class NewWorkoutEditFragment : Fragment() {
         val defaultPosition = 0
 
         typeSpinner.setSelection(defaultPosition)
-        //TODO Center the options https://stackoverflow.com/questions/7511049/set-view-text-align-at-center-in-spinner-in-android
-
-        //TODO Set spinner first option to be the passed in date
         typeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 

@@ -22,7 +22,7 @@ import kotlin.collections.HashMap
 
 class RoutineEditActivity : AppCompatActivity() {
 
-    lateinit var dateSpinner : Spinner
+    private lateinit var dateSpinner : Spinner
     lateinit var routines : HashMap<String, ArrayList<Exercise>>
     var selectedDate : Int = 0
     private lateinit var touchHelper : ItemTouchHelper

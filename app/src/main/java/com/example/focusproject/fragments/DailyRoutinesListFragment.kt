@@ -248,9 +248,9 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
 
         routines[date]!!.add(exercise)
 
-        if (routines[date]!!.size == (data.get(date) as ArrayList<String>).size){
+        if (routines[date]!!.size == (data[date] as ArrayList<String>).size){
             var sortedArray = ArrayList<Exercise>()
-            for (id in data.get(date) as ArrayList<String>){
+            for (id in data[date] as ArrayList<String>){
                 for (exercise in routines[date]!!){
                     if (exercise.uid == id){
                         sortedArray.add(exercise)

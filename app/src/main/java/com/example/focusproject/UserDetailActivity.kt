@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.focusproject.adapters.ViewPagerAdapter
 import com.example.focusproject.fragments.RoutineListFragment
 import com.example.focusproject.models.User
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
@@ -44,7 +46,7 @@ class UserDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.followedTextView).text = user.follower.size.toString()
         findViewById<TextView>(R.id.followingTextView).text = user.following.size.toString()
 
-        var followBtn = findViewById<Button>(R.id.followButton)
+        var followBtn = findViewById<MaterialButton>(R.id.followButton)
         if (user.follower.contains(User.currentUser.id)){
             followBtn.apply {
                 text = "unfollow"
@@ -77,6 +79,7 @@ class UserDetailActivity : AppCompatActivity() {
                                     followBtn.apply {
                                         text = "follow"
                                         setBackgroundColor(getColor(R.color.colorPrimaryDark))
+                                        setIconResource(R.drawable.ic_friends)
                                     }
                                     followedTextView.text =
                                         "${followedTextView.text.toString().toLong() - 1}"
@@ -100,6 +103,7 @@ class UserDetailActivity : AppCompatActivity() {
                                     followBtn.apply {
                                         text = "unfollow"
                                         setBackgroundColor(getColor(R.color.darkgrey))
+                                        setIconResource(R.drawable.ic_un_friends)
                                         followedTextView.text =
                                             "${followedTextView.text.toString().toLong() + 1}"
                                     }

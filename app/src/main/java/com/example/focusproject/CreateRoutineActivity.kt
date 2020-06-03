@@ -64,8 +64,8 @@ class CreateRoutineActivity : AppCompatActivity() {
         deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
         setUpRecyclerView()
 
-        var saveBtn = findViewById<Button>(R.id.saveButton)
-        var cancelBtn = findViewById<Button>(R.id.cancel_button)
+        var saveBtn = findViewById<FloatingActionButton>(R.id.saveButton)
+        var cancelBtn = findViewById<ImageButton>(R.id.cancel_button)
         var addBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction)
         var routineName = findViewById<EditText>(R.id.newRoutineNameTextView) as TextView
 

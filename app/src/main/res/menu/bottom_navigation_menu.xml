@@ -11,6 +11,6 @@
         android:id="@+id/action_new_feed"
         android:enabled="true"
         android:icon="@drawable/ic_new_feed"
-        android:title="New Feed"
+        android:title="News Feed"
         app:showAsAction="ifRoom" />
 </menu>
