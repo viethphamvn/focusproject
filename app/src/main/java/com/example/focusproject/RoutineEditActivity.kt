@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.fragments.ExercisePickerFragment
 import com.example.focusproject.models.Exercise
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 import kotlin.collections.ArrayList
@@ -50,9 +51,9 @@ class RoutineEditActivity : AppCompatActivity() {
         setUpRecyclerView()
 
         //Set up Views
-        var saveBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton_saveAction)
-        var addBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction)
-        var cancelBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton_cancelAction)
+        var saveBtn = findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_saveAction)
+        var addBtn = findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_addAction)
+        var cancelBtn = findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_cancelAction)
 
         saveBtn.setOnClickListener {
             var returnIntent: Intent = Intent()
@@ -75,7 +76,7 @@ class RoutineEditActivity : AppCompatActivity() {
                 parms.height = screen_height
                 layout.layoutParams = parms
                 //change addBtn icon to add icon
-                addBtn.setImageResource(R.drawable.ic_add)
+                addBtn.setIconResource(R.drawable.ic_add)
             } else {
                 supportFragmentManager.beginTransaction()
                     .add(R.id.exercisePickerContainer, ExercisePickerFragment.newInstance(),"pickerFragment")
@@ -89,7 +90,7 @@ class RoutineEditActivity : AppCompatActivity() {
                 parms.height = screen_height
                 layout.layoutParams = parms
                 //change addBtn icon to arrow down
-                addBtn.setImageResource(R.drawable.ic_down)
+                addBtn.setIconResource(R.drawable.ic_down)
             }
         }
 

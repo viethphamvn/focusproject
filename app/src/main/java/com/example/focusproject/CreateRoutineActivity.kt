@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.fragments.ExercisePickerFragment
 import com.example.focusproject.models.Exercise
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -64,9 +65,9 @@ class CreateRoutineActivity : AppCompatActivity() {
         deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
         setUpRecyclerView()
 
-        var saveBtn = findViewById<FloatingActionButton>(R.id.saveButton)
+        var saveBtn = findViewById<ExtendedFloatingActionButton>(R.id.saveButton)
         var cancelBtn = findViewById<ImageButton>(R.id.cancel_button)
-        var addBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction)
+        var addBtn = findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_addAction)
         var routineName = findViewById<EditText>(R.id.newRoutineNameTextView) as TextView
 
         if (routineTitle != null){
@@ -99,7 +100,7 @@ class CreateRoutineActivity : AppCompatActivity() {
                 val params = layout.layoutParams
                 params.height = screenHeight
                 layout.layoutParams = params
-                addBtn.setImageResource(R.drawable.ic_add)
+                addBtn.setIconResource(R.drawable.ic_add)
             } else {
                 supportFragmentManager.beginTransaction()
                     .add(R.id.exercisePickerContainer, ExercisePickerFragment.newInstance(),"pickerFragment")
@@ -111,7 +112,7 @@ class CreateRoutineActivity : AppCompatActivity() {
                 val parms = layout.layoutParams
                 parms.height = screenHeight
                 layout.layoutParams = parms
-                addBtn.setImageResource(R.drawable.ic_down)
+                addBtn.setIconResource(R.drawable.ic_down)
             }
         }
 
