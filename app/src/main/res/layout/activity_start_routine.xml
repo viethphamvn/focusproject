@@ -76,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/colorPrimary"
-        android:text="PAUSE"
+        android:text="@string/pause"
         android:textColor="@color/white"
         android:fontFamily="@font/nunito"
         android:gravity="center_vertical|center_horizontal"

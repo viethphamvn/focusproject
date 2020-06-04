@@ -57,7 +57,7 @@ class StartRoutineActivity : AppCompatActivity() {
 
                     findViewById<TextView>(R.id.controlBar).apply {
                         setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
-                        text = "PAUSE"
+                        text = getString(R.string.pause)
                     }
 
                     playVideo()
@@ -78,7 +78,7 @@ class StartRoutineActivity : AppCompatActivity() {
 
                     findViewById<TextView>(R.id.controlBar).apply {
                         setBackgroundColor(ContextCompat.getColor(context, R.color.darkgrey))
-                        text = "RESUME"
+                        text = context.getString(R.string.resume)
                     }
                     pauseVideo()
                 }

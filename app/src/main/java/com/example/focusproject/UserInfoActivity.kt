@@ -183,7 +183,7 @@ class UserInfoActivity : AppCompatActivity() {
 
     private fun setUpViews() {
         if (username != null){
-            welcomeTextView.text = "Welcome $username, get ready to stay #focus"
+            welcomeTextView.text = getString(R.string.welcome) + username + getString(R.string.get_ready_to_stay_focus)
         } else {
 //            Toast.makeText(this, "Sorry, an error has occurred!", Toast.LENGTH_LONG).show()
 //            FirebaseAuth.getInstance().signOut()

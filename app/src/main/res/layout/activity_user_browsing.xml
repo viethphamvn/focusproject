@@ -21,7 +21,7 @@
             android:id="@+id/searchEditText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Search Your Friend Here"
+            android:hint="@string/search_your_friend_here"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:maxLines="1"
@@ -87,7 +87,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Go make some friends!"
+            android:text="@string/go_make_some_friends"
             android:textSize="30sp"
             android:fontFamily="@font/nunito"/>
     </LinearLayout>

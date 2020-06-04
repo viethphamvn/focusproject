@@ -78,7 +78,7 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
 
         //If this is not null, then that means user wants to add new exercises to current routine. Call from RoutineDetail.kt
         if (userWantedToAddRoutine != null) {
-            addBtn.text = "Add Here"
+            addBtn.text = getString(R.string.add_here)
             addBtn.setOnClickListener {
                 for (exercise in userWantedToAddRoutine!!) {
                     activeRoutineList.add(exercise)
@@ -162,13 +162,13 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
 
         copyBtn.setOnClickListener {
             if (copyLayout.visibility == View.VISIBLE){
-                copyBtn.text = "COPY CURRENT ROUTINE"
+                copyBtn.text = getString(R.string.copy_current_routine)
                 copyLayout.visibility = View.GONE
                 copyBtn.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorPrimaryDark))
                 copyBtn.icon = getDrawable(R.drawable.ic_right)
                 originRoutine = 0
             } else {
-                copyBtn.text = "CANCEL COPY"
+                copyBtn.text = getString(R.string.cancel_copy)
                 copyBtn.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.darkgrey))
                 copyBtn.icon = getDrawable(R.drawable.ic_down2)
                 copyLayout.visibility = View.VISIBLE

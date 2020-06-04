@@ -75,7 +75,7 @@ class CountdownFragment : Fragment() {
         if (countdownTimer != null) {
             countdownTimer?.cancel()
         }
-        countdownTextView!!.text = "PAUSED"
+        countdownTextView!!.text = getString(R.string.paused)
     }
 
     private fun updateTextView(remainingTimeInMillis : Long){

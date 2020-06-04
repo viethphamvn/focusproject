@@ -5,12 +5,12 @@
         android:id="@+id/action_routine"
         android:enabled="true"
         android:icon="@drawable/ic_routine"
-        android:title="Routine"
+        android:title="@string/routine"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_new_feed"
         android:enabled="true"
         android:icon="@drawable/ic_new_feed"
-        android:title="News Feed"
+        android:title="@string/news_feed"
         app:showAsAction="ifRoom" />
 </menu>

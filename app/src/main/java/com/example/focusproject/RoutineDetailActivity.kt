@@ -136,7 +136,7 @@ class RoutineDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     exerciseList.add(CreateExercise.createExercise(it))
                     totalDuration += exerciseList[exerciseList.size-1].duration
-                    findViewById<TextView>(R.id.totalDurationTextView).text = "${(totalDuration / 60)} mins"
+                    findViewById<TextView>(R.id.totalDurationTextView).text = "${(totalDuration / 60)} " + getString(R.string.mins)
                     exerciseRecyclerViewAdapter.notifyItemInserted(exerciseList.size-1)
                 }
         }

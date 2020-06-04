@@ -182,7 +182,7 @@ class NewWorkoutEditFragment : Fragment() {
                                 }
                             }
                         },
-                        Response.ErrorListener { textView.text = "That didn't work!" })
+                        Response.ErrorListener { textView.text = context.getString(R.string.that_didnt_work) })
 
                     // Add the request to the RequestQueue.
                     queue.add(stringRequest)

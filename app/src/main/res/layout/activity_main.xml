@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/nunito"
-            android:text="Welcome"
+            android:text="@string/welcome"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:elevation="100dp"
         android:gravity="center"
-        android:text="LOADING..."
+        android:text="@string/loading"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@id/bottomLayout"
         app:layout_constraintLeft_toLeftOf="parent"

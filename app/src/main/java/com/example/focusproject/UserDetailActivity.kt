@@ -45,7 +45,7 @@ class UserDetailActivity : AppCompatActivity() {
         val followBtn = findViewById<MaterialButton>(R.id.followButton)
         if (user.follower.contains(User.currentUser.id)){
             followBtn.apply {
-                text = "unfollow"
+                text = context.getString(R.string.unfollow)
                 setBackgroundColor(getColor(R.color.darkgrey))
             }
         } else {
@@ -53,7 +53,7 @@ class UserDetailActivity : AppCompatActivity() {
                 followBtn.visibility = View.GONE
             } else {
                 followBtn.apply {
-                    text = "follow"
+                    text = getString(R.string.follow)
                     setBackgroundColor(getColor(R.color.colorPrimaryDark))
                 }
             }
@@ -73,7 +73,7 @@ class UserDetailActivity : AppCompatActivity() {
                                 .addOnSuccessListener {
                                     user.follower.remove(User.currentUser.id)
                                     followBtn.apply {
-                                        text = "follow"
+                                        text = getString(R.string.follow)
                                         setBackgroundColor(getColor(R.color.colorPrimaryDark))
                                         setIconResource(R.drawable.ic_friends)
                                     }
@@ -97,7 +97,7 @@ class UserDetailActivity : AppCompatActivity() {
 
                                     user.follower.add(User.currentUser.id)
                                     followBtn.apply {
-                                        text = "unfollow"
+                                        text = getString(R.string.unfollow)
                                         setBackgroundColor(getColor(R.color.darkgrey))
                                         setIconResource(R.drawable.ic_un_friends)
                                         followedTextView.text =
