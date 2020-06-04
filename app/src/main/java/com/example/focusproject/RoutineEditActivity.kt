@@ -1,14 +1,12 @@
 package com.example.focusproject
 
-import android.app.Activity
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,8 +18,8 @@ import com.example.focusproject.models.User
 import com.example.focusproject.tools.DateToString
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_routine_edit.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -29,7 +27,7 @@ import kotlin.collections.HashMap
 class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var dateSpinner: Spinner
-    lateinit var routines: HashMap<String, ArrayList<Exercise>>
+    private lateinit var routines: HashMap<String, ArrayList<Exercise>>
     var selectedDate: Int = 0
     private var selectedDateAsString = ""
     private lateinit var touchHelper: ItemTouchHelper
@@ -62,20 +60,20 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
         setUpRecyclerView()
 
         //Set up Views
-        var saveBtn =
+        val saveBtn =
             findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_saveAction)
-        var addBtn = findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_addAction)
-        var cancelBtn =
+        val addBtn = findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_addAction)
+        val cancelBtn =
             findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_cancelAction)
 
         //Get List of Date checkbox
-        datePickerList.put("mon", findViewById(R.id.mon))
-        datePickerList.put("tue", findViewById(R.id.tue))
-        datePickerList.put("wed", findViewById(R.id.wed))
-        datePickerList.put("thu", findViewById(R.id.thu))
-        datePickerList.put("fri", findViewById(R.id.fri))
-        datePickerList.put("sat", findViewById(R.id.sat))
-        datePickerList.put("sun", findViewById(R.id.sun))
+        datePickerList["mon"] = findViewById(R.id.mon)
+        datePickerList["tue"] = findViewById(R.id.tue)
+        datePickerList["wed"] = findViewById(R.id.wed)
+        datePickerList["thu"] = findViewById(R.id.thu)
+        datePickerList["fri"] = findViewById(R.id.fri)
+        datePickerList["sat"] = findViewById(R.id.sat)
+        datePickerList["sun"] = findViewById(R.id.sun)
 
 
         //If this is not null, then that means user wants to add new exercises to current routine. Call from RoutineDetail.kt
@@ -98,7 +96,7 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
 
         } else {
             addBtn.setOnClickListener {
-                var excercisePickerFragment =
+                val excercisePickerFragment =
                     supportFragmentManager.findFragmentByTag("pickerFragment")
                 if (excercisePickerFragment != null) {
                     supportFragmentManager.beginTransaction()
@@ -113,6 +111,13 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
                     layout.layoutParams = parms
                     //change addBtn icon to add icon
                     addBtn.setIconResource(R.drawable.ic_add)
+
+                    //Show cancel btn and save btn
+                    cancelBtn.visibility = View.VISIBLE
+                    saveBtn.visibility = View.VISIBLE
+                    copyBtn.visibility = View.VISIBLE
+                    copyLayout.visibility = View.VISIBLE
+
                 } else {
                     supportFragmentManager.beginTransaction()
                         .add(
@@ -131,6 +136,13 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
                     layout.layoutParams = parms
                     //change addBtn icon to arrow down
                     addBtn.setIconResource(R.drawable.ic_down)
+
+                    //Hide cancel btn and save btn and copylayout
+                    cancelBtn.visibility = View.GONE
+                    saveBtn.visibility = View.GONE
+                    copyBtn.visibility = View.GONE
+                    copyLayout.visibility = View.GONE
+
                 }
             }
         }
@@ -145,8 +157,8 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
             finish()
         }
 
-        var copyBtn = findViewById<MaterialButton>(R.id.copyBtn)
-        var copyLayout = findViewById<LinearLayout>(R.id.copyLayout)
+        val copyBtn = findViewById<MaterialButton>(R.id.copyBtn)
+        val copyLayout = findViewById<LinearLayout>(R.id.copyLayout)
 
         copyBtn.setOnClickListener {
             if (copyLayout.visibility == View.VISIBLE){
@@ -187,8 +199,8 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateDatabase(newRoutine: HashMap<String, ArrayList<Exercise>>) { //This function will update Firestore with new dataset
-        var updatedRoutine = HashMap<String, ArrayList<String>>()
-        var exerciseIdArray = ArrayList<String>()
+        val updatedRoutine = HashMap<String, ArrayList<String>>()
+        val exerciseIdArray = ArrayList<String>()
         for (exercise in newRoutine["mon"]!!) {
             if (exercise.uid != "") {
                 exerciseIdArray.add(exercise.uid)
@@ -261,7 +273,7 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
         val options =
             arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
         dateSpinner.adapter =
-            ArrayAdapter<String>(this, R.layout.center_textview_for_spinner, options)
+            ArrayAdapter(this, R.layout.center_textview_for_spinner, options)
         //Set Up Default Option
         var defaultPosition = 0
         when (selectedDate) {
@@ -288,9 +300,7 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         dateSpinner.setSelection(defaultPosition)
-        //TODO Center the options https://stackoverflow.com/questions/7511049/set-view-text-align-at-center-in-spinner-in-android
 
-        //TODO Set spinner first option to be the passed in date
         dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -353,7 +363,7 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                var deletedItemPosition = viewHolder.adapterPosition
+                val deletedItemPosition = viewHolder.adapterPosition
                 routineRecyclerViewAdapter.removeItemAt(deletedItemPosition)
             }
 
@@ -366,7 +376,7 @@ class RoutineEditActivity : AppCompatActivity(), View.OnClickListener {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-                var itemView = viewHolder.itemView
+                val itemView = viewHolder.itemView
 
                 val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
 

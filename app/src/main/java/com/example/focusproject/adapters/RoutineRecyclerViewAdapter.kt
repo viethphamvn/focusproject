@@ -30,8 +30,8 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var inflater = LayoutInflater.from(parent.context)
-        var routineItem : View
+        val inflater = LayoutInflater.from(parent.context)
+        val routineItem : View
         routineItem = if (viewType == REST){
             inflater.inflate(R.layout.resttime_item, parent, false)
         } else {
@@ -61,11 +61,11 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
     }
 
     class RoutineViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageView: ImageView? = itemView.excerciseImageHolder
+        private var imageView: ImageView? = itemView.excerciseImageHolder
         private var exerciseNameTextView: TextView? = itemView.exerciseNameTextView
-        var equipmentOrWeightTextView: TextView? = itemView.equipmentOrWeightTextView
-        var repTextView: TextView? = itemView.reprange_textview
-        var timeTextView: TextView? = itemView.time_textview
+        private var equipmentOrWeightTextView: TextView? = itemView.equipmentOrWeightTextView
+        private var repTextView: TextView? = itemView.reprange_textview
+        private var timeTextView: TextView? = itemView.time_textview
 
         fun bind(exercise : Exercise){
             if (!exercise.isRestTime) {

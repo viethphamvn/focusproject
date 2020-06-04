@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -41,7 +42,7 @@ class UserProfileActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener {user ->
                 if (user["profilePictureUri"] != null){
-                    var uri = user["profilePictureUri"] as String;
+                    val uri = user["profilePictureUri"] as String
                     if (uri != ""){
                         setProfileImage(Uri.parse(uri))
                     }
@@ -63,7 +64,7 @@ class UserProfileActivity : AppCompatActivity() {
         }
 
         profilePictureView.setOnClickListener {
-            var intent = Intent(this, UserDetailActivity::class.java)
+            val intent = Intent(this, UserDetailActivity::class.java)
             intent.putExtra("user", User.currentUser)
             startActivity(intent)
         }
@@ -99,7 +100,7 @@ class UserProfileActivity : AppCompatActivity() {
         //Check permission if user want to pick their own picture
         if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
             //Permission Deny
-            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE);
+            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
             requestPermissions(permissions, READ_EX_STORAGE_PERMISSION_CODE)
         } else {
             Intent(Intent.ACTION_PICK).also { picturePickIntent ->
@@ -144,11 +145,16 @@ class UserProfileActivity : AppCompatActivity() {
             }
 
             REQUEST_PICK_IMAGE_CODE -> {
+                val imageBitmap : Bitmap
                 if (data != null) {
                     val imagePath = data.data
                     if (imagePath != null) {
-                        val imageSource = ImageDecoder.createSource(this.contentResolver, imagePath)
-                        val imageBitmap = ImageDecoder.decodeBitmap(imageSource)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            val imageSource = ImageDecoder.createSource(this.contentResolver, imagePath)
+                            imageBitmap = ImageDecoder.decodeBitmap(imageSource)
+                        } else {
+                            TODO("VERSION.SDK_INT < P")
+                        }
                         if (imageBitmap != null) {
                             uploadProfilePicture(imageBitmap)
                         }

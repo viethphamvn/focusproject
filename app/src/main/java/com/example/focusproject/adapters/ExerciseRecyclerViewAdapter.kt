@@ -3,6 +3,8 @@ package com.example.focusproject.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.focusproject.R
@@ -13,8 +15,8 @@ class ExerciseRecyclerViewAdapter(exercises: ArrayList<Exercise>, val adapterOnC
     private var Exercises = exercises
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var inflater = LayoutInflater.from(parent.context)
-        var exerciseItem = inflater.inflate(R.layout.excercise_thumbnail_item, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val exerciseItem = inflater.inflate(R.layout.excercise_thumbnail_item, parent, false)
         return ExerciseViewHolder(exerciseItem)
     }
 
@@ -31,8 +33,8 @@ class ExerciseRecyclerViewAdapter(exercises: ArrayList<Exercise>, val adapterOnC
     }
 
     inner class ExerciseViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageView = itemView.excerciseImageHolder
-        var excerciseNameTextView = itemView.exerciseNameTextView
+        private var imageView: ImageView = itemView.excerciseImageHolder
+        private var excerciseNameTextView: TextView = itemView.exerciseNameTextView
 
         fun bind(exercise : Exercise){
             excerciseNameTextView.text = exercise.name
@@ -50,7 +52,7 @@ class ExerciseRecyclerViewAdapter(exercises: ArrayList<Exercise>, val adapterOnC
             setItem(exercise)
         }
 
-        fun setItem(item: Exercise){
+        private fun setItem(item: Exercise){
             itemView.setOnClickListener{
                 adapterOnClick(item)
             }

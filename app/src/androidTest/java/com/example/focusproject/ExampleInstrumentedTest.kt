@@ -39,8 +39,8 @@ class ExampleInstrumentedTest {
         // Request a string response from the provided URL.
         val stringRequest = StringRequest(
             Request.Method.GET, url,
-            Response.Listener<String> { response ->
-                var resultJson = JSONObject(response)
+            Response.Listener { response ->
+                val resultJson = JSONObject(response)
                 assertEquals("PT4M13S",resultJson.get("duration"))
             },
             Response.ErrorListener {})

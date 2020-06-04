@@ -1,12 +1,9 @@
 package com.example.focusproject
 
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -16,7 +13,6 @@ import com.example.focusproject.models.User
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_user_detail.*
@@ -33,7 +29,7 @@ class UserDetailActivity : AppCompatActivity() {
         user = intent.getSerializableExtra("user") as User
 
         findViewById<TextView>(R.id.username_textview).text = user.username
-        var url = if (user.profilePictureUri != ""){
+        val url = if (user.profilePictureUri != ""){
             user.profilePictureUri
         } else {
             R.drawable.ic_asset_3
@@ -46,7 +42,7 @@ class UserDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.followedTextView).text = user.follower.size.toString()
         findViewById<TextView>(R.id.followingTextView).text = user.following.size.toString()
 
-        var followBtn = findViewById<MaterialButton>(R.id.followButton)
+        val followBtn = findViewById<MaterialButton>(R.id.followButton)
         if (user.follower.contains(User.currentUser.id)){
             followBtn.apply {
                 text = "unfollow"
@@ -114,14 +110,14 @@ class UserDetailActivity : AppCompatActivity() {
 
 
         //Set Up View Pager and Tab Layout
-        var fragments = ArrayList<Fragment>()
+        val fragments = ArrayList<Fragment>()
         fragments.add(RoutineListFragment.newInstance(user))
         fragments.add(RoutineListFragment.newInstance(user, "savedRoutines"))
 
-        var viewpager = findViewById<ViewPager2>(R.id.viewpager)
+        val viewpager = findViewById<ViewPager2>(R.id.viewpager)
         viewpager.adapter = ViewPagerAdapter(2, fragments, this)
 
-        var tabLayout = findViewById<TabLayout>(R.id.tab_layout)
+        val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         TabLayoutMediator(tabLayout, viewpager) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()

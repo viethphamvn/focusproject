@@ -20,9 +20,9 @@ class ExercisePickerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_excercise_picker, container, false)
+        val view = inflater.inflate(R.layout.fragment_excercise_picker, container, false)
 
-        var fragments = ArrayList<Fragment>()
+        val fragments = ArrayList<Fragment>()
         fragments.add(NewWorkoutEditFragment.newInstance())
         fragments.add(MuscleGroupFragment.newInstance("", true))
         fragments.add(MuscleGroupFragment.newInstance("Abs", false))
@@ -30,7 +30,7 @@ class ExercisePickerFragment : Fragment() {
 
         view.viewpager.adapter = activity?.let { ViewPagerAdapter(4, fragments, it) }
 
-        var tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
+        val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
         TabLayoutMediator(tabLayout, view.viewpager) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()

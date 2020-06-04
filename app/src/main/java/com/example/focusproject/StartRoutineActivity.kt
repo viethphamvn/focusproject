@@ -1,9 +1,12 @@
 package com.example.focusproject
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.focusproject.fragments.CountdownFragment
 import com.example.focusproject.fragments.ExcerciseProgressFragment
@@ -22,64 +25,70 @@ class StartRoutineActivity : AppCompatActivity() {
     private lateinit var progressBar : ProgressBar
     private lateinit var exerciseNameTextView : TextView
     var isPaused : Boolean = false
-    var isImage: Boolean = false
+    private var isImage: Boolean = false
     private var fragmentCountDown: Fragment? = null
     private var fragmentVideoPlayer: Fragment? = null
     private var fragmentImageViewer: Fragment? = null
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_routine)
 
         //Get the data from caller
-        activeRoutineList = intent.getSerializableExtra("routine") as ArrayList<Exercise>
+        if (intent.getSerializableExtra("routine")!= null) {
+            activeRoutineList = intent.getSerializableExtra("routine") as ArrayList<Exercise>
 
-        setUpRoutineList()
+            setUpRoutineList()
 
-        progressBar = findViewById(R.id.progress_horizontal)
-        progressBar.max = activeRoutineList.size
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
-            progressBar.min = 0
-        }
+            progressBar = findViewById(R.id.progress_horizontal)
+            progressBar.max = activeRoutineList.size
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                progressBar.min = 0
+            }
 
 
-        exerciseNameTextView = findViewById(R.id.exerciseNameTextView)
+            exerciseNameTextView = findViewById(R.id.exerciseNameTextView)
 
-        controlLayout = findViewById(R.id.controlBar)
-        controlLayout.setOnTouchListener(object :OnSwipeTouchListener(this) {
-            override fun onSwipeTop() {
-                isPaused = false
+            controlLayout = findViewById(R.id.controlBar)
+            controlLayout.setOnTouchListener(object : OnSwipeTouchListener(this) {
+                override fun onSwipeTop() {
+                    isPaused = false
 
-                findViewById<TextView>(R.id.controlBar).apply {
-                    setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-                    text = "PAUSE"
+                    findViewById<TextView>(R.id.controlBar).apply {
+                        setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+                        text = "PAUSE"
+                    }
+
+                    playVideo()
                 }
 
-                playVideo()
-            }
+                override fun onSwipeRight() {
+                    nextExcercise()
+                }
 
-            override fun onSwipeRight() {
-                nextExcercise()
-            }
-
-            override fun onSwipeLeft() {
+                override fun onSwipeLeft() {
 //                decreaseCurrentWorkoutPosition()
 //                excerciseMediaViewPager.currentItem = currentWorkoutPosition
 //                updateProgressBar(currentWorkoutPosition)
-            }
+                }
 
-            override fun onSwipeBottom() {
+                override fun onSwipeBottom() {
                     isPaused = true
 
                     findViewById<TextView>(R.id.controlBar).apply {
-                        setBackgroundColor(resources.getColor(R.color.darkgrey))
+                        setBackgroundColor(ContextCompat.getColor(context, R.color.darkgrey))
                         text = "RESUME"
                     }
                     pauseVideo()
-            }
-        })
+                }
+            })
 
-        startWorkout(currentWorkoutPosition)
+            startWorkout(currentWorkoutPosition)
+        } else {
+            Toast.makeText(this, "Error Occurred!", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 
     private fun startWorkout(position: Int){
@@ -114,7 +123,7 @@ class StartRoutineActivity : AppCompatActivity() {
             print("Is Image")
         }
 
-        activeRoutineList.get(position).apply {
+        activeRoutineList[position].apply {
             exerciseNameTextView.text = this.name
 
             //Start timer if it's timed workout
@@ -134,7 +143,7 @@ class StartRoutineActivity : AppCompatActivity() {
                 if (!isImage){(fragmentCountDown as CountdownFragment).startTimer()} else {(fragmentCountDown as CountdownFragment).startTimerForImage()}
             }
 
-            var fragmentProgress = supportFragmentManager.findFragmentByTag("progressFragment")
+            val fragmentProgress = supportFragmentManager.findFragmentByTag("progressFragment")
             if (fragmentProgress != null) {
                 supportFragmentManager.beginTransaction()
                     .remove(fragmentProgress)
@@ -156,11 +165,11 @@ class StartRoutineActivity : AppCompatActivity() {
     fun playVideo(){
         fragmentCountDown =
             supportFragmentManager.findFragmentByTag("countDownFragment")
-        if (fragmentCountDown != null && activeRoutineList.get(currentWorkoutPosition).isRestTime) {
+        if (fragmentCountDown != null && activeRoutineList[currentWorkoutPosition].isRestTime) {
             (fragmentCountDown as CountdownFragment).startTimer()
         }
 
-        if (activeRoutineList.get(currentWorkoutPosition).vidId != ""){
+        if (activeRoutineList[currentWorkoutPosition].vidId != ""){
             (fragmentVideoPlayer as VideoViewerFragment).playVideo()
         }
     }
@@ -172,7 +181,7 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     fun pauseVideo(){
-        if (activeRoutineList.get(currentWorkoutPosition).vidId != ""){
+        if (activeRoutineList[currentWorkoutPosition].vidId != ""){
             (fragmentVideoPlayer as VideoViewerFragment).pauseVideo()
         }
         if (fragmentCountDown as CountdownFragment != null) {
@@ -198,7 +207,7 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     private fun setUpRoutineList(){
-        var tempList : ArrayList<Exercise> = ArrayList()
+        val tempList : ArrayList<Exercise> = ArrayList()
 
         activeRoutineList.forEach {
             if (it.isRestTime){
@@ -208,7 +217,7 @@ class StartRoutineActivity : AppCompatActivity() {
                 }
                 tempList.add(it)
             } else {
-                var readyTime = CreateExercise.createReadyExercise(10, it)
+                val readyTime = CreateExercise.createReadyExercise(10, it)
                 tempList.add(readyTime)
                 tempList.add(it)
             }

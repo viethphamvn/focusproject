@@ -1,18 +1,13 @@
 package com.example.focusproject.fragments
 
-import android.animation.LayoutTransition
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.focusproject.R
@@ -61,10 +56,10 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
     private fun initiateRoutine(){
         firestore.collection("Users").document(currentUser)
             .get()
-            .addOnSuccessListener {
+            .addOnSuccessListener { it ->
                 if (it["routine"] != null) {
                     data = it["routine"] as HashMap<String, Any>
-                    var tempArrayList = data.get("mon") as ArrayList<String>
+                    var tempArrayList = data["mon"] as ArrayList<String>
                     routines["mon"]?.clear()
                     if (tempArrayList.size > 0) {
                         for (exerciseId in tempArrayList) {
@@ -79,7 +74,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
                     }
 
 
-                    tempArrayList = data.get("tue") as ArrayList<String>
+                    tempArrayList = data["tue"] as ArrayList<String>
                     routines["tue"]?.clear()
                     if (tempArrayList.size > 0) {
                         for (exerciseId in tempArrayList) {
@@ -93,7 +88,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
                     }
 
 
-                    tempArrayList = data.get("wed") as ArrayList<String>
+                    tempArrayList = data["wed"] as ArrayList<String>
                     routines["wed"]?.clear()
                     if (tempArrayList.size > 0) {
                         for (exerciseId in tempArrayList) {
@@ -108,7 +103,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
                     }
 
 
-                    tempArrayList = data.get("thu") as ArrayList<String>
+                    tempArrayList = data["thu"] as ArrayList<String>
                     routines["thu"]?.clear()
                     if (tempArrayList.size > 0) {
                         for (exerciseId in tempArrayList) {
@@ -122,7 +117,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
                         }
                     }
 
-                    tempArrayList = data.get("fri") as ArrayList<String>
+                    tempArrayList = data["fri"] as ArrayList<String>
                     routines["fri"]?.clear()
                     if (tempArrayList.size > 0) {
                         for (exerciseId in tempArrayList) {
@@ -137,7 +132,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
                     }
 
 
-                    tempArrayList = data.get("sat") as ArrayList<String>
+                    tempArrayList = data["sat"] as ArrayList<String>
                     routines["sat"]?.clear()
                     if (tempArrayList.size > 0) {
                         for (exerciseId in tempArrayList) {
@@ -152,7 +147,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
                     }
 
 
-                    tempArrayList = data.get("sun") as ArrayList<String>
+                    tempArrayList = data["sun"] as ArrayList<String>
                     routines["sun"]?.clear()
                     if (tempArrayList.size > 0) {
                         for (exerciseId in tempArrayList) {
@@ -183,18 +178,18 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_daily_routine_activity, container, false)
+        val view = inflater.inflate(R.layout.fragment_daily_routine_activity, container, false)
 
         emptyLayout = view.emptyLayout
 
         //Create a Array of dateButton for easier control
-        buttonArray.put(2, view.mon)
-        buttonArray.put(3, view.tue)
-        buttonArray.put(4, view.wed)
-        buttonArray.put(5, view.thu)
-        buttonArray.put(6, view.fri)
-        buttonArray.put(7, view.sat)
-        buttonArray.put(1, view.sun)
+        buttonArray[2] = view.mon
+        buttonArray[3] = view.tue
+        buttonArray[4] = view.wed
+        buttonArray[5] = view.thu
+        buttonArray[6] = view.fri
+        buttonArray[7] = view.sat
+        buttonArray[1] = view.sun
         //Initiate RecyclerView with Adapter
         view.routine_recycler_list_view.apply {
             layoutManager = LinearLayoutManager(context)
@@ -220,7 +215,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
 
             start_workout_btn.setOnClickListener{
                 if (getCurrentActiveList(selectedDate).size > 0) {
-                    var intent = Intent(context, StartRoutineActivity::class.java)
+                    val intent = Intent(context, StartRoutineActivity::class.java)
                     intent.putExtra("routine", getCurrentActiveList(selectedDate))
                     startActivity(intent)
                 } else {
@@ -246,12 +241,12 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun createExercise(it: DocumentSnapshot, exerciseId: String, date: String){
-        var exercise = CreateExercise.createExercise(it, exerciseId)
+        val exercise = CreateExercise.createExercise(it, exerciseId)
 
         routines[date]!!.add(exercise)
 
         if (routines[date]!!.size == (data[date] as ArrayList<String>).size){
-            var sortedArray = ArrayList<Exercise>()
+            val sortedArray = ArrayList<Exercise>()
             for (id in data[date] as ArrayList<String>){
                 for (exercise in routines[date]!!){
                     if (exercise.uid == id){
@@ -289,14 +284,14 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun getCurrentActiveList(selectedDate: Int): ArrayList<Exercise>{
-        var returnList = when(selectedDate){
-            2 -> if (routines.get("mon") != null) routines["mon"] else ArrayList()
-            3 -> if (routines.get("tue") != null) routines["tue"] else ArrayList()
-            4 -> if (routines.get("wed") != null) routines["wed"] else ArrayList()
-            5 -> if (routines.get("thu") != null) routines["thu"] else ArrayList()
-            6 -> if (routines.get("fri") != null) routines["fri"] else ArrayList()
-            7 -> if (routines.get("sat") != null) routines["sat"] else ArrayList()
-            else -> if (routines.get("sun") != null) routines["sun"] else ArrayList()
+        val returnList = when(selectedDate){
+            2 -> if (routines["mon"] != null) routines["mon"] else ArrayList()
+            3 -> if (routines["tue"] != null) routines["tue"] else ArrayList()
+            4 -> if (routines["wed"] != null) routines["wed"] else ArrayList()
+            5 -> if (routines["thu"] != null) routines["thu"] else ArrayList()
+            6 -> if (routines["fri"] != null) routines["fri"] else ArrayList()
+            7 -> if (routines["sat"] != null) routines["sat"] else ArrayList()
+            else -> if (routines["sun"] != null) routines["sun"] else ArrayList()
         } as ArrayList<Exercise>
 
         if (returnList.size == 0){

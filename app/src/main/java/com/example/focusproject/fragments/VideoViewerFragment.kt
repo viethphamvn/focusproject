@@ -1,24 +1,20 @@
 package com.example.focusproject.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
-
+import androidx.fragment.app.Fragment
 import com.example.focusproject.R
 import com.example.focusproject.StartRoutineActivity
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
-import kotlinx.android.synthetic.main.fragment_video_viewer.view.videoPlayerView
+import kotlinx.android.synthetic.main.fragment_video_viewer.view.*
 
 private const val VIDEO_URL = "param1"
 
 class VideoViewerFragment : Fragment(){
-    // TODO: Rename and change types of parameters
     private var vidUrl: String = ""
     private lateinit var mYoutubePlayer : YouTubePlayer
     private lateinit var theview: View
@@ -105,7 +101,7 @@ class VideoViewerFragment : Fragment(){
 
     fun playVideo(){
         if (this::mYoutubePlayer.isInitialized){
-            println("Play video ${mYoutubePlayer}")
+            println("Play video $mYoutubePlayer")
             mYoutubePlayer.play()
         }
     }

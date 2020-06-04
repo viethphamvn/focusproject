@@ -17,8 +17,6 @@ import com.example.focusproject.tools.CreateExercise
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_muscle_group.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val MUSCL_GRP = "param1"
 private const val SELF_CREATED = "param2"
 
@@ -43,7 +41,7 @@ class MuscleGroupFragment : Fragment() {
         //Get data
         getItemFromDatabase()
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_muscle_group, container, false)
+        val view = inflater.inflate(R.layout.fragment_muscle_group, container, false)
         view.exerciseItemRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             exerciseRecyclerViewAdapter = ExerciseRecyclerViewAdapter(exercises) { item -> doClick(item)}
@@ -61,7 +59,7 @@ class MuscleGroupFragment : Fragment() {
     }
 
     private fun getItemFromDatabase(){
-        var firestore = FirebaseFirestore.getInstance()
+        val firestore = FirebaseFirestore.getInstance()
         firestore.collection("Exercise")
             .get()
             .addOnSuccessListener { result ->
@@ -69,11 +67,11 @@ class MuscleGroupFragment : Fragment() {
                 exerciseRecyclerViewAdapter.notifyDataSetChanged()
                 for (document in result){
                     if (document.get("type") as String == docName && !self!!) {
-                        var exercise = CreateExercise.createExercise(document)
+                        val exercise = CreateExercise.createExercise(document)
                         exercises.add(exercise)
                         exerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
                     } else if (self!! && document.get("createdBy") as String == User.currentUser.id && !(document.get("isRestTime") as Boolean)){
-                        var exercise = CreateExercise.createExercise(document)
+                        val exercise = CreateExercise.createExercise(document)
                         exercises.add(exercise)
                         exerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
                     }

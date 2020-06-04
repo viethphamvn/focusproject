@@ -4,7 +4,7 @@ import java.util.regex.Pattern
 
 class YouTubeHelper {
     companion object {
-        private val youTubeUrlRegEx = "^(https?)?(://)?(www.)?(m.)?((youtube.com)|(youtu.be))/"
+        private const val youTubeUrlRegEx = "^(https?)?(://)?(www.)?(m.)?((youtube.com)|(youtu.be))/"
         private val videoIdRegex = arrayOf(
             "\\?vi?=([^&]*)",
             "watch\\?.*v=([^&]*)",

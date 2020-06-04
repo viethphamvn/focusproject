@@ -32,10 +32,14 @@ class RoutineDetailActivity : AppCompatActivity() {
     private var totalDuration: Long  = 0
     private lateinit var actionButton : FloatingActionButton
     private lateinit var exerciseRecyclerViewAdapter : RoutineRecyclerViewAdapter
+    private lateinit var deleteBtn : FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_routine_detail)
+
+        deleteBtn = findViewById(R.id.floatingActionButton_deleteAction)
+
 
         routine = intent.getSerializableExtra("routine") as Routine
         if (routine != null){
@@ -49,12 +53,12 @@ class RoutineDetailActivity : AppCompatActivity() {
 
             findViewById<TextView>(R.id.routine_name_text_view).text = routine.name
 
-            actionButton = findViewById<FloatingActionButton>(R.id.floatingActionButton_saveAction)
+            actionButton = findViewById(R.id.floatingActionButton_saveAction)
             if (routine.createdBy == User.currentUser.id){
                 actionButton.apply {
                     setImageResource(R.drawable.ic_modify)
                     setOnClickListener {
-                        var intent = Intent(context, CreateRoutineActivity::class.java)
+                        val intent = Intent(context, CreateRoutineActivity::class.java)
                         intent.putExtra("routine", exerciseList)
                         intent.putExtra("routinejustid", routine.exerciseList)
                         intent.putExtra("routinetitle", routine.name)
@@ -62,49 +66,65 @@ class RoutineDetailActivity : AppCompatActivity() {
                         startActivityForResult(intent, MODIFY_ROUTINE_REQUEST_CODE)
                     }
                 }
+                deleteFromRoutinesCollection()
             } else {
+                setUpActionButton()
+                deleteFromSavedRoutine()
                 setActionButtonToSave()
             }
             start_workout_btn.setOnClickListener {
-                var intent = Intent(this, StartRoutineActivity::class.java)
+                val intent = Intent(this, StartRoutineActivity::class.java)
                 intent.putExtra("routine", exerciseList)
                 startActivity(intent)
             }
         }
     }
 
-//    private fun setActionButtonToDelete(){
-//        actionButton.apply {
-//            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.pastelred))
-//            setImageResource(R.drawable.ic_delete)
-//            setOnClickListener {
-//                FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
-//                    .update("savedRoutines", FieldValue.arrayRemove(routine.id))
-//                    .addOnSuccessListener {
-//                        Toast.makeText(context, "Routine is removed!", Toast.LENGTH_SHORT).show()
-//                        setActionButtonToSave()
-//                    }
-//
-//            }
-//        }
-//    }
+    private fun deleteFromSavedRoutine() {
+        deleteBtn.apply {
+            setOnClickListener {
+                FirebaseFirestore.getInstance().collection("Users")
+                    .document(FirebaseAuth.getInstance().currentUser!!.uid)
+                    .update("savedRoutines", FieldValue.arrayRemove(routine.id))
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Routine is removed!", Toast.LENGTH_SHORT).show()
+                        setUpActionButton()
+                    }
 
-//    private fun setUpActionButton(){
-//        //find out if routine is saved in the user's library and set action button accordingly
-//
-//        FirebaseFirestore.getInstance().collection("Users").document(User.currentUser.id)
-//            .get()
-//            .addOnSuccessListener { result ->
-//                if (result.get("savedRoutines") != null) {
-//                    var savedRoutinesList = result.get("savedRoutines") as ArrayList<String>
-//                    if (savedRoutinesList.contains(routine.id)) {
-//                        setActionButtonToDelete()
-//                    } else {
-//                        setActionButtonToSave()
-//                    }
-//                }
-//            }
-//    }
+            }
+        }
+    }
+
+    private fun deleteFromRoutinesCollection(){
+        deleteBtn.apply {
+            setOnClickListener {
+                FirebaseFirestore.getInstance().collection("Routines")
+                    .document(routine.id)
+                    .delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Routine is deleted!", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+            }
+        }
+    }
+
+
+    private fun setUpActionButton(){
+        //find out if routine is saved in the user's library and set action button accordingly
+        FirebaseFirestore.getInstance().collection("Users").document(User.currentUser.id)
+            .get()
+            .addOnSuccessListener { result ->
+                if (result.get("savedRoutines") != null) {
+                    val savedRoutinesList = result.get("savedRoutines") as ArrayList<String>
+                    if (!savedRoutinesList.contains(routine.id)) {
+                        deleteBtn.visibility = View.GONE
+                    } else {
+                        deleteBtn.visibility = View.VISIBLE
+                    }
+                }
+            }
+    }
 
     private fun getExercises(){
         exerciseRecyclerViewAdapter.notifyItemRangeRemoved(0, exerciseList.size)
@@ -146,7 +166,7 @@ class RoutineDetailActivity : AppCompatActivity() {
         }
         toRoutineBtn.setOnClickListener {
             //Start activity RoutineEditActivity.kt
-            var intent = Intent(this, RoutineEditActivity::class.java)
+            val intent = Intent(this, RoutineEditActivity::class.java)
             intent.putExtra("date", MainActivity.todayDate)
             intent.putExtra("routine", exerciseList)
             startActivity(intent)
@@ -160,6 +180,7 @@ class RoutineDetailActivity : AppCompatActivity() {
             .update("savedRoutines", FieldValue.arrayUnion(routine.id))
             .addOnSuccessListener {
                 Toast.makeText(this, "Routine is saved!", Toast.LENGTH_SHORT).show()
+                setUpActionButton()
             }
     }
 
@@ -173,7 +194,7 @@ class RoutineDetailActivity : AppCompatActivity() {
                             data.getSerializableExtra("routine") as ArrayList<String>
                     }
                     if (data.getStringExtra("title") != null) {
-                        var routineTitle = data.getStringExtra("title") as String
+                        val routineTitle = data.getStringExtra("title") as String
                         findViewById<TextView>(R.id.routine_name_text_view).text = routineTitle
                         routine.name = routineTitle
                     }

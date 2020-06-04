@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/nunito"
-            android:text="Chào Mừng"
+            android:text="Welcome"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -51,7 +51,6 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:outlineAmbientShadowColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@id/bottomLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -63,8 +62,8 @@
         android:layout_height="wrap_content"
         android:elevation="100dp"
         android:gravity="center"
-        android:text="Đang Tải..."
-        android:textSize="40dp"
+        android:text="LOADING..."
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@id/bottomLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

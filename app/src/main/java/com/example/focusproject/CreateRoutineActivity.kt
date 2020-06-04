@@ -14,7 +14,6 @@ import com.example.focusproject.adapters.RoutineRecyclerViewAdapter
 import com.example.focusproject.fragments.ExercisePickerFragment
 import com.example.focusproject.models.Exercise
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
@@ -65,10 +64,10 @@ class CreateRoutineActivity : AppCompatActivity() {
         deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
         setUpRecyclerView()
 
-        var saveBtn = findViewById<ExtendedFloatingActionButton>(R.id.saveButton)
-        var cancelBtn = findViewById<ImageButton>(R.id.cancel_button)
-        var addBtn = findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_addAction)
-        var routineName = findViewById<EditText>(R.id.newRoutineNameTextView) as TextView
+        val saveBtn = findViewById<ExtendedFloatingActionButton>(R.id.saveButton)
+        val cancelBtn = findViewById<ImageButton>(R.id.cancel_button)
+        val addBtn = findViewById<ExtendedFloatingActionButton>(R.id.floatingActionButton_addAction)
+        val routineName = findViewById<EditText>(R.id.newRoutineNameTextView) as TextView
 
         if (routineTitle != null){
             routineName.text = routineTitle
@@ -88,7 +87,7 @@ class CreateRoutineActivity : AppCompatActivity() {
         }
 
         addBtn.setOnClickListener{
-            var exercisePickerFragment = supportFragmentManager.findFragmentByTag("pickerFragment")
+            val exercisePickerFragment = supportFragmentManager.findFragmentByTag("pickerFragment")
             if (exercisePickerFragment != null){
                 supportFragmentManager.beginTransaction()
                     .remove(exercisePickerFragment)
@@ -124,8 +123,8 @@ class CreateRoutineActivity : AppCompatActivity() {
     }
 
     private fun uploadData(routineName: String) {
-        var firestore = FirebaseFirestore.getInstance().collection("Routines")
-        var newRoutineHashMap = HashMap<String, Any>()
+        val firestore = FirebaseFirestore.getInstance().collection("Routines")
+        val newRoutineHashMap = HashMap<String, Any>()
 
         if (routineId == null){
             routineId = FirebaseFirestore.getInstance().collection("Routines").document().id
@@ -138,7 +137,7 @@ class CreateRoutineActivity : AppCompatActivity() {
         newRoutineHashMap["id"] = routineId!!
         firestore.document(routineId!!).set(newRoutineHashMap).addOnSuccessListener {
             Toast.makeText(this, "Your routine has been posted!", Toast.LENGTH_SHORT).show()
-            var returnIntent = Intent()
+            val returnIntent = Intent()
             returnIntent.putExtra("title", routineName)
             returnIntent.putExtra("routine", newWorkoutJustId)
             setResult(Activity.RESULT_OK, returnIntent)
@@ -169,7 +168,7 @@ class CreateRoutineActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                var deletedItemPosition = viewHolder.adapterPosition
+                val deletedItemPosition = viewHolder.adapterPosition
                 routineRecyclerViewAdapter.removeItemAt(deletedItemPosition)
                 newWorkoutJustId.removeAt(deletedItemPosition)
             }
@@ -183,7 +182,7 @@ class CreateRoutineActivity : AppCompatActivity() {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-                var itemView = viewHolder.itemView
+                val itemView = viewHolder.itemView
 
                 val iconMargin = (itemView.height - deleteIcon.intrinsicHeight) / 2
 

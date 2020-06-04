@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.fragment_image_viewer.view.*
 private const val IMAGE_URL = "param1"
 
 class ImageViewerFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var imgUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +26,7 @@ class ImageViewerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_image_viewer, container, false)
+        val view = inflater.inflate(R.layout.fragment_image_viewer, container, false)
         Glide.with(this)
             .load(imgUrl)
             .centerCrop()

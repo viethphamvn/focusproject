@@ -45,7 +45,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:startIconDrawable="@drawable/ic_user"
             app:endIconMode="clear_text"
-            android:hint="Tên Hiển Thị">
+            android:hint="Username">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -83,7 +83,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:startIconDrawable="@drawable/ic_lock"
             app:endIconMode="password_toggle"
-            android:hint="Mật Khẩu">
+            android:hint="Password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -97,7 +97,7 @@
             android:id="@+id/signUpButton"
             android:layout_width="200dp"
             android:layout_height="60dp"
-            android:text="Đăng Ký"
+            android:text="Signup"
             android:fontFamily="@font/nunito"
             app:backgroundTint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"

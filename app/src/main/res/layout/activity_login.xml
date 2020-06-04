@@ -23,6 +23,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:src="@drawable/ic_asset_3"
             android:scaleX="0.5"
+            android:contentDescription="App Logo"
             android:scaleY="0.5"/>
 
 

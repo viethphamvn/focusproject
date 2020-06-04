@@ -191,7 +191,8 @@
                 android:textStyle="bold"
                 android:maxLength="2"
                 android:inputType="numberDecimal"
-                android:fontFamily="@font/nunito"/>
+                android:fontFamily="@font/nunito"
+                android:autofillHints="" />
 
             <ImageButton
                 android:id="@+id/increaseRepButton"
@@ -240,7 +241,8 @@
                 android:hint="45"
                 android:textSize="50sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/nunito"/>
+                android:fontFamily="@font/nunito"
+                android:autofillHints="" />
 
             <ImageButton
                 android:id="@+id/increaseWeightButton"

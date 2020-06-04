@@ -1,50 +1,39 @@
 package com.example.focusproject.fragments
 
-import android.app.DownloadManager
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.focusproject.CreateRoutineActivity
-
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.models.Exercise
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.YouTubeHelper
-import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.gson.Gson
-import com.google.gson.internal.bind.util.ISO8601Utils
 import com.ikovac.timepickerwithseconds.MyTimePickerDialog
-import kotlinx.android.synthetic.main.fragment_new_workout_edit.*
 import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.*
-import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.currentDurationTextView
-import kotlinx.android.synthetic.main.fragment_new_workout_edit.view.isRestTimeCheckBox
 import org.json.JSONObject
-import org.w3c.dom.Text
-import java.net.URL
 import java.time.Duration
 
 private const val API_KEY = "AIzaSyDGVmEwQlfqzbybEhpkyXTfI2L0uSlU1-s"
 
 class NewWorkoutEditFragment : Fragment() {
-    var hours : Long = 0
-    var minutes: Long = 0
-    var seconds: Long = 0
-    lateinit var fragmentView : View
-    lateinit var typeSpinner : Spinner
-    lateinit var currentDurationTextView : TextView
+    private var hours : Long = 0
+    private var minutes: Long = 0
+    private var seconds: Long = 0
+    private lateinit var fragmentView : View
+    private lateinit var typeSpinner : Spinner
+    private lateinit var currentDurationTextView : TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +68,7 @@ class NewWorkoutEditFragment : Fragment() {
                 if (repTextView.text.toString() != "") {
                     rep = repTextView.text.toString().toLong()
                 }
-                var weight = 0L
+                val weight = 0L
                 if (weightTextView.text.toString() != "") {
                     var weight = weightTextView.text.toString().toLong()
                 }
@@ -180,11 +169,17 @@ class NewWorkoutEditFragment : Fragment() {
                     // Request a string response from the provided URL.
                     val stringRequest = StringRequest(
                         Request.Method.GET, url,
-                        Response.Listener<String> { response ->
-                            var resultJson = JSONObject(response)
+                        Response.Listener { response ->
+                            val resultJson = JSONObject(response)
                             if (resultJson.get("items").toString() != "[]"){
-                                var dur = Duration.parse(resultJson.getJSONArray("items").getJSONObject(0).getJSONObject("contentDetails").getString("duration"))
-                                setUpDuration(dur.seconds)
+                                val dur = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    Duration.parse(resultJson.getJSONArray("items").getJSONObject(0).getJSONObject("contentDetails").getString("duration"))
+                                } else {
+                                    TODO("VERSION.SDK_INT < O")
+                                }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    setUpDuration(dur.seconds)
+                                }
                             }
                         },
                         Response.ErrorListener { textView.text = "That didn't work!" })
@@ -288,7 +283,7 @@ class NewWorkoutEditFragment : Fragment() {
         typeSpinner = fragmentView.spinnerExerciseType
         //Set up options for Spinner
         typeSpinner.adapter =
-            context?.let { ArrayAdapter<String>(it, R.layout.center_textview_for_spinner,resources.getStringArray(R.array.type_array)) }
+            context?.let { ArrayAdapter(it, R.layout.center_textview_for_spinner,resources.getStringArray(R.array.type_array)) }
         //Set Up Default Option
         val defaultPosition = 0
 
@@ -320,9 +315,9 @@ class NewWorkoutEditFragment : Fragment() {
     }
 
     private fun setUpDuration(duration: Long){
-        var hourOfDay = duration / 3600
-        var minute = (duration - (hourOfDay * 3600)) / 60
-        var seconds = (duration - minute*60 - hourOfDay*3600)
+        val hourOfDay = duration / 3600
+        val minute = (duration - (hourOfDay * 3600)) / 60
+        val seconds = (duration - minute*60 - hourOfDay*3600)
 
         currentDurationTextView.text =
             String.format("%02d:%02d:%02d", hourOfDay, minute, seconds)

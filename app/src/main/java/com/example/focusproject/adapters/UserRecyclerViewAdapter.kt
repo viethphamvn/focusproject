@@ -12,11 +12,11 @@ import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.user_card.view.*
 
 class UserRecyclerViewAdapter (Users: ArrayList<User>, val onClick: (User) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var userList = Users
+    private var userList = Users
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var inflater = LayoutInflater.from(parent.context)
-        var userCard = inflater.inflate(R.layout.user_card, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val userCard = inflater.inflate(R.layout.user_card, parent, false)
         return UserViewHolder(userCard)
     }
 
@@ -38,8 +38,8 @@ class UserRecyclerViewAdapter (Users: ArrayList<User>, val onClick: (User) -> Un
     }
 
     inner class UserViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var profileImageView: CircleImageView = itemView.user_profile_picture
-        var usernameTextView: TextView = itemView.username_textview
+        private var profileImageView: CircleImageView = itemView.user_profile_picture
+        private var usernameTextView: TextView = itemView.username_textview
 
         fun bind(user : User){
             usernameTextView.text = user.username

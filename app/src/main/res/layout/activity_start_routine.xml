@@ -80,7 +80,7 @@
         android:textColor="@color/white"
         android:fontFamily="@font/nunito"
         android:gravity="center_vertical|center_horizontal"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:clickable="true"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

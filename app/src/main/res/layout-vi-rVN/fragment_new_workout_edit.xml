@@ -22,7 +22,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:text="Bài Tập Cá Nhân "
+            android:text="@string/your_customized_workout"
             android:fontFamily="@font/nunito"/>
 
         <CheckBox
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@id/textView"
             app:layout_constraintLeft_toRightOf="@id/isRestTimeCheckBox"
             android:layout_marginTop="10dp"
-            android:text="Là Giờ Nghỉ"
+            android:text="@string/is_rest_time"
             android:textSize="20sp"
             android:fontFamily="@font/nunito"/>
 
@@ -51,7 +51,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="10dp"
             app:endIconMode="clear_text"
-            android:hint="Tên Bài Tập">
+            android:hint="@string/exercise_name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -75,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@id/workoutNameEditText"
             app:layout_constraintLeft_toRightOf="@id/needEquipmentCheckBox"
             android:layout_marginTop="10dp"
-            android:text="Cần Dụng Cụ"
+            android:text="@string/equipment_needed"
             android:textSize="20sp"
             android:fontFamily="@font/nunito"/>
 
@@ -86,7 +86,7 @@
             app:layout_constraintTop_toBottomOf="@id/needEquipmentTextView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:endIconMode="clear_text"
-            android:hint="Thông Tin Bài Tập"
+            android:hint="@string/exercise_description"
             android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -132,7 +132,7 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Nội Dung Media"
+            android:text="@string/media_content"
             android:fontFamily="@font/nunito" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -162,7 +162,7 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Số Lần Lặp Lại"
+            android:text="@string/repetition"
             android:fontFamily="@font/nunito"/>
 
         <LinearLayout
@@ -191,7 +191,8 @@
                 android:textStyle="bold"
                 android:maxLength="2"
                 android:inputType="numberDecimal"
-                android:fontFamily="@font/nunito"/>
+                android:fontFamily="@font/nunito"
+                android:autofillHints="" />
 
             <ImageButton
                 android:id="@+id/increaseRepButton"
@@ -212,7 +213,7 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="% Độ Nặng Lớn Nhất"/>
+            android:text="@string/weight_one_rep_max"/>
 
         <LinearLayout
             android:id="@+id/weight_layout"
@@ -240,7 +241,8 @@
                 android:hint="45"
                 android:textSize="50sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/nunito"/>
+                android:fontFamily="@font/nunito"
+                android:autofillHints="" />
 
             <ImageButton
                 android:id="@+id/increaseWeightButton"
@@ -261,7 +263,7 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Thời Lượng"/>
+            android:text="@string/duration"/>
         <LinearLayout
             android:id="@+id/durationLayout"
             android:layout_width="match_parent"
@@ -287,7 +289,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimaryDark"
-                android:text="Thay đổi thời lượng"
+                android:text="@string/change_duration"
                 android:fontFamily="@font/nunito"/>
         </LinearLayout>
 
@@ -298,7 +300,7 @@
             app:layout_constraintTop_toBottomOf="@id/durationLayout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="Lưu"
+            android:text="@string/save"
             app:icon="@drawable/ic_save_2"
             android:backgroundTint="#1D9622"
             android:fontFamily="@font/nunito"/>

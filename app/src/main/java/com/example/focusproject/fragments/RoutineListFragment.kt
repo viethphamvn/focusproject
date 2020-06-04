@@ -17,13 +17,10 @@ import com.example.focusproject.tools.CreateRoutine
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val USER = "param1"
 private const val DOCUMENT = "param2"
 
 class RoutineListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var user: User? = null
     private var documentPath: String? = null
     private lateinit var routineRecyclerViewAdapter : FeedRecyclerViewAdapter
@@ -42,7 +39,7 @@ class RoutineListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_routine_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_routine_list, container, false)
         view.findViewById<RecyclerView>(R.id.routine_recycler_list_view).apply {
             layoutManager = LinearLayoutManager(context)
             routineRecyclerViewAdapter = FeedRecyclerViewAdapter(routineList){item -> doClick(item)}
@@ -53,7 +50,7 @@ class RoutineListFragment : Fragment() {
     }
 
     private fun doClick(item: Routine) {
-        var intent = Intent(context, RoutineDetailActivity::class.java)
+        val intent = Intent(context, RoutineDetailActivity::class.java)
         intent.putExtra("routine", item)
         startActivity(intent)
     }
@@ -99,7 +96,7 @@ class RoutineListFragment : Fragment() {
                 .get()
                 .addOnSuccessListener { result ->
                     if (result.get("savedRoutines") != null) {
-                        var savedRoutines =
+                        val savedRoutines =
                             result.get("savedRoutines") as ArrayList<String>//this is a list of routine id
                         for (id in savedRoutines) {
                             FirebaseFirestore.getInstance().collection("Routines").document(id)

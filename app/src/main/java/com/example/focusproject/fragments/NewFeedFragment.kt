@@ -24,8 +24,8 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private lateinit var fragmentView: View
     private var routineList: ArrayList<Routine> = ArrayList()
     private lateinit var feedRecyclerViewAdapter: FeedRecyclerViewAdapter
-    var tempArray = ArrayList<Routine>()
-    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private var tempArray = ArrayList<Routine>()
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +50,7 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun doClick(item: Routine) {
-        var intent = Intent(context, RoutineDetailActivity::class.java)
+        val intent = Intent(context, RoutineDetailActivity::class.java)
         intent.putExtra("routine", item)
         startActivity(intent)
     }
@@ -59,7 +59,7 @@ class NewFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         FirebaseFirestore.getInstance().collection("Users").document(User.currentUser.id)
             .get()
             .addOnSuccessListener {
-                var currentUser = CreateUser.createUser(it)
+                val currentUser = CreateUser.createUser(it)
                 FirebaseFirestore.getInstance().collection("Routines")
                     .get()
                     .addOnSuccessListener { result ->

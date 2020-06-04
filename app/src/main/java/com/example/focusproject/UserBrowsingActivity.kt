@@ -1,24 +1,24 @@
 package com.example.focusproject
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.view.View
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusproject.adapters.UserRecyclerViewAdapter
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateUser
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserBrowsingActivity : AppCompatActivity() {
     private lateinit var userRecyclerViewAdapter : UserRecyclerViewAdapter
     private var userList = ArrayList<User>()
+    private lateinit var emptyBannerLayout : LinearLayout
+    private lateinit var resultBannerTextView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +30,11 @@ class UserBrowsingActivity : AppCompatActivity() {
             adapter = userRecyclerViewAdapter
         }
 
-        var searchBtn = findViewById<ImageButton>(R.id.searchbtn)
-        var searchText = findViewById<EditText>(R.id.searchEditText)
+        emptyBannerLayout = findViewById(R.id.emptyLayout)
+        resultBannerTextView = findViewById(R.id.TextView)
+
+        val searchBtn = findViewById<ImageButton>(R.id.searchbtn)
+        val searchText = findViewById<EditText>(R.id.searchEditText)
 
         searchBtn.setOnClickListener {
             findFriends((searchText as TextView).text.toString())
@@ -54,33 +57,45 @@ class UserBrowsingActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         getFriends()
     }
 
     private fun onUserClick(item: User) {
-        var intent = Intent(this, UserDetailActivity::class.java)
+        val intent = Intent(this, UserDetailActivity::class.java)
         intent.putExtra("user", item)
         startActivity(intent)
     }
+
+
 
     private fun findFriends(searchText: String){
         if (searchText != ""){
             FirebaseFirestore.getInstance().collection("Users")
                 .get()
                 .addOnSuccessListener { result ->
-                    var tempList = ArrayList<String>()
+                    val tempList = ArrayList<String>()
                     for (userDoc in result){
-                        var name = userDoc.get("username").toString()
+                        val name = userDoc.get("username").toString()
                         if (name.contains(searchText)){
                             tempList.add(userDoc.get("id").toString())
                         }
                     }
                     if (tempList.size > 0) {
+                        emptyBannerLayout.visibility = View.GONE
+                        resultBannerTextView.text = getString(R.string.searchresult)
+
                         userList.clear()
                         userRecyclerViewAdapter.notifyDataSetChanged()
                         for (id in tempList) {
                             getUserInfo(id)
                         }
+                    } else {
+                        Toast.makeText(this, getString(R.string.noresultfound), Toast.LENGTH_SHORT).show()
                     }
                 }
         } else {
@@ -89,18 +104,26 @@ class UserBrowsingActivity : AppCompatActivity() {
     }
 
     private fun getFriends() {
-        var fireStore = FirebaseFirestore.getInstance()
+        val fireStore = FirebaseFirestore.getInstance()
         fireStore.collection("Users").document(User.currentUser.id)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.get("following") != null){
-                    var tempList = (snapshot.get("following") as ArrayList<String>)
+                    val tempList = (snapshot.get("following") as ArrayList<String>)
                     if (tempList.size > 0){
+                        emptyBannerLayout.visibility = View.GONE
+                        resultBannerTextView.text = getString(R.string.yourfriends)
+
                         userList.clear()
                         userRecyclerViewAdapter.notifyDataSetChanged()
                         for (userId in tempList) {
                            getUserInfo(userId)
                         }
+                    } else {
+                        userList.clear()
+                        userRecyclerViewAdapter.notifyDataSetChanged()
+                        emptyBannerLayout.visibility = View.VISIBLE
+                        resultBannerTextView.text = ""
                     }
                 }
             }

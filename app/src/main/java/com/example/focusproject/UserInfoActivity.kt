@@ -8,8 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import android.os.Build.VERSION_CODES.M
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Window
@@ -17,14 +15,12 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
-import java.security.Permission
-import java.util.jar.Manifest
 
 private const val REQUEST_TAKE_IMAGE_CODE = 250
 private const val REQUEST_PICK_IMAGE_CODE = 270
@@ -82,7 +78,7 @@ class UserInfoActivity : AppCompatActivity() {
         //Check permission if user want to pick their own picture
         if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
             //Permission Deny
-            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE);
+            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
             requestPermissions(permissions, READ_EX_STORAGE_PERMISSION_CODE)
         } else {
             Intent(Intent.ACTION_PICK).also { picturePickIntent ->
@@ -127,11 +123,17 @@ class UserInfoActivity : AppCompatActivity() {
             }
 
             REQUEST_PICK_IMAGE_CODE -> {
+                val imageBitmap : Bitmap
+
                 if (data != null) {
                     val imagePath = data.data
                     if (imagePath != null) {
-                        val imageSource = ImageDecoder.createSource(this.contentResolver, imagePath)
-                        val imageBitmap = ImageDecoder.decodeBitmap(imageSource)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            val imageSource = ImageDecoder.createSource(this.contentResolver, imagePath)
+                            imageBitmap = ImageDecoder.decodeBitmap(imageSource)
+                        } else {
+                            TODO("VERSION.SDK_INT < P")
+                        }
                         if (imageBitmap != null) {
                             uploadProfilePicture(imageBitmap)
                         }
@@ -190,7 +192,7 @@ class UserInfoActivity : AppCompatActivity() {
         }
 
         doneBtn.setOnClickListener {
-            var intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }

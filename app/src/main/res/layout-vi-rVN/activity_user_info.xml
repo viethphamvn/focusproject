@@ -26,7 +26,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
-        android:text="Thay Đổi hình đại diện"
+        android:text="change profile picture"
         android:fontFamily="@font/nunito"
         />
 
@@ -50,9 +50,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:fontFamily="@font/nunito"
         android:textColor="@color/white"
+        android:text="Welcome Tom, get ready to stay #focus"
         android:gravity="center"/>
 
     <ImageView
@@ -74,10 +75,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="20dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:fontFamily="@font/nunito"
         android:textColor="@color/white"
-        android:text="Trước khi bắt đầu, đây là một vào thứ mà bạn có thể cần"
+        android:text="Before getting stared, here is a few things you might need"
         android:padding="5dp"
         android:gravity="center"/>
 
@@ -90,7 +91,7 @@
         app:layout_constraintRight_toLeftOf="@id/skipBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         android:fontFamily="@font/nunito"
-        android:text="Hưỡng Dẫn Sử Dụng"/>
+        android:text="show me how this works"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/skipBtn"
@@ -100,7 +101,7 @@
         app:layout_constraintLeft_toRightOf="@id/tutorialBtn"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Xong"
+        android:text="done"
         android:fontFamily="@font/nunito"
         android:backgroundTint="#4CAF50"
         />

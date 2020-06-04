@@ -17,11 +17,11 @@ import kotlin.collections.ArrayList
 
 class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>, val onClick: (Routine) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var routineList = routineList
+    private var routineList = routineList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var inflater = LayoutInflater.from(parent.context)
-        var routineCard = inflater.inflate(R.layout.routine_item, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val routineCard = inflater.inflate(R.layout.routine_item, parent, false)
         return UserViewHolder(routineCard)
     }
 
@@ -43,7 +43,7 @@ class FeedRecyclerViewAdapter (routineList: ArrayList<Routine>, val onClick: (Ro
     }
 
     inner class UserViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var profileImageView: CircleImageView = itemView.user_profile_picture
+        private var profileImageView: CircleImageView = itemView.user_profile_picture
         private var usernameTextView: TextView = itemView.username_textview
         private var routineNameTextView: TextView = itemView.routine_name
         private var timestampTextView: TextView = itemView.timeStampTextView

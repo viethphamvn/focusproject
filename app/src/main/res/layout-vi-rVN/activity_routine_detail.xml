@@ -37,7 +37,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/totalExerciseBanner"
-            android:text="Tổng Thời Gian"
+            android:text="Duration"
             android:textColor="@color/white"
             android:background="@color/colorPrimaryDark"
             android:gravity="center"
@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/totalDurationBanner"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="Tổng Bài Tập"
+            android:text="Total Exercises"
             android:textColor="@color/white"
             android:background="@color/colorPrimaryDark"
             android:gravity="center"
@@ -101,7 +101,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/floatingActionButton_saveAction"
         android:layout_marginBottom="10dp"
-        android:text="BẮT ĐẦU TẬP"
+        android:text="START WORKOUT"
         app:iconTint="@color/white"
         android:textColor="@color/white"
         app:icon="@drawable/ic_play"
@@ -109,6 +109,21 @@
         android:paddingRight="40dp"
         android:backgroundTint="#1D9622"
         />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton_deleteAction"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/ic_delete"
+        android:backgroundTint="@color/pastelred"
+        app:fabCustomSize="70dp"
+        android:clickable="true"
+        app:tint="@color/white"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/floatingActionButton_saveAction"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton_saveAction"

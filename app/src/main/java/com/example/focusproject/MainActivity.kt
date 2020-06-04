@@ -2,14 +2,12 @@ package com.example.focusproject
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.focusproject.fragments.NewFeedFragment
 import com.example.focusproject.fragments.DailyRoutinesListFragment
-import com.example.focusproject.fragments.ImageViewerFragment
+import com.example.focusproject.fragments.NewFeedFragment
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateUser
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                         User.currentUser = CreateUser.createUser(user)
 
                         if (user["profilePictureUri"] != null) {
-                            var uri = user["profilePictureUri"] as String;
+                            val uri = user["profilePictureUri"] as String
                             if (uri != "") {
                                 setProfileImage(Uri.parse(uri))
                             }
@@ -99,9 +97,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addNewFeedFragment() {
-        var newFeedFragment = supportFragmentManager.findFragmentByTag(getString(R.string.newFeedFragmentTag))
+        val newFeedFragment = supportFragmentManager.findFragmentByTag(getString(R.string.newFeedFragmentTag))
 
-        var routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
+        val routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
         if (routineFragment != null){
             supportFragmentManager.beginTransaction().remove(routineFragment)
                 .commit()
@@ -123,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addWeeklyRoutineFragment(){
-        var newFeedFragment = supportFragmentManager.findFragmentByTag(getString(R.string.newFeedFragmentTag))
+        val newFeedFragment = supportFragmentManager.findFragmentByTag(getString(R.string.newFeedFragmentTag))
         if (newFeedFragment != null){
             if (newFeedFragment != null){
                 supportFragmentManager.beginTransaction().remove(newFeedFragment)
@@ -131,7 +129,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        var routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
+        val routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
 
         if (routineFragment == null) {
             if (routineFragment != null) {

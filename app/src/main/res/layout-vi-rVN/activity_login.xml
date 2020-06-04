@@ -17,6 +17,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="App Logo"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -64,7 +65,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:startIconDrawable="@drawable/ic_lock"
             app:endIconMode="password_toggle"
-            android:hint="Mật Khẩu">
+            android:hint="Password">
 
             <com.google.android.material.textfield.TextInputEditText
 
@@ -79,7 +80,7 @@
             android:id="@+id/loginButton"
             android:layout_width="200dp"
             android:layout_height="60dp"
-            android:text="Đăng Nhập"
+            android:text="Login"
             app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -93,7 +94,7 @@
             android:id="@+id/donthaveanaccount_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Không có tài khoản?"
+            android:text="Don't have an account?"
             android:textColor="@color/colorPrimaryDark"
             app:layout_constraintTop_toBottomOf="@id/loginButton"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -105,7 +106,7 @@
             android:id="@+id/switch_to_signup_activity_button"
             android:layout_width="200dp"
             android:layout_height="60dp"
-            android:text="Đăng Ký"
+            android:text="Signup"
             app:backgroundTint="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

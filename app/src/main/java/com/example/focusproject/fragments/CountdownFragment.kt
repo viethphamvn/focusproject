@@ -3,23 +3,17 @@ package com.example.focusproject.fragments
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Chronometer
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.focusproject.R
 import com.example.focusproject.StartRoutineActivity
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 class CountdownFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var duration: Long = 0
     private var countdownTextView : TextView? = null
     private var countdownTimer : CountDownTimer? = null
@@ -29,7 +23,7 @@ class CountdownFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_countdown, container, false)
+        val view = inflater.inflate(R.layout.fragment_countdown, container, false)
         countdownTextView = view.findViewById(R.id.countDownTextView)
         return view
     }
@@ -64,7 +58,7 @@ class CountdownFragment : Fragment() {
     }
 
     fun updateTextView(current: Long, duration: Long){
-        var remainingTimeInMillis = duration - current
+        val remainingTimeInMillis = duration - current
         val minutes: Long = (remainingTimeInMillis / (60 * 1000))
         val seconds: Long = (remainingTimeInMillis / 1000 % 60)
         if (countdownTextView != null) {
@@ -85,9 +79,9 @@ class CountdownFragment : Fragment() {
     }
 
     private fun updateTextView(remainingTimeInMillis : Long){
-        var minutes = (remainingTimeInMillis / 1000) / 60
-        var seconds = (remainingTimeInMillis / 1000) % 60
-        var displayString = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds)
+        val minutes = (remainingTimeInMillis / 1000) / 60
+        val seconds = (remainingTimeInMillis / 1000) % 60
+        val displayString = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds)
         countdownTextView!!.text = displayString
 
     }

@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/time_textview"
-        android:text="GIỜ NGHỈ"
+        android:text="@string/rest_time"
         android:fontFamily="@font/nunito"
         android:textSize="20sp"
         android:textStyle="bold"
