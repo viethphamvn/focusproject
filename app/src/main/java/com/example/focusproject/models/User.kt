@@ -14,5 +14,6 @@ class User : Serializable{
 
     companion object {
         var currentUser : User = User()
+        var dailyRoutine : HashMap<String, ArrayList<Exercise>> = HashMap()
     }
 }

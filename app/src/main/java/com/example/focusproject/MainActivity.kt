@@ -134,9 +134,6 @@ class MainActivity : AppCompatActivity() {
         var routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
 
         if (routineFragment == null) {
-
-            var calendar = Calendar.getInstance()
-            var todayDate = calendar.get(Calendar.DAY_OF_WEEK)
             if (routineFragment != null) {
                 supportFragmentManager.beginTransaction().remove(routineFragment)
                     .commit()
@@ -148,5 +145,10 @@ class MainActivity : AppCompatActivity() {
             )
                 .commit()
         }
+    }
+
+    companion object {
+        private var calendar = Calendar.getInstance()
+        var todayDate = calendar.get(Calendar.DAY_OF_WEEK)
     }
 }

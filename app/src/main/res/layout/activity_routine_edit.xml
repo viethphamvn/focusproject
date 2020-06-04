@@ -30,8 +30,154 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/topLayout"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/actionButtonLayout"
+        app:layout_constraintBottom_toTopOf="@id/copyBtn"
         android:paddingTop="10dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/copyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/routine_recycler_list_view"
+        app:layout_constraintBottom_toTopOf="@id/copyLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:fontFamily="@font/nunito"
+        android:text="Copy Current Routine"
+        app:icon="@drawable/ic_right"
+        app:iconGravity="end"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        app:cornerRadius="400dp"
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:id="@+id/copyLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/copyBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/actionButtonLayout"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/TextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="THIS ACTION WILL REPLACE YOUR CHOSEN ROUTINE'S VALUE"
+            android:background="@color/pastelred"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/nunito"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="0dp"
+            android:textSize="13sp"/>
+
+        <HorizontalScrollView
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckedTextView
+                    android:id="@+id/mon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="20sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/tue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tuesday"
+                    android:textSize="20sp"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/nunito"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/wed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wednesday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="20sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/thu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thursday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="20sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/fri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Friday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="20sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/sat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Saturday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="20sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/sun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sunday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="20sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/actionButtonLayout"
@@ -42,7 +188,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/routine_recycler_list_view">
+        app:layout_constraintTop_toBottomOf="@id/copyLayout">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/floatingActionButton_addAction"
@@ -53,6 +199,7 @@
             app:icon="@drawable/ic_add"
             android:text="Add"
             android:textColor="@color/white"
+            android:fontFamily="@font/nunito"
             app:fabCustomSize="70dp"
             app:layout_constraintLeft_toRightOf="@id/floatingActionButton_cancelAction"
             app:layout_constraintRight_toLeftOf="@id/floatingActionButton_saveAction"
@@ -68,6 +215,7 @@
             android:clickable="true"
             app:icon="@drawable/ic_close"
             android:text="CANCEL"
+            android:fontFamily="@font/nunito"
             android:textColor="@color/white"
             app:fabSize="normal"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -85,6 +233,7 @@
             app:icon="@drawable/ic_save_2"
             app:fabSize="normal"
             android:text="SAVE"
+            android:fontFamily="@font/nunito"
             android:textColor="@color/white"
             app:layout_constraintLeft_toRightOf="@id/floatingActionButton_addAction"
             app:layout_constraintRight_toRightOf="parent"

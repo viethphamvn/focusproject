@@ -1,11 +1,14 @@
 package com.example.focusproject
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,18 +63,7 @@ class RoutineDetailActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                FirebaseFirestore.getInstance().collection("Users").document(User.currentUser.id)
-                    .get()
-                    .addOnSuccessListener { result ->
-                        if (result.get("savedRoutines") != null) {
-                            var savedRoutinesList = result.get("savedRoutines") as ArrayList<String>
-                            if (savedRoutinesList.contains(routine.id)) {
-                                setActionButtonToDelete()
-                            } else {
-                                setActionButtonToSave()
-                            }
-                        }
-                    }
+                setActionButtonToSave()
             }
             start_workout_btn.setOnClickListener {
                 var intent = Intent(this, StartRoutineActivity::class.java)
@@ -81,21 +73,38 @@ class RoutineDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setActionButtonToDelete(){
-        actionButton.apply {
-            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.pastelred))
-            setImageResource(R.drawable.ic_delete)
-            setOnClickListener {
-                FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
-                    .update("savedRoutines", FieldValue.arrayRemove(routine.id))
-                    .addOnSuccessListener {
-                        Toast.makeText(context, "Routine is removed!", Toast.LENGTH_SHORT).show()
-                        setActionButtonToSave()
-                    }
+//    private fun setActionButtonToDelete(){
+//        actionButton.apply {
+//            backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.pastelred))
+//            setImageResource(R.drawable.ic_delete)
+//            setOnClickListener {
+//                FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+//                    .update("savedRoutines", FieldValue.arrayRemove(routine.id))
+//                    .addOnSuccessListener {
+//                        Toast.makeText(context, "Routine is removed!", Toast.LENGTH_SHORT).show()
+//                        setActionButtonToSave()
+//                    }
+//
+//            }
+//        }
+//    }
 
-            }
-        }
-    }
+//    private fun setUpActionButton(){
+//        //find out if routine is saved in the user's library and set action button accordingly
+//
+//        FirebaseFirestore.getInstance().collection("Users").document(User.currentUser.id)
+//            .get()
+//            .addOnSuccessListener { result ->
+//                if (result.get("savedRoutines") != null) {
+//                    var savedRoutinesList = result.get("savedRoutines") as ArrayList<String>
+//                    if (savedRoutinesList.contains(routine.id)) {
+//                        setActionButtonToDelete()
+//                    } else {
+//                        setActionButtonToSave()
+//                    }
+//                }
+//            }
+//    }
 
     private fun getExercises(){
         exerciseRecyclerViewAdapter.notifyItemRangeRemoved(0, exerciseList.size)
@@ -119,14 +128,39 @@ class RoutineDetailActivity : AppCompatActivity() {
             backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
             setImageResource(R.drawable.ic_save)
             setOnClickListener {
-                FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
-                    .update("savedRoutines", FieldValue.arrayUnion(routine.id))
-                    .addOnSuccessListener {
-                        Toast.makeText(context, "Routine is saved!", Toast.LENGTH_SHORT).show()
-                        setActionButtonToDelete()
-                    }
+                showDialog()
             }
         }
+    }
+
+    private fun showDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setContentView(R.layout.save_routine_to_location_dialog)
+        val toLibraryBtn = dialog.findViewById(R.id.toMyLibrBtn) as Button
+        val toRoutineBtn = dialog.findViewById(R.id.toRoutineBtn) as Button
+        toLibraryBtn.setOnClickListener {
+            saveCurrentRoutineToMyLibary()
+            dialog.cancel()
+        }
+        toRoutineBtn.setOnClickListener {
+            //Start activity RoutineEditActivity.kt
+            var intent = Intent(this, RoutineEditActivity::class.java)
+            intent.putExtra("date", MainActivity.todayDate)
+            intent.putExtra("routine", exerciseList)
+            startActivity(intent)
+            dialog.cancel()
+        }
+        dialog.show()
+    }
+
+    private fun saveCurrentRoutineToMyLibary() {
+        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+            .update("savedRoutines", FieldValue.arrayUnion(routine.id))
+            .addOnSuccessListener {
+                Toast.makeText(this, "Routine is saved!", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_daily_routine_activity.view.*
 
 
 class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
-    private var routines : HashMap<String, ArrayList<Exercise>> = HashMap()
+    private var routines = User.dailyRoutine
     private var selectedDate : Int = 0
     private var selectedDateAsString: String = ""
     private val DAY_OF_WEEK = "DayOfWeek"
@@ -49,13 +49,13 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
 
         //Initiate the routines Hashmap with arraylists that will hold exerciseIds that will be fetched from
         //the database
-        routines.put("mon", ArrayList())
-        routines.put("tue", ArrayList())
-        routines.put("wed", ArrayList())
-        routines.put("thu", ArrayList())
-        routines.put("fri", ArrayList())
-        routines.put("sat", ArrayList())
-        routines.put("sun", ArrayList())
+        routines["mon"] = ArrayList()
+        routines["tue"] = ArrayList()
+        routines["wed"] = ArrayList()
+        routines["thu"] = ArrayList()
+        routines["fri"] = ArrayList()
+        routines["sat"] = ArrayList()
+        routines["sun"] = ArrayList()
     }
 
     private fun initiateRoutine(){
@@ -215,7 +215,7 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
             sun.setOnClickListener (this@DailyRoutinesListFragment)
 
             edit_routine_btn.setOnClickListener {
-                startEditActivity(routines, selectedDate)
+                startEditActivity(selectedDate)
             }
 
             start_workout_btn.setOnClickListener{
@@ -272,10 +272,8 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun startEditActivity(routines : HashMap<String, ArrayList<Exercise>>, dateCode: Int){
-        var copyRoutine = HashMap(routines)
+    private fun startEditActivity(dateCode: Int){
         val intent = Intent(context, RoutineEditActivity::class.java)
-        intent.putExtra("routine", copyRoutine)
         intent.putExtra("date", dateCode)
         startActivityForResult(intent, 100)
     }
@@ -308,92 +306,6 @@ class DailyRoutinesListFragment : Fragment(), View.OnClickListener {
         }
 
         return returnList
-    }
-
-    private fun updateDatabase(newRoutine: HashMap<String, ArrayList<Exercise>>){ //This function will update Firestore with new dataset
-        var updatedRoutine = HashMap<String, ArrayList<String>>()
-        var exerciseIdArray= ArrayList<String>()
-        for (exercise in newRoutine["mon"]!!){
-            if (exercise.uid != ""){
-                exerciseIdArray.add(exercise.uid)
-            }
-        }
-        updatedRoutine["mon"] = ArrayList(exerciseIdArray)
-        exerciseIdArray.clear()
-
-        for (exercise in newRoutine["tue"]!!){
-            if (exercise.uid != ""){
-                exerciseIdArray.add(exercise.uid)
-            }
-        }
-        updatedRoutine["tue"] = ArrayList(exerciseIdArray)
-        exerciseIdArray.clear()
-
-        for (exercise in newRoutine["wed"]!!){
-            if (exercise.uid != ""){
-                exerciseIdArray.add(exercise.uid)
-            }
-        }
-        updatedRoutine["wed"] = ArrayList(exerciseIdArray)
-        exerciseIdArray.clear()
-
-        for (exercise in newRoutine["thu"]!!){
-            if (exercise.uid != ""){
-                exerciseIdArray.add(exercise.uid)
-            }
-        }
-        updatedRoutine["thu"] = ArrayList(exerciseIdArray)
-        exerciseIdArray.clear()
-
-        for (exercise in newRoutine["fri"]!!){
-            if (exercise.uid != ""){
-                exerciseIdArray.add(exercise.uid)
-            }
-        }
-        updatedRoutine["fri"] = ArrayList(exerciseIdArray)
-        exerciseIdArray.clear()
-
-        for (exercise in newRoutine["sat"]!!){
-            if (exercise.uid != ""){
-                exerciseIdArray.add(exercise.uid)
-            }
-        }
-        updatedRoutine["sat"] = ArrayList(exerciseIdArray)
-        exerciseIdArray.clear()
-
-        for (exercise in newRoutine["sun"]!!){
-            if (exercise.uid != ""){
-                exerciseIdArray.add(exercise.uid)
-            }
-        }
-        updatedRoutine["sun"] = ArrayList(exerciseIdArray)
-
-
-        firestore.collection("Users").document(currentUser).update("routine", updatedRoutine).addOnCompleteListener {
-            initiateRoutine()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK){
-            if (data != null) {
-                updateDatabase(data.getSerializableExtra("routine") as HashMap<String, ArrayList<Exercise>>)
-            }
-        }
-    }
-
-    fun scaleView(
-        v: View,
-        startXScale: Float,
-        endXScale: Float
-    ) {
-        val anim: Animation = ScaleAnimation(
-            startXScale, endXScale,1f,1f,Animation.RELATIVE_TO_SELF,1f, Animation.RELATIVE_TO_SELF, 0f)  // Start and end values for the X axis scaling) // Pivot point of Y scaling
-        anim.fillAfter = true // Needed to keep the result of the animation
-        anim.zAdjustment = 100
-        anim.duration = 1000
-        v.startAnimation(anim)
     }
 
     override fun onClick(v: View?) {
