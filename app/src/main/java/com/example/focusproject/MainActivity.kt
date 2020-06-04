@@ -1,12 +1,19 @@
 package com.example.focusproject
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
-import com.example.focusproject.fragments.RoutinesListFragment
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.example.focusproject.fragments.DailyRoutinesListFragment
+import com.example.focusproject.fragments.NewFeedFragment
+import com.example.focusproject.models.User
+import com.example.focusproject.tools.CreateUser
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -14,56 +21,132 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private var firebaseUser = FirebaseAuth.getInstance().currentUser
+    private lateinit var profilePictureView : CircleImageView
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         if (firebaseUser == null){
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
 
+        profilePictureView = findViewById(R.id.user_profile_picture)
+
+        //Set Up Current User Located in models/User
+        if (firebaseUser != null) {
+            FirebaseFirestore.getInstance().collection("Users")
+                .document(FirebaseAuth.getInstance().currentUser!!.uid)
+                .get()
+                .addOnSuccessListener { user ->
+                    if (user != null) {
+                        loadingTextView.visibility = View.GONE
+                        User.currentUser = CreateUser.createUser(user)
+
+                        if (user["profilePictureUri"] != null) {
+                            val uri = user["profilePictureUri"] as String
+                            if (uri != "") {
+                                setProfileImage(Uri.parse(uri))
+                            }
+                        }
+
+                        addWeeklyRoutineFragment()
+                        //BottomNavigation Handle
+                        bottomNavigationView.setOnNavigationItemSelectedListener(
+                            BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+                                when (menuItem.itemId) {
+                                    R.id.action_routine -> {
+                                        addWeeklyRoutineFragment()
+                                        return@OnNavigationItemSelectedListener true
+                                    }
+                                    R.id.action_new_feed -> {
+                                        //Implement New Feed Fragment
+                                        addNewFeedFragment()
+                                        return@OnNavigationItemSelectedListener true
+                                    }
+                                }
+                                false
+                            })
+
+                        //Setup Views
+                        findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
+                            startActivity(Intent(this, CreateRoutineActivity::class.java))
+                        }
+                        profilePictureView.setOnClickListener {
+                            startActivity(Intent(this, UserProfileActivity::class.java))
+                        }
+                        findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener {
+                            startActivity(Intent(this, UserBrowsingActivity::class.java))
+                        }
+                    }
+                }
+        }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        addRoutineFragment()
-
-        //BottomNavigation Handle
-        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_routine -> {
-                    addRoutineFragment()
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.action_excercise -> {
-                    //Implement Excercise Fragment
-                }
-            }
-            false
-        })
-
-        //Setup Views
-        findViewById<FloatingActionButton>(R.id.floatingActionButton_addAction).setOnClickListener {
-            startActivity(Intent(this, CreateRoutineActivity::class.java))
-        }
-        findViewById<CircleImageView>(R.id.user_profile_button).setOnClickListener{
-            startActivity(Intent(this, UserProfileActivity::class.java))
-        }
+    override fun onResume() {
+        super.onResume()
+        setProfileImage(Uri.parse(User.currentUser.profilePictureUri))
     }
 
-    private fun addRoutineFragment(){
-        var calendar = Calendar.getInstance()
-        var todayDate = calendar.get(Calendar.DAY_OF_WEEK)
-        var routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
+    private fun setProfileImage(parse: Uri?) {
+        Glide.with(this)
+            .load(parse)
+            .centerCrop()
+            .into(profilePictureView)
+    }
+
+    private fun addNewFeedFragment() {
+        val newFeedFragment = supportFragmentManager.findFragmentByTag(getString(R.string.newFeedFragmentTag))
+
+        val routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
         if (routineFragment != null){
-            supportFragmentManager.beginTransaction().replace(R.id.container, routineFragment,"routineFragment")
-                .commit()
-        } else {
-            supportFragmentManager.beginTransaction().replace(R.id.container, RoutinesListFragment.newInstance(todayDate),"routineFragment")
+            supportFragmentManager.beginTransaction().remove(routineFragment)
                 .commit()
         }
+
+//        if (newFeedFragment != null){
+//            supportFragmentManager.beginTransaction().remove(newFeedFragment)
+//                .commit()
+//        }
+
+        if (newFeedFragment == null) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.container,
+                NewFeedFragment.newInstance(),
+                getString(R.string.newFeedFragmentTag)
+            )
+                .commit()
+        }
+    }
+
+    private fun addWeeklyRoutineFragment(){
+        val newFeedFragment = supportFragmentManager.findFragmentByTag(getString(R.string.newFeedFragmentTag))
+        if (newFeedFragment != null){
+            if (newFeedFragment != null){
+                supportFragmentManager.beginTransaction().remove(newFeedFragment)
+                    .commit()
+            }
+        }
+
+        val routineFragment = supportFragmentManager.findFragmentByTag("routineFragment")
+
+        if (routineFragment == null) {
+            if (routineFragment != null) {
+                supportFragmentManager.beginTransaction().remove(routineFragment)
+                    .commit()
+            }
+            supportFragmentManager.beginTransaction().replace(
+                R.id.container,
+                DailyRoutinesListFragment.newInstance(todayDate),
+                "routineFragment"
+            )
+                .commit()
+        }
+    }
+
+    companion object {
+        private var calendar = Calendar.getInstance()
+        var todayDate = calendar.get(Calendar.DAY_OF_WEEK)
     }
 }

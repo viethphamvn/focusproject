@@ -10,28 +10,26 @@ import com.example.focusproject.CreateRoutineActivity
 
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
-import com.example.focusproject.adapters.ExcerciseRecyclerViewAdapter
+import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
 import com.example.focusproject.models.Exercise
+import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateExercise
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_arms.view.excerciseItemRecyclerView
+import kotlinx.android.synthetic.main.fragment_muscle_group.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val MUSCL_GRP = "param1"
 private const val SELF_CREATED = "param2"
 
 class MuscleGroupFragment : Fragment() {
-    private var doc_name: String? = ""
+    private var docName: String? = ""
     private var self: Boolean? = false
-    private lateinit var excerciseRecyclerViewAdapter: ExcerciseRecyclerViewAdapter
+    private lateinit var exerciseRecyclerViewAdapter: ExerciseRecyclerViewAdapter
     private var exercises: ArrayList<Exercise> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            doc_name = if (it.getString(MUSCL_GRP) != null) it.getString(MUSCL_GRP) else ""
+            docName = if (it.getString(MUSCL_GRP) != null) it.getString(MUSCL_GRP) else ""
             self = if (it.getBoolean(SELF_CREATED) != null) it.getBoolean(SELF_CREATED) else false
         }
     }
@@ -43,16 +41,16 @@ class MuscleGroupFragment : Fragment() {
         //Get data
         getItemFromDatabase()
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_arms, container, false)
-        view.excerciseItemRecyclerView.apply {
+        val view = inflater.inflate(R.layout.fragment_muscle_group, container, false)
+        view.exerciseItemRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
-            excerciseRecyclerViewAdapter = ExcerciseRecyclerViewAdapter(exercises) {item -> doClick(item)}
-            adapter = excerciseRecyclerViewAdapter
+            exerciseRecyclerViewAdapter = ExerciseRecyclerViewAdapter(exercises) { item -> doClick(item)}
+            adapter = exerciseRecyclerViewAdapter
         }
         return view
     }
 
-    fun doClick(item: Exercise){
+    private fun doClick(item: Exercise){
         if (activity is CreateRoutineActivity){
             (activity as CreateRoutineActivity).onItemClick(item)
         } else if (activity is RoutineEditActivity){
@@ -61,19 +59,21 @@ class MuscleGroupFragment : Fragment() {
     }
 
     private fun getItemFromDatabase(){
-        var firestore = FirebaseFirestore.getInstance()
+        val firestore = FirebaseFirestore.getInstance()
         firestore.collection("Exercise")
             .get()
             .addOnSuccessListener { result ->
+                exercises.clear()
+                exerciseRecyclerViewAdapter.notifyDataSetChanged()
                 for (document in result){
-                    if (document.get("type") as String == doc_name && !self!!) {
-                        var excercise = CreateExercise.createExercise(document)
-                        exercises.add(excercise)
-                        excerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
-                    } else if (self!! && document.get("createdBy") as String == FirebaseAuth.getInstance().currentUser!!.uid && !(document.get("isRestTime") as Boolean)){
-                        var exercise = CreateExercise.createExercise(document)
+                    if (document.get("type") as String == docName && !self!!) {
+                        val exercise = CreateExercise.createExercise(document)
                         exercises.add(exercise)
-                        excerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
+                        exerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
+                    } else if (self!! && document.get("createdBy") as String == User.currentUser.id && !(document.get("isRestTime") as Boolean)){
+                        val exercise = CreateExercise.createExercise(document)
+                        exercises.add(exercise)
+                        exerciseRecyclerViewAdapter.notifyItemInserted(exercises.size - 1)
                     }
                 }
             }

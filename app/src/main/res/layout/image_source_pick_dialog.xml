@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/copyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="20sp"
+        android:padding="20dp"
+        android:fontFamily="@font/nunito"
+        android:text="@string/choose_an_action"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cameraBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/copyBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/take_a_photo"
+        app:icon="@drawable/ic_camera"
+        android:fontFamily="@font/nunito"
+        android:layout_marginTop="10dp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/imagePickerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cameraBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/pick_a_photo"
+        app:icon="@drawable/ic_file"
+        android:fontFamily="@font/nunito"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

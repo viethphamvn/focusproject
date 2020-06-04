@@ -3,21 +3,21 @@ package com.example.focusproject.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.focusproject.R
 import com.example.focusproject.models.Exercise
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.excercise_item.view.excerciseImageHolder
-import kotlinx.android.synthetic.main.excercise_item.view.excerciseNameTextView
+import kotlinx.android.synthetic.main.excercise_thumbnail_item.view.excerciseImageHolder
+import kotlinx.android.synthetic.main.excercise_thumbnail_item.view.exerciseNameTextView
 import kotlinx.android.synthetic.main.resttime_item.view.*
-import kotlinx.android.synthetic.main.rountine_item.view.*
+import kotlinx.android.synthetic.main.exercise_item.view.*
 
 class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var Exercises = exercises
-    private var firestore = FirebaseFirestore.getInstance()
-    val REST = 1
-    val EXCERCISE = 2
+    private var Exercises = exercises
+    private val REST = 1
+    private val EXCERCISE = 2
 
     fun updateDataSet(exercises: ArrayList<Exercise>){
         this.Exercises = exercises
@@ -30,15 +30,14 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var inflater = LayoutInflater.from(parent.context)
-        var routine_item : View
-        if (viewType == REST){
-            routine_item = inflater.inflate(R.layout.resttime_item, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val routineItem : View
+        routineItem = if (viewType == REST){
+            inflater.inflate(R.layout.resttime_item, parent, false)
         } else {
-            routine_item = inflater.inflate(R.layout.rountine_item, parent, false)
+            inflater.inflate(R.layout.exercise_item, parent, false)
         }
-        var routinerViewHolder = RoutineRecyclerViewAdapter.RoutineViewHolder(routine_item)
-        return routinerViewHolder
+        return RoutineViewHolder(routineItem)
     }
 
     override fun getItemCount(): Int {
@@ -48,53 +47,55 @@ class RoutineRecyclerViewAdapter(exercises: ArrayList<Exercise>) : RecyclerView.
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
             is RoutineViewHolder -> {
-                holder.bind(Exercises.get(position))
+                holder.bind(Exercises[position])
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (Exercises.get(position).isRestTime){
-            return REST
+        return if (Exercises[position].isRestTime){
+            REST
         } else {
-            return EXCERCISE
+            EXCERCISE
         }
     }
 
     class RoutineViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var imageView = itemView.excerciseImageHolder
-        var excerciseNameTextView = itemView.excerciseNameTextView
-        var equipmentOrWeightTextView = itemView.equipmentOrWeightTextView
-        var repTextView = itemView.reprange_textview
-        var timeTextView = itemView.time_textview
+        private var imageView: ImageView? = itemView.excerciseImageHolder
+        private var exerciseNameTextView: TextView? = itemView.exerciseNameTextView
+        private var equipmentOrWeightTextView: TextView? = itemView.equipmentOrWeightTextView
+        private var repTextView: TextView? = itemView.reprange_textview
+        private var timeTextView: TextView? = itemView.time_textview
 
         fun bind(exercise : Exercise){
             if (!exercise.isRestTime) {
-                excerciseNameTextView.text = exercise.name
+                exerciseNameTextView!!.text = exercise.name
                 if (exercise.weight > 0) {
-                    equipmentOrWeightTextView.text = String.format("%d %%RM", exercise.weight)
+                    equipmentOrWeightTextView!!.text = String.format("%d %%RM", exercise.weight)
                 } else {
-                    equipmentOrWeightTextView.text = "NA"
+                    equipmentOrWeightTextView!!.text = "NA"
                 }
 
                 if (exercise.rep > 0){
-                    repTextView.text = "REPETITION: ${exercise.rep}"
+                    repTextView!!.text = "REPETITION: ${exercise.rep}"
                 } else {
-                    repTextView.text = "REPETITION: NA"
+                    repTextView!!.text = "REPETITION: NA"
                 }
                 //Bind image
-                var url = ""
-                if (exercise.img != ""){
-                    url = exercise.img
-                } else if (exercise.vidId != ""){
-                    url = "https://img.youtube.com/vi/" + exercise.vidId + "/0.jpg"
+                if (imageView != null) {
+                    var url = ""
+                    if (exercise.img != "") {
+                        url = exercise.img
+                    } else if (exercise.vidId != "") {
+                        url = "https://img.youtube.com/vi/" + exercise.vidId + "/0.jpg"
+                    }
+                    Glide.with(itemView.context)
+                        .load(url)
+                        .centerCrop()
+                        .into(imageView!!)
                 }
-                Glide.with(itemView.context)  //2
-                    .load(url) //3
-                    .centerCrop() //4
-                    .into(imageView) //8
             } else {
-                timeTextView.text = "${exercise.duration} SECS"
+                timeTextView!!.text = "${exercise.duration} SECS"
             }
         }
     }

@@ -12,9 +12,10 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHeight_percent="0.07">
+        app:layout_constraintHeight_percent="0.07"
+        android:background="@color/colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatSpinner
+        <Spinner
             android:id="@+id/date_spinner"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -29,57 +30,221 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/topLayout"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/actionButtonLayout"
+        app:layout_constraintBottom_toTopOf="@id/copyBtn"
         android:paddingTop="10dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/copyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/routine_recycler_list_view"
+        app:layout_constraintBottom_toTopOf="@id/copyLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:fontFamily="@font/nunito"
+        android:text="@string/copy_current_routine"
+        app:icon="@drawable/ic_right"
+        app:iconGravity="end"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dp"
+        app:cornerRadius="400dp"
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:id="@+id/copyLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/copyBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/actionButtonLayout"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/TextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/this_action_will_overwrite_your_chosen_routine_s_value"
+            android:background="@color/pastelred"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/nunito"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="0dp"
+            android:textSize="15sp"
+            android:gravity="center"/>
+
+        <HorizontalScrollView
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckedTextView
+                    android:id="@+id/mon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/monday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="25sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/tue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tuesday"
+                    android:textSize="25sp"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/nunito"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/wed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wednesday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="25sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/thu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/thursday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="25sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/fri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/friday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="25sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/sat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/saturday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="25sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+
+                <CheckedTextView
+                    android:id="@+id/sun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sunday"
+                    android:fontFamily="@font/nunito"
+                    android:textSize="25sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="@drawable/ic_uncheck"
+                    android:checkMarkTint="@color/darkgrey"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/actionButtonLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintTop_toBottomOf="@id/routine_recycler_list_view"
+        app:layout_constraintBottom_toTopOf="@id/exercisePickerContainer"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/excercisePickerContainer">
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        app:layout_constraintTop_toBottomOf="@id/copyLayout">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/floatingActionButton_addAction"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_add"
-            app:fabCustomSize="70dp"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
             android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:icon="@drawable/ic_add"
+            android:text="@string/add"
+            android:textColor="@color/white"
+            android:fontFamily="@font/nunito"
+            app:fabCustomSize="70dp"
             app:layout_constraintLeft_toRightOf="@id/floatingActionButton_cancelAction"
-            app:layout_constraintRight_toLeftOf="@id/floatingActionButton_saveAction"/>
+            app:layout_constraintRight_toLeftOf="@id/floatingActionButton_saveAction"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:iconTint="@color/white" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/floatingActionButton_cancelAction"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_close"
-            android:backgroundTint="#F44336"
-            app:fabCustomSize="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#BB1E31"
             android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:icon="@drawable/ic_close"
+            android:text="@string/cancel"
+            android:fontFamily="@font/nunito"
+            android:textColor="@color/white"
+            app:fabSize="normal"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/floatingActionButton_addAction"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton_saveAction"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_check"
-            android:backgroundTint="#2BC331"
-            app:fabCustomSize="70dp"
-            android:clickable="true"
+            app:layout_constraintRight_toLeftOf="@id/floatingActionButton_addAction"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:iconTint="@color/white" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/floatingActionButton_saveAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#1D9622"
+            android:clickable="true"
+            app:icon="@drawable/ic_save_2"
+            app:fabSize="normal"
+            android:text="@string/save"
+            android:fontFamily="@font/nunito"
+            android:textColor="@color/white"
             app:layout_constraintLeft_toRightOf="@id/floatingActionButton_addAction"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:iconTint="@color/white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
-        android:id="@+id/excercisePickerContainer"
+        android:id="@+id/exercisePickerContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

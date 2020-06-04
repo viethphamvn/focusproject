@@ -7,14 +7,16 @@
     tools:context=".fragments.ExcerciseProgressFragment"
     android:layout_gravity="center_vertical">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="% ONE-RM"
+        android:text="@string/one_rm"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/white"
+        android:fontFamily="@font/nunito"
         android:textSize="30sp"
         android:textStyle="bold"
         android:gravity="center_horizontal|center_vertical"
@@ -26,8 +28,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="REP"
+        android:text="@string/rep"
+        android:fontFamily="@font/nunito"
         android:textSize="30sp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:gravity="center_horizontal|center_vertical"
         app:layout_constraintWidth_percent="0.5"/>
@@ -40,9 +45,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintWidth_percent="0.5"
         android:textSize="35sp"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimaryDark"
         android:gravity="center_vertical|center_horizontal"
-        android:text="65"/>
+        android:fontFamily="@font/nunito"/>
 
     <TextView
         android:id="@+id/repTextView"
@@ -52,7 +57,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintWidth_percent="0.5"
         android:textSize="35sp"
-        android:textColor="@color/white"
+        android:textColor="@color/colorPrimaryDark"
         android:gravity="center_vertical|center_horizontal"
-        android:text="8 - 12"/>
+        android:fontFamily="@font/nunito"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
