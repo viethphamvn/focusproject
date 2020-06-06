@@ -79,6 +79,11 @@ class MainActivity : AppCompatActivity() {
                         findViewById<CircleImageView>(R.id.friendsButton).setOnClickListener {
                             startActivity(Intent(this, UserBrowsingActivity::class.java))
                         }
+
+                        findViewById<CircleImageView>(R.id.messageButton).setOnClickListener {
+                            startActivity(Intent(this, LatestMessageActivity::class.java))
+                        }
+
                     }
                 }
         }
