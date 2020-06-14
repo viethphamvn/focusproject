@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Material.Light.NoActionBar">
-        <activity android:name=".ChatUserListActivity"></activity>
+        <activity android:name=".BaseActivityWithKeyboardManager"></activity>
+        <activity
+            android:name=".ChatWindowActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ChatUserListActivity" />
         <activity android:name=".LatestMessageActivity" />
         <activity android:name=".UserInfoActivity" />
         <activity android:name=".RoutineDetailActivity" />

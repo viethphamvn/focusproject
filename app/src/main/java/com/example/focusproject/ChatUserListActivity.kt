@@ -1,6 +1,7 @@
 package com.example.focusproject
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -33,6 +34,11 @@ class ChatUserListActivity : AppCompatActivity() {
         userListRecyclerView = findViewById<RecyclerView>(R.id.user_list_recycler_view)
         userListRecyclerViewAdapter = GroupAdapter<GroupieViewHolder>()
         userListRecyclerView.adapter = userListRecyclerViewAdapter
+        userListRecyclerViewAdapter.setOnItemClickListener { item, view ->
+            var intent = Intent(view.context, ChatWindowActivity::class.java)
+            intent.putExtra("user", (item as UserItem).user)
+            startActivity(intent)
+        }
 
         getFriends()
 

@@ -20,9 +20,11 @@ class YouTubeHelper {
                 val matcher =
                     compiledPattern.matcher(youTubeLinkWithoutProtocolAndDomain)
                 if (matcher.find()) {
+                    println(matcher.group(1))
                     return matcher.group(1)
                 }
             }
+            println("nothing")
             return ""
         }
 
