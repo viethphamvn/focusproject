@@ -66,6 +66,12 @@ class ChatWindowActivity : AppCompatActivity() {
             //send message to database
             realtimeDatabase.getReference("/inbox/${recipient!!.id}/${User.currentUser.id}").push().setValue(message)
             realtimeDatabase.getReference("/inbox/${User.currentUser.id}/${recipient!!.id}").push().setValue(message)
+
+            //Update Latest Message for current user and the recipient
+            //For Current User
+            realtimeDatabase.getReference("/latest/${User.currentUser.id}/${recipient!!.id}").setValue(message)
+            //For Recipient
+            realtimeDatabase.getReference("/latest/${recipient!!.id}/${User.currentUser.id}").setValue(message)
         }
 
 
