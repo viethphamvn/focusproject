@@ -73,7 +73,17 @@ class LatestMessageActivity : AppCompatActivity() {
                 val chat = p0.getValue(Chat::class.java)
                 for (item in latestChatItemList){
                     if (item.userId == chat!!.sender || item.userId == chat.recipient){
-                        item.viewHolder.itemView.findViewById<TextView>(R.id.messageTextView).text = chat.content
+                        if (chat!!.sender == User.currentUser.id && chat.content.startsWith(Chat.ROUTINE_TAG)){
+                            item.viewHolder.itemView.findViewById<TextView>(R.id.messageTextView).text = "You sent a routine"
+                        } else if (chat!!.sender == User.currentUser.id && chat.content.startsWith(Chat.EXERCISE_TAG)){
+                            item.viewHolder.itemView.findViewById<TextView>(R.id.messageTextView).text = "You sent an exercise"
+                        } else if (chat.content.startsWith(Chat.EXERCISE_TAG)){
+                            item.viewHolder.itemView.findViewById<TextView>(R.id.messageTextView).text = "You received an exercise"
+                        } else if (chat.content.startsWith(Chat.ROUTINE_TAG)){
+                            item.viewHolder.itemView.findViewById<TextView>(R.id.messageTextView).text = "You received a routine"
+                        } else {
+                            item.viewHolder.itemView.findViewById<TextView>(R.id.messageTextView).text = chat.content
+                        }
                         item.chat.recipient = chat.recipient
                         item.chat.sender = chat.sender
                         item.chat.timeStamp = chat.timeStamp
@@ -87,6 +97,17 @@ class LatestMessageActivity : AppCompatActivity() {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 val chat = p0.getValue(Chat::class.java)
                 if (chat != null) {
+
+                    if (chat!!.sender == User.currentUser.id && chat.content.startsWith(Chat.ROUTINE_TAG)){
+                        chat.content = "You sent a routine"
+                    } else if (chat!!.sender == User.currentUser.id && chat.content.startsWith(Chat.EXERCISE_TAG)){
+                        chat.content = "You sent an exercise"
+                    } else if (chat.content.startsWith(Chat.EXERCISE_TAG)){
+                        chat.content = "You received an exercise"
+                    } else if (chat.content.startsWith(Chat.ROUTINE_TAG)){
+                        chat.content = "You received a routine"
+                    }
+
                     latestChatItemList.add(ChatItem(chat, this@LatestMessageActivity))
                     latestChatItemList = ArrayList(latestChatItemList.sortedDescending().toList())
                     recentChatRecyclerViewAdapter.update(latestChatItemList, true)

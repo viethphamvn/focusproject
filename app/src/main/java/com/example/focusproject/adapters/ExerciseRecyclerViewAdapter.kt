@@ -33,11 +33,11 @@ class ExerciseRecyclerViewAdapter(exercises: ArrayList<Exercise>, val adapterOnC
     }
 
     inner class ExerciseViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var imageView: ImageView = itemView.excerciseImageHolder
-        private var excerciseNameTextView: TextView = itemView.exerciseNameTextView
+        private var imageView: ImageView = itemView.exerciseImageHolder
+        private var exerciseNameTextView: TextView = itemView.exerciseNameTextView
 
         fun bind(exercise : Exercise){
-            excerciseNameTextView.text = exercise.name
+            exerciseNameTextView.text = exercise.name
             //Bind image
             var url = ""
             if (exercise.img != ""){

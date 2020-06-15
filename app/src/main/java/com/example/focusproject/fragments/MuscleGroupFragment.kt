@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.focusproject.ChatWindowActivity
 import com.example.focusproject.CreateRoutineActivity
 
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
 import com.example.focusproject.adapters.ExerciseRecyclerViewAdapter
 import com.example.focusproject.models.Exercise
+import com.example.focusproject.models.Routine
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateExercise
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,11 +52,24 @@ class MuscleGroupFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        getItemFromDatabase()
+    }
+
+
+    //If user select an exercise
     private fun doClick(item: Exercise){
-        if (activity is CreateRoutineActivity){
-            (activity as CreateRoutineActivity).onItemClick(item)
-        } else if (activity is RoutineEditActivity){
-            (activity as RoutineEditActivity).onItemClick(item)
+        when (activity) {
+            is CreateRoutineActivity -> {
+                (activity as CreateRoutineActivity).onItemClick(item)
+            }
+            is RoutineEditActivity -> {
+                (activity as RoutineEditActivity).onItemClick(item)
+            }
+            is ChatWindowActivity -> {
+                (activity as ChatWindowActivity).itemOnClick(item)
+            }
         }
     }
 
