@@ -2,15 +2,21 @@ package com.example.focusproject
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.focusproject.fragments.ExercisePickerFragment
 import com.example.focusproject.models.Chat
+import com.example.focusproject.models.Exercise
+import com.example.focusproject.models.Routine
 import com.example.focusproject.models.User
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,6 +25,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_routine_edit.*
 
 class ChatWindowActivity : AppCompatActivity() {
     private var recipient : User? = null
@@ -41,8 +48,57 @@ class ChatWindowActivity : AppCompatActivity() {
         conversationRecyclerView.layoutManager = linearLayoutManager
 
         val messageEditText = findViewById<EditText>(R.id.messageEditText)
+        val showRoutineButton = findViewById<ImageButton>(R.id.moreRoutineButton).setOnClickListener {
+            val excercisePickerFragment =
+                supportFragmentManager.findFragmentByTag("pickerFragment")
+            if (excercisePickerFragment != null) {
+                supportFragmentManager.beginTransaction()
+                    .remove(excercisePickerFragment)
+                    .commit()
+                val display = windowManager.defaultDisplay
+                val layout = findViewById<FrameLayout>(R.id.exercisePickerContainer)
+                var screen_height = display.height
+                screen_height = 0
+                val parms = layout.layoutParams
+                parms.height = screen_height
+                layout.layoutParams = parms
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .add(
+                        R.id.exercisePickerContainer,
+                        ExercisePickerFragment.newInstance(),
+                        "pickerFragment"
+                    )
+                    .commit()
 
+                val display = windowManager.defaultDisplay
+                val layout = findViewById<FrameLayout>(R.id.exercisePickerContainer)
+                var screen_height = display.height
+                screen_height = (0.60 * screen_height).toInt()
+                val parms = layout.layoutParams
+                parms.height = screen_height
+                layout.layoutParams = parms
+            }
+        }
 
+        messageEditText.setOnClickListener {
+            //Collapse Exercise Picker when Kayboard is activiated
+
+            val excercisePickerFragment =
+                supportFragmentManager.findFragmentByTag("pickerFragment")
+            if (excercisePickerFragment != null) {
+                supportFragmentManager.beginTransaction()
+                    .remove(excercisePickerFragment)
+                    .commit()
+                val display = windowManager.defaultDisplay
+                val layout = findViewById<FrameLayout>(R.id.exercisePickerContainer)
+                var screen_height = display.height
+                screen_height = 0
+                val parms = layout.layoutParams
+                parms.height = screen_height
+                layout.layoutParams = parms
+            }
+        }
 
         //Get User Info from intent
         if (intent.getSerializableExtra("user") != null){
@@ -58,7 +114,7 @@ class ChatWindowActivity : AppCompatActivity() {
         }
 
         //handle send button
-        findViewById<ImageButton>(R.id.sendButton).setOnClickListener {
+        findViewById<MaterialButton>(R.id.sendButton).setOnClickListener {
             //Get sent message
             val message = Chat(System.currentTimeMillis(), User.currentUser.id, recipient!!.id, messageEditText.text.toString())
             //clear text in edittext
@@ -112,6 +168,14 @@ class ChatWindowActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    fun itemOnClick(item : Exercise){
+
+    }
+
+    fun itemOnClick(item : Routine){
+
     }
 
     override fun onStop() {

@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.focusproject.models.Chat
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.CreateUser
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -46,7 +47,7 @@ class LatestMessageActivity : AppCompatActivity() {
         }
 
 
-        findViewById<ImageButton>(R.id.searchFriendsButton).setOnClickListener {
+        findViewById<ExtendedFloatingActionButton>(R.id.newChatButton).setOnClickListener {
             startActivity(Intent(this, ChatUserListActivity::class.java))
         }
 
