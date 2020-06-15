@@ -50,12 +50,16 @@ class LatestMessageActivity : AppCompatActivity() {
         findViewById<ExtendedFloatingActionButton>(R.id.newChatButton).setOnClickListener {
             startActivity(Intent(this, ChatUserListActivity::class.java))
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         getLatestChat()
-
     }
 
     private fun getLatestChat() {
+        latestChatItemList.clear()
+
         dataListener = database.getReference("/latest/${User.currentUser.id}").addChildEventListener(object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
