@@ -273,7 +273,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:gravity="center_vertical|center_horizontal"
             android:orientation="vertical"
-            android:background="@color/colorPrimary">
+            android:background="@drawable/shadowshape">
 
             <TextView
                 android:id="@+id/currentDurationTextView"
@@ -288,7 +288,7 @@
                 android:id="@+id/changeDurationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimaryDark"
+                android:backgroundTint="@color/colorPrimary"
                 android:text="@string/change_duration"
                 android:fontFamily="@font/nunito"/>
         </LinearLayout>

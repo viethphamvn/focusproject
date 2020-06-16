@@ -14,6 +14,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="horizontal"
+        android:padding="5dp"
         android:gravity="center"
         android:background="@color/colorPrimary">
 
@@ -21,9 +22,7 @@
             android:id="@+id/backButton"
             android:layout_width="40sp"
             android:layout_height="40sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginStart="5dp"
             android:background="@drawable/ic_left" />
 
         <EditText
@@ -31,13 +30,13 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/search_your_friend_here"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:padding="5dp"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_layout"
             android:maxLines="1"
             android:inputType="textShortMessage"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
+            android:textColorHint="@color/darkgrey"
+            android:textColor="#000000"
             android:fontFamily="@font/nunito"
             android:autofillHints="" />
 
@@ -45,12 +44,11 @@
             android:id="@+id/searchbtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:padding="5dp"
             android:scaleType="center"
             android:background="@drawable/ic_search"
-            android:layout_marginStart="5dp"/>
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
 
     </LinearLayout>
 

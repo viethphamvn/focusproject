@@ -28,7 +28,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/exerciseItemRecyclerView"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@drawable/shadowshape">
 
         <TextView
             android:id="@+id/totalDurationBanner"

@@ -24,8 +24,8 @@
         app:layout_constraintLeft_toRightOf="@id/user_profile_picture"
         app:layout_constraintBottom_toBottomOf="parent"
         android:fontFamily="@font/nunito"
-        android:text="Recent Conversations"
         android:textSize="20sp"
+        android:textColor="@color/white"
         android:layout_marginLeft="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

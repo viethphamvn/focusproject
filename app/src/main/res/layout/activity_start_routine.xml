@@ -75,7 +75,7 @@
         android:id="@+id/controlBar"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/shadowshape"
         android:text="@string/pause"
         android:textColor="@color/white"
         android:fontFamily="@font/nunito"
