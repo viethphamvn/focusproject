@@ -94,6 +94,11 @@ class StartRoutineActivity : AppCompatActivity() {
 
     private fun startWorkout(position: Int){
 
+        findViewById<TextView>(R.id.controlBar).apply {
+            background = ContextCompat.getDrawable(context, R.drawable.shadowshape)
+            text = getString(R.string.pause)
+        }
+
         updateProgressBar(position)
 
         fragmentVideoPlayer = supportFragmentManager.findFragmentByTag("videofragment")

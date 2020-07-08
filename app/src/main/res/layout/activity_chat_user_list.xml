@@ -52,6 +52,19 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadowbox_blue"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/search_bar_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Start a conversation by choosing a friend from this list"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_list_recycler_view"
         android:layout_width="match_parent"
@@ -60,7 +73,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_bar_layout"
+        app:layout_constraintTop_toBottomOf="@id/TextView"
         app:layout_constraintVertical_bias="0.0"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 

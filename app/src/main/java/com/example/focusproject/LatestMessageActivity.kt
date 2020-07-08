@@ -22,6 +22,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_latest_message.*
 
 class LatestMessageActivity : AppCompatActivity() {
     private val database = FirebaseDatabase.getInstance()
@@ -44,6 +45,10 @@ class LatestMessageActivity : AppCompatActivity() {
             var intent = Intent(view.context, ChatWindowActivity::class.java)
             intent.putExtra("user", (item as ChatItem).user)
             startActivity(intent)
+        }
+
+        backButton.setOnClickListener {
+            finish();
         }
 
 

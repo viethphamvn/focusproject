@@ -20,6 +20,9 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_chat_user_list.*
+import kotlinx.android.synthetic.main.activity_latest_message.*
+import kotlinx.android.synthetic.main.activity_latest_message.backButton
 
 class ChatUserListActivity : AppCompatActivity() {
 
@@ -41,6 +44,10 @@ class ChatUserListActivity : AppCompatActivity() {
         }
 
         getFriends()
+
+        backButton.setOnClickListener {
+            finish();
+        }
 
 
         val searchBtn = findViewById<ImageButton>(R.id.searchbtn)

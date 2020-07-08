@@ -3,6 +3,7 @@ package com.example.focusproject
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -31,9 +32,10 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful){
                         //Switch to MainActivity
+                        Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT)
                         startMainActivity()
                     } else {
-                        //Toast
+                        Toast.makeText(this, "Something is wrong, please try again.", Toast.LENGTH_SHORT)
                     }
                 }
         }
@@ -55,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun startMainActivity(){
         val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
     }
