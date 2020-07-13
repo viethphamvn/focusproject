@@ -56,7 +56,7 @@ class StartRoutineActivity : AppCompatActivity() {
                     isPaused = false
 
                     findViewById<TextView>(R.id.controlBar).apply {
-                        setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+                        background = ContextCompat.getDrawable(context, R.drawable.shadowshape)
                         text = getString(R.string.pause)
                     }
 
@@ -77,7 +77,8 @@ class StartRoutineActivity : AppCompatActivity() {
                     isPaused = true
 
                     findViewById<TextView>(R.id.controlBar).apply {
-                        setBackgroundColor(ContextCompat.getColor(context, R.color.darkgrey))
+                        //setBackgroundColor(ContextCompat.getColor(context, R.color.darkgrey))
+                        background = ContextCompat.getDrawable(context, R.drawable.shadowshape_grey)
                         text = context.getString(R.string.resume)
                     }
                     pauseVideo()
@@ -92,6 +93,11 @@ class StartRoutineActivity : AppCompatActivity() {
     }
 
     private fun startWorkout(position: Int){
+
+        findViewById<TextView>(R.id.controlBar).apply {
+            background = ContextCompat.getDrawable(context, R.drawable.shadowshape)
+            text = getString(R.string.pause)
+        }
 
         updateProgressBar(position)
 

@@ -15,6 +15,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="horizontal"
         android:gravity="center"
+        android:padding="5dp"
         android:background="@color/colorPrimary">
 
         <EditText
@@ -22,12 +23,12 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="@string/search_your_friend_here"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:padding="5dp"
             android:maxLines="1"
+            android:background="@drawable/rounded_layout"
             android:inputType="textShortMessage"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
+            android:textColorHint="@color/darkgrey"
+            android:textColor="#000000"
             android:fontFamily="@font/nunito"
             android:autofillHints="" />
 
@@ -35,8 +36,6 @@
             android:id="@+id/searchbtn"
             android:layout_width="55dp"
             android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:padding="5dp"
             android:scaleType="center"
             android:backgroundTint="@color/colorPrimaryDark"

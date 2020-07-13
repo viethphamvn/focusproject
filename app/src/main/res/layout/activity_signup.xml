@@ -100,6 +100,7 @@
             android:layout_height="60dp"
             android:text="@string/signup"
             android:fontFamily="@font/nunito"
+            app:cornerRadius="30dp"
             app:backgroundTint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

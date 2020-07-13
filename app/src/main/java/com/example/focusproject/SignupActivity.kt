@@ -76,6 +76,7 @@ class SignupActivity : AppCompatActivity() {
 
     private fun startWelcomeActivity(){
         val intent = Intent(this, UserInfoActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
     }

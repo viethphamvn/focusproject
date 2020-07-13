@@ -13,9 +13,11 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.focusproject.ChatWindowActivity
 import com.example.focusproject.CreateRoutineActivity
 import com.example.focusproject.R
 import com.example.focusproject.RoutineEditActivity
+import com.example.focusproject.models.Chat
 import com.example.focusproject.models.Exercise
 import com.example.focusproject.models.User
 import com.example.focusproject.tools.YouTubeHelper
@@ -272,10 +274,16 @@ class NewWorkoutEditFragment : Fragment() {
             exercise["createdBy"] as String,
             exercise["desc"] as String)
 
-        if (activity is RoutineEditActivity){
-            (activity as RoutineEditActivity).onItemClick(newExercise)
-        } else if (activity is CreateRoutineActivity){
-            (activity as CreateRoutineActivity).onItemClick(newExercise)
+        when (activity) {
+            is RoutineEditActivity -> {
+                (activity as RoutineEditActivity).onItemClick(newExercise)
+            }
+            is CreateRoutineActivity -> {
+                (activity as CreateRoutineActivity).onItemClick(newExercise)
+            }
+            is ChatWindowActivity -> {
+                (activity as ChatWindowActivity).itemOnClick(newExercise)
+            }
         }
     }
 

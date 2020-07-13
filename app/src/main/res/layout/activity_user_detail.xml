@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/shadowshape">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_profile_picture"
@@ -49,7 +49,7 @@
             app:layout_constraintLeft_toRightOf="@id/user_profile_picture"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/username_textview"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimaryDark">
 
             <ImageButton
                 android:layout_width="30dp"

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.focusproject.ChatWindowActivity
 import com.example.focusproject.R
 import com.example.focusproject.RoutineDetailActivity
 import com.example.focusproject.adapters.FeedRecyclerViewAdapter
@@ -50,9 +51,13 @@ class RoutineListFragment : Fragment() {
     }
 
     private fun doClick(item: Routine) {
-        val intent = Intent(context, RoutineDetailActivity::class.java)
-        intent.putExtra("routine", item)
-        startActivity(intent)
+        if (activity != null && activity is ChatWindowActivity){
+            (activity as ChatWindowActivity).itemOnClick(item)
+        } else {
+            val intent = Intent(context, RoutineDetailActivity::class.java)
+            intent.putExtra("routine", item)
+            startActivity(intent)
+        }
     }
 
     companion object {

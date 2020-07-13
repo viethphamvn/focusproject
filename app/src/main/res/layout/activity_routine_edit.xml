@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:background="@color/darkgrey"/>
+            android:background="@color/colorPrimary"/>
 
     </FrameLayout>
 
@@ -68,16 +68,16 @@
             android:id="@+id/TextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/this_action_will_overwrite_your_chosen_routine_s_value"
-            android:background="@color/pastelred"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:fontFamily="@font/nunito"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="0dp"
+            android:background="@drawable/shadowbox_red"
+            android:fontFamily="@font/nunito"
+            android:gravity="center"
+            android:text="@string/this_action_will_overwrite_your_chosen_routine_s_value"
+            android:textColor="@color/white"
             android:textSize="15sp"
-            android:gravity="center"/>
+            android:textStyle="bold" />
 
         <HorizontalScrollView
             android:id="@+id/datePicker"
